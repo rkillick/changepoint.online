@@ -1,0 +1,6 @@
+import('changepoint')
+ 	
+
+exportPattern("^[^\\.]")
+
+useDynLib(changepoint.online)

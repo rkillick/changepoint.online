@@ -1,0 +1,14 @@
+Package: changepoint.online
+Type: Package
+Title: Online detection of changepoints
+Version: 0.1
+Date: 2016-03-21
+Authors@R: c(person("Rebecca", "Killick", role=c("aut","cre"),email="r.killick@lancs.ac.uk"),
+	person("Matt", "Nunes", role="aut"))
+Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>
+Description: To be described later ...
+Depends: R(>= 3.1), changepoint
+Suggests: testthat
+License: GPL
+LazyLoad: yes
+Packaged: 2016-03-21 12:36:29 UTC; killick

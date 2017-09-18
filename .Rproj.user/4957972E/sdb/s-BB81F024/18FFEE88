@@ -1,0 +1,17 @@
+{
+    "contents" : "PELT.online = function(sumstat,pen=0, cost_func = \"norm.mean\", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts){\n  # function that uses the PELT method to calculate changes in mean where the segments in the data are assumed to be Normal\n  n = length(sumstat[,1]) - 1\n  if(n<2){stop('Data must have atleast 2 observations to fit a changepoint model.')}\n  \n  storage.mode(sumstat) = 'double'\n  error=0\n  \n  if(missing(lastchangelike)) {lastchangelike = array(0,dim = n+1)}\n  if(missing(lastchangecpts)) {lastchangecpts = array(0,dim = n+1)}\n  if(missing(numchangecpts)) {numchangecpts = array(0,dim = n+1)}\n  \n  cptsout=rep(0,n) # sets up null vector for changepoint answer\n  storage.mode(cptsout)='integer'\n  \n  answer=list()\n  answer[[6]]=1\n  on.exit(.C(\"FreePELT\",answer[[6]]))\n  \n  storage.mode(lastchangelike) = 'double'\n  storage.mode(lastchangecpts) = 'integer'\n  storage.mode(numchangecpts) = 'integer'\n  \n  # answer=.C('PELT',cost_func, y3, y2,y,as.integer(n),as.double(pen),cptsout,as.integer(error),as.double(shape))\n  answer=.C('PELT',cost_func, sumstat,as.integer(n),as.double(pen),cptsout,as.integer(error),as.double(shape), as.integer(minseglen), lastchangelike, lastchangecpts,numchangecpts)\n\n  if(answer[[6]]>0){\n    stop(\"C code error:\",answer[[6]],call.=F)\n  }\n  return(list(answer[[10]],sort(answer[[5]][answer[[5]]>0]), answer[[9]], answer[[11]]))\n  \n}\n",
+    "created" : 1458558508748.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1217155650",
+    "id" : "18FFEE88",
+    "lastKnownWriteTime" : 1458561413,
+    "path" : "~/Dropbox/Becki-Matt/changepoint.online/R/PELT_one_func_minseglen-COPY from cpt as not exported.R",
+    "project_path" : "R/PELT_one_func_minseglen-COPY from cpt as not exported.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
