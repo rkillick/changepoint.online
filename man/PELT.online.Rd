@@ -1,17 +1,17 @@
-\name{PELT}
-\alias{PELT}
+\name{PELT.online}
+\alias{PELT.online}
 \title{
 PELT (Pruned Exact Linear Time) - Only intended for developer use.
 }
 \description{
 Implements the PELT method for identifying changepoints in a given set of summary statistics for a specified cost function and penalty.
 
-This function is called by \code{cpt.mean}, \code{cpt.var} and \code{cpt.meanvar} when \code{method="PELT"}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed increases or to fit alternative cost functions.
+This function is called by \code{ocpt.mean}, \code{ocpt.var} and \code{ocpt.meanvar} when \code{method="PELT"}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed increases or to fit alternative cost functions.
 
 WARNING: No checks on arguments are performed!
 }
 \usage{
-PELT(sumstat, pen = 0, cost_func = "norm.mean", shape = 1, minseglen = 1)
+PELT.online(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts)
 }
 \arguments{
   \item{sumstat}{
@@ -53,7 +53,7 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpt.mean}},\code{\link{cpt.meanvar}},\code{\link{plot-methods}},\code{\linkS4class{cpt}}
+\code{\link{ocpt.mean}},\code{\link{ocpt.meanvar}},\code{\link{plot-methods}},\code{\linkS4class{ocpt}}
 }
 \examples{
 #This function should only be used by developers, see its use in cpt.mean, cpt.var and cpt.meanvar.

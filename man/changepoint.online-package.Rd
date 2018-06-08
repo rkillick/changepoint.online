@@ -1,19 +1,19 @@
-\name{changepoint-package}
-\alias{changepoint-package}
-\alias{changepoint}
+\name{changepoint.online-package}
+\alias{changepoint.online-package}
+\alias{changepoint.online}
 \docType{package}
 \title{
-Methods for Changepoint Detection
+Methods for online Changepoint Detection
 }
 \description{
-Implements various mainstream and specialised changepoint methods for finding single and multiple changepoints within data.  Many popular non-parametric and frequentist methods are included.  Users should start by looking at the documentation for cpt.mean(), cpt.var() and cpt.meanvar().
+Implements various mainstream and specialised changepoint methods for finding single and multiple changepoints within data.  Many popular non-parametric and frequentist methods are included.  Users should start by looking at the documentation for ocpt.mean(), ocpt.var(), ocpt.meanvar() and ocpt.plot().
 }
 \details{
 \tabular{ll}{
 Package: \tab changepoint\cr
 Type: \tab Package\cr
-Version: \tab 2.2.4 \cr
-Date: \tab 2018-04-19\cr
+Version: \tab 0.0.1 \cr
+Date: \tab 2018-06-20\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }
@@ -44,19 +44,23 @@ Segment Neighbourhoods: Auger, I. E. And Lawrence, C. E. (1989) Algorithms for t
 # change in variance
 set.seed(1)
 x=c(rnorm(100,0,1),rnorm(100,0,10))
-ansvar=cpt.var(x)
+ansvar=ocpt.var(x)
 plot(ansvar)
 print(ansvar) # identifies 1 changepoint at 100
 
 # change in mean
 y=c(rnorm(100,0,1),rnorm(100,5,1))
-ansmean=cpt.mean(y)
+ansmean=ocpt.mean(y)
 plot(ansmean,cpt.col='blue')
 print(ansmean)
 
 # change in mean and variance
 z=c(rnorm(100,0,1),rnorm(100,2,10))
-ansmeanvar=cpt.meanvar(z)
+ansmeanvar=ocpt.meanvar(z)
 plot(ansmeanvar,cpt.width=3)
 print(ansmeanvar)
+
+# Real time plotting of Time Series
+p=c(rnorm(100,5,1),rnorm(100,10,10))
+ocpt.plot(p)
 }
