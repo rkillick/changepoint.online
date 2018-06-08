@@ -5,3 +5,7 @@ The update function needs to be done but when the C was working that was the onl
  As for as the other errors we discussed (the big number and zeros have been dealt with so when it does run it runs correctly)
 
 As a side note, I assume for the update one we now want to call PELT.c instead and so needs to be in the same format as initialise is above?
+
+The below error kept popping up also: PELT.c:140:19: warning: incompatible integer to pointer conversion assigning to 'int *' from 'int' [-Wint-conversion]
+
+Other warnings on check are to do with missing .rd files for specific functions or rd files for functions that don't exist
