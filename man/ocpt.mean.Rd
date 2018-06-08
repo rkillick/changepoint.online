@@ -1,5 +1,5 @@
-\name{cpt.mean}
-\alias{cpt.mean}
+\name{ocpt.mean}
+\alias{ocpt.mean}
 \title{
 Identifying Changes in Mean
 }
@@ -126,10 +126,10 @@ set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
 y=rnorm(200,0,1)
 z=rbind(x,y)
-cpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="SegNeigh",Q=5,class=FALSE) # returns list
+ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="SegNeigh",Q=5,class=FALSE) # returns list
 #that has two elements, the first has 3 changes in mean and variance at 50,100,150 and the second
 #has no changes in variance
-ans=cpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
+ans=ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
 cpts(ans[[1]]) # same results as for the SegNeigh method.
 cpts(ans[[2]]) # same results as for the SegNeigh method.
 }

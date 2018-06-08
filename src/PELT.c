@@ -137,7 +137,7 @@ int *numchangecpts; //stores the current number of changepoints
         
         *ndone=min;
         if(min>*nupdate){return;} // i.e. you can't add a change
-        nchecklist=2;
+        *nchecklist=2;
         checklist[0]=0;
         checklist[1]=*minseglen;
         *nupdate=*nupdate-*minseglen;

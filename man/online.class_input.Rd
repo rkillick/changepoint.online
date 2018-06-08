@@ -1,12 +1,12 @@
-\name{class_input}
-\alias{class_input}
+\name{online.class_input}
+\alias{online.class_input}
 \title{
 Input all required arguments into cpt classes - Only intended for developer use.
 }
 \description{
 This function helps to input all the necessary information into the correct format for \code{cpt} and \code{cpt.range} classes.
 
-This function is called by \code{cpt.mean}, \code{cpt.var} and \code{cpt.meanvar} when \code{class=TRUE}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed and convenience.
+This function is called by \code{ocpt.mean}, \code{ocpt.var} and \code{ocpt.meanvar} when \code{class=TRUE}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed and convenience.
 
 WARNING: No checks on arguments are performed!
 }
