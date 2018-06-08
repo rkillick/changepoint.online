@@ -95,7 +95,6 @@ int *numchangecpts; //stores the current number of changepoints
     else if (strcmp(*cost_func,"meanvar.poisson.mbic")==0){
         costfunction = &mbic_meanvar_poisson;
     }
-    
     double minout;
     
     double *tmplike;
@@ -104,7 +103,6 @@ int *numchangecpts; //stores the current number of changepoints
         *error = 4;
         goto err4;
     }
-    
     
     int *tmpt;
     tmpt = (int *)calloc((*nupdate+*nchecklist+1),sizeof(int));
@@ -179,3 +177,4 @@ int *numchangecpts; //stores the current number of changepoints
 err5:  free(tmplike);
 err4:  return;
 }
+
