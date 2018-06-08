@@ -1,7 +1,9 @@
 PELT.online = function(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts){
   # function that uses the PELT method to calculate changes in mean where the segments in the data are assumed to be Normal
+  if(is.null(dim(sumstat))){sumstat=as.matrix(sumstat,ncol=1)}
+
   n = length(sumstat[,1]) - 1
-  if(n<2){stop('Data must have atleast 2 observations to fit a changepoint model.')}
+  if(n<2){stop('Data must have at least 2 observations to fit a changepoint model.')}
   
   storage.mode(sumstat) = 'double'
   error=0
@@ -20,13 +22,12 @@ PELT.online = function(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseg
   storage.mode(lastchangelike) = 'double'
   storage.mode(lastchangecpts) = 'integer'
   storage.mode(numchangecpts) = 'integer'
-  
-  # answer=.C('PELT',cost_func, y3, y2,y,as.integer(n),as.double(pen),cptsout,as.integer(error),as.double(shape))
-  answer=.C('PELT',cost_func, sumstat,as.integer(n),as.double(pen),cptsout,as.integer(error),as.double(shape), as.integer(minseglen), lastchangelike, lastchangecpts,numchangecpts)
 
-  if(answer[[6]]>0){
-    stop("C code error:",answer[[6]],call.=F)
-  }
-  return(list(answer[[10]],sort(answer[[5]][answer[[5]]>0]), answer[[9]], answer[[11]]))
-  
+answer=.C('PELT_online',cost_func=cost_func,sumstat=sumstat,ndone=as.integer(n),penalty=as.double(pen),cptsout=cptsout,error=as.integer(error),shape=as.double(shape), minseglen=as.integer(minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,numchangecpts=numchangecpts)
+
+if(answer$error>0){
+    stop("C code error:",answer$error,call.=F)
+}
+return(list(lastchangecpts=answer$lastchangecpts,cpts=sort(answer$cptsout[answer$cptsout>0]), lastchangelike=answer$lastchangelike, ncpts=answer$numchangecpts))
+
 }

@@ -1,11 +1,11 @@
-	setClass("cpt",slots=list(data.set="ts", cpttype="character", method="character", 	test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(date=date(),version=as(packageVersion("changepoint"),'character')))
+	setClass("cpt",slots=list(data.set="ts", cpttype="character", method="character", 	test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(date=date(),version=as(packageVersion("changepoint.online"),'character')))
 
-	setClass("cpt.reg",slots=list(data.set="matrix", cpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(cpttype="regression",date=date(),version=as(packageVersion("changepoint"),"character")))
+	setClass("cpt.reg",slots=list(data.set="matrix", cpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(cpttype="regression",date=date(),version=as(packageVersion("changepoint.online"),"character")))
   
-#   setClass("cpt", representation(), prototype())
-# # cpts is the optimal segementation
+#  setClass("cpt", representation(), prototype())
+#  cpts is the optimal segementation
 #   
-  setClass("cpt.range",slots=list(cpts.full="matrix", pen.value.full="numeric"), prototype=prototype(), contains="cpt")
+  setClass("cpt.range",slots=list(cpts.full="matrix", pen.value.full="numeric"), prototype=prototype(cpttype="regression",date=date(),version=as(packageVersion("changepoint.online"),"character")), contains="cpt")
   # cpts.full is the entire matrix
   # pen.value.full (beta) values as an extra slot (vector)
 
