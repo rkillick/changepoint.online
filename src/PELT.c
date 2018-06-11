@@ -95,6 +95,7 @@ int *numchangecpts; //stores the current number of changepoints
     else if (strcmp(*cost_func,"meanvar.poisson.mbic")==0){
         costfunction = &mbic_meanvar_poisson;
     }
+
     double minout;
     
     double *tmplike;
