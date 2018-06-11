@@ -7,7 +7,7 @@ Identifying Changes in Mean and Variance
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-cpt.meanvar(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.stat="Normal",
+ocpt.meanvar(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.stat="Normal",
 class=TRUE,param.estimates=TRUE,shape=1,minseglen=2)
 }
 \arguments{
@@ -92,7 +92,7 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpt.var}},\code{\link{cpt.mean}},\code{\link{plot-methods}},\code{\linkS4class{cpt}}
+\code{\link{ocpt.var}},\code{\link{ocpt.mean}},\code{\link{plot-methods}},\code{\linkS4class{cpt}}
 }
 \examples{
 # Example of a change in scale parameter (mean and variance) at 100 in simulated gamma data

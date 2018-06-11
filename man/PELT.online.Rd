@@ -29,6 +29,15 @@ PELT.online(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,las
   \item{minseglen}{
   Positive integer giving the minimum segment length (no. of observations between changes), default is 1.  No checks are performed on the input value so it could be larger than feasible to have changes in the data.
   }
+  \item{lastchangelike}{
+  Vector of likelihoods for the data up to the length of the data.
+  }
+  \item{lastchangecpts}{
+  Vector of identified last changepoint locations up to the length of the data.
+  }
+  \item{numchangecpts}{
+  Stores the current number of changepoints identified.
+  }
 }
 \details{
 	This function is used as a wrapper function to implement the PELT algorithm in C.  It simply creates the necessary worker vectors, ensures all inputs are the correct type, and passes everything to the C function.
