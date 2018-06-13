@@ -339,7 +339,7 @@ setReplaceMethod("minseglen", "ocpt.reg", function(object, value) {
 setGeneric("ocpts<-", function(object, value) standardGeneric("ocpts<-"))
 setReplaceMethod("ocpts", "ocpt", function(object, value) {
     if((ocpttype(object)=="meanar")|(ocpttype(object)=="trendar")){
-        n=length(object@data.set)-1
+        n=length(object@data.set) - 1
     }
     else{n=length(object@data.set)}
     
