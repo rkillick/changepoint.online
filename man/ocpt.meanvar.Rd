@@ -98,7 +98,7 @@ Rebecca Killick
 # Example of a change in scale parameter (mean and variance) at 100 in simulated gamma data
 set.seed(1)
 x=c(rgamma(100,shape=1,rate=1),rgamma(100,shape=1,rate=5))
-ocpt.meanvar(x,penalty="SIC",method="PELT",class=FALSE,shape=1) # returns 97 to
+ocpt.meanvar(x,penalty="SIC",method="PELT",class=FALSE,shape=1) 
 }
 
 \keyword{methods}
