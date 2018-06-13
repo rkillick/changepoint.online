@@ -1,20 +1,17 @@
-\name{cpttype<-}
-\alias{cpttype<-}
+\name{ocpttype}
+\alias{ocpttype}
 \title{
-Generic Function - cpttype
+Generic Function - ocpttype
 }
 \description{
 Generic function
 }
 \usage{
-cpttype(object)<-value
+ocpttype(object)
 }
 \arguments{
   \item{object}{
 	Depending on the class of \code{object} depends on the method used (and if one exists)
-}
-  \item{value}{
-	Replacement value
 }
 }
 \details{
@@ -29,13 +26,13 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpttype<--methods}}
+\code{\link{ocpttype-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
-cpttype(x)<-"mean" # replaces the existing cpttype in object x with "mean"
+x=new("ocpt") # new ocpt object
+ocpttype(x) # retrieves the ocpttype slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
-\keyword{internal}
+\keyword{ocpt}
+\keyword{internal} 

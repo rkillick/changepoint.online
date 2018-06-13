@@ -1,13 +1,13 @@
-\name{ncpts}
-\alias{ncpts}
+\name{nocpts.max}
+\alias{nocpts.max}
 \title{
-Generic Function - ncpts
+Generic Function - nocpts.max
 }
 \description{
 Generic function
 }
 \usage{
-ncpts(object)
+nocpts.max(object)
 }
 \arguments{
   \item{object}{
@@ -15,7 +15,7 @@ ncpts(object)
 }
 }
 \details{
-	Generic Function
+	Generic function.
 }
 \value{
 	Depends on the class of \code{object}, see individual methods
@@ -26,12 +26,13 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{ncpts-methods}}
+\code{\link{nocpts.max-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
-ncpts(x) # returns the number of changepoints (i.e. length of the cpts slot in x minus 1)
+x=new("ocpt") # new ocpt object
+nocpts.max(x) # retrieves the nocpts.max slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
+\keyword{internal}

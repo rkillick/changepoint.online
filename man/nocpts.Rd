@@ -1,13 +1,13 @@
-\name{cpttype}
-\alias{cpttype}
+\name{nocpts}
+\alias{nocpts}
 \title{
-Generic Function - cpttype
+Generic Function - nocpts
 }
 \description{
 Generic function
 }
 \usage{
-cpttype(object)
+nocpts(object)
 }
 \arguments{
   \item{object}{
@@ -26,13 +26,12 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpttype-methods}}
+\code{\link{nocpts-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
-cpttype(x) # retrieves the cpttype slot from x
+x=new("ocpt") # new cpt object
+nocpts(x) # returns the number of changepoints (i.e. length of the ocpts slot in x minus 1)
 }
 
 \keyword{methods}
-\keyword{cpt}
-\keyword{internal} 
+\keyword{ocpt}

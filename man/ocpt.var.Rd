@@ -7,7 +7,7 @@ Identifying Changes in Variance
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-cpt.var(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,method="AMOC",Q=5,
+ocpt.var(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,method="AMOC",Q=5,
 test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=2)
 }
 \arguments{
@@ -36,7 +36,7 @@ test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=2)
 	The assumed test statistic / distribution of the data.  Currently only "Normal" and "CSS" supported.
 }
   \item{class}{
-	Logical.  If TRUE then an object of class \code{cpt} is returned.
+	Logical.  If TRUE then an object of class \code{ocpt} is returned.
 }
   \item{param.estimates}{
 	Logical.  If TRUE and class=TRUE then parameter estimates are returned. If FALSE or class=FALSE no parameter estimates are returned.
@@ -50,25 +50,25 @@ test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=2)
   Note that for the test.stat="CSS" option the preset penalties are log(.) to allow comparison with test.stat="Normal".  
 }
 \value{
-	If \code{class=TRUE} then an object of S4 class "cpt" is returned.  The slot \code{cpts} contains the changepoints that are returned.  For \code{class=FALSE} the structure is as follows.
+	If \code{class=TRUE} then an object of S4 class "ocpt" is returned.  The slot \code{ocpts} contains the changepoints that are returned.  For \code{class=FALSE} the structure is as follows.
 
 	If data is a vector (single dataset) then a vector/list is returned depending on the value of method.  If data is a matrix (multiple datasets) then a list is returned where each element in the list is either a vector or list depending on the value of method.
 
 	If method is AMOC then a vector (one dataset) or matrix (multiple datasets) is returned, the columns are:
-	\item{cpt}{The most probable location of a changepoint if a change was identified or NA if no changepoint.}
+	\item{ocpt}{The most probable location of a changepoint if a change was identified or NA if no changepoint.}
   \item{p value}{The p-value of the identified changepoint.}
 	If method is PELT then a vector is returned containing the changepoint locations for the penalty supplied.  This always ends with n.
   If the penalty is CROPS then a list is returned with elements:
-  \item{cpt.out}{A data frame containing the value of the penalty value where the number of segmentations changes, the number of segmentations and the value of the cost at that penalty value.}
+  \item{ocpt.out}{A data frame containing the value of the penalty value where the number of segmentations changes, the number of segmentations and the value of the cost at that penalty value.}
   \item{segmentations}{The optimal segmentations for the different penalty values starting with the lowest penalty value}
 	If method is SegNeigh then a list is returned with elements:
 	\item{cps}{Matrix containing the changepoint positions for 1,...,Q changepoints.}
-	\item{op.cpts}{The optimal changepoint locations for the penalty supplied.}
+	\item{op.ocpts}{The optimal changepoint locations for the penalty supplied.}
   \item{pen}{Penalty used to find the optimal number of changepoints.}
 	\item{like}{Value of the -2*log(likelihood ratio) + penalty for the optimal number of changepoints selected.}
 	If method is BinSeg then a list is returned with elements:
 	\item{cps}{2xQ Matrix containing the changepoint positions on the first row and the test statistic on the second row.}
-	\item{op.cpts}{The optimal changepoint locations for the penalty supplied.}
+	\item{op.ocpts}{The optimal changepoint locations for the penalty supplied.}
 	\item{pen}{Penalty used to find the optimal number of changepoints.}
 }
 \references{
@@ -92,7 +92,7 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpt.mean}},\code{\link{cpt.meanvar}},\code{\link{plot-methods}},\code{\linkS4class{cpt}}
+\code{\link{ocpt.mean}},\code{\link{ocpt.meanvar}},\code{\link{plot-methods}},\code{\linkS4class{ocpt}}
 }
 \examples{
 # Example multiple datasets where the first row has multiple changes in variance and the second row
@@ -101,12 +101,11 @@ set.seed(10)
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
 y=rnorm(200,0,1)
 z=rbind(x,y)
-ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="PELT",Q=5,class=FALSE) # returns list that
-#has two elements, the first has 3 changes in variance at 50,100,149 and the second has no changes
-#in variance
-ans=ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
-cpts(ans[[1]]) # same results as for the above method.
-cpts(ans[[2]]) # same results as for the above method.
+ocpt.var(z,penalty="MBIC",pen.value=0.01,method="PELT",Q=5,class=FALSE) # returns list that
+#has two elements, the first has 3 changes in variance at 50,100,149 and the second has no changes in variance
+ans=ocpt.var(z,penalty="MBIC",pen.value=0.01,method="PELT") 
+ocpts(ans[[1]]) # same results as for the above method.
+ocpts(ans[[2]]) # same results as for the above method.
 }
 
 \keyword{methods}

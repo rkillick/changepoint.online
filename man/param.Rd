@@ -34,8 +34,13 @@ Rebecca Killick
 \examples{
 set.seed(1)
 x=c(rnorm(100,0,1),rnorm(100,0,10))
+ans=ocpt.var(x,penalty="Asymptotic",pen.value=0.01,method="AMOC",param.estimates=FALSE)
+# if estimates were not requested in the analysis then they can be created at a later stage if
+#required
+ans=param(ans) # fills the param.est slot with the parameter estimes.
+param.est(ans)
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}

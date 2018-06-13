@@ -29,10 +29,10 @@ Rebecca Killick
 \code{\link{param.est-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 param.est(x) # retrieves the param.est slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}

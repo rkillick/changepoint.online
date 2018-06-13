@@ -32,10 +32,10 @@ Rebecca Killick
 \code{\link{pen.value.full<--methods}}
 }
 \examples{
-x=new("cpt.range") # new cpt.range object
+x=new("ocpt.range") # new ocpt.range object
 pen.value.full(x)<-5 # replaces the existing pen.value.full slot in x with 5
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

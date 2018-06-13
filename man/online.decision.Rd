@@ -1,17 +1,17 @@
-\name{decision}
-\alias{decision}
+\name{online.decision}
+\alias{online.decision}
 \title{
-Decision Function - Only intended for developer use.
+Online Decision Function - Only intended for developer use.
 }
 \description{
 Uses the function parameters to decide if a proposed changepoint is a true changepoint or due to random variability.  Test is conducted using the user specified penalty.
 
-This function is called by \code{cpt.mean}, \code{cpt.var} and \code{cpt.meanvar} when \code{method="AMOC"}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed increases or to fit alternative cost functions.
+This function is called by \code{ocpt.mean}, \code{ocpt.var} and \code{ocpt.meanvar} when \code{method="AMOC"}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed increases or to fit alternative cost functions.
 
 WARNING: No checks on arguments are performed!
 }
 \usage{
-decision(tau,null,alt=NA,penalty="MBIC",n=0,diffparam=1,pen.value=0)
+online.decision(tau,null,alt=NA,penalty="MBIC",n=0,diffparam=1,pen.value=0)
 }
 \arguments{
   \item{tau}{
@@ -66,16 +66,16 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpt.mean}},\code{\link{cpt.var}},\code{\link{cpt.meanvar}}
+\code{\link{ocpt.mean}},\code{\link{ocpt.var}},\code{\link{ocpt.meanvar}}
 }
 \examples{
 # Example of finding a change
 out=c(100,765.1905,435.6529) # tau, null, alt
-decision(out[1],out[2],out[3],penalty="SIC",n=200,diffparam=1) # returns 100 as a true changepoint
+online.decision(out[1],out[2],out[3],penalty="SIC",n=200,diffparam=1) # returns 100 as a true changepoint
 
 # Example of no change found
 out=c(53,-22.47768,-24.39894) # tau, null, alt
-decision(out[1],out[2],out[3],penalty="Manual",n=200,diffparam=1,pen.value="2*log(n)")
+online.decision(out[1],out[2],out[3],penalty="Manual",n=200,diffparam=1,pen.value="2*log(n)")
 }
 
 \keyword{methods}

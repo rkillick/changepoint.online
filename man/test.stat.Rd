@@ -29,10 +29,10 @@ Rebecca Killick
 \code{\link{test.stat-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 test.stat(x) # retrieves the test.stat slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}

@@ -43,25 +43,25 @@ param.estimates=TRUE,minseglen=1)
 	This function is used to find changes in mean for data using the test statistic specfified in the test.stat parameter.  The changes are found using the method supplied which can be single changepoint (AMOC) or multiple changepoints using exact (PELT or SegNeigh) or approximate (BinSeg) methods.  A changepoint is denoted as the last observation of the segment / regime.
 }
 \value{
-  If \code{class=TRUE} then an object of S4 class "cpt" is returned.  The slot \code{cpts} contains the changepoints that are returned.  For \code{class=FALSE} the structure is as follows.
+  If \code{class=TRUE} then an object of S4 class "ocpt" is returned.  The slot \code{ocpts} contains the changepoints that are returned.  For \code{class=FALSE} the structure is as follows.
 
   If data is a vector (single dataset) then a vector/list is returned depending on the value of method.  If data is a matrix (multiple datasets) then a list is returned where each element in the list is either a vector or list depending on the value of method.
 
 	If method is AMOC then a vector (one dataset) or matrix (multiple datasets) is returned, the columns are:
-	\item{cpt}{The most probable location of a changepoint if a change was identified or NA if no changepoint.}
+	\item{ocpt}{The most probable location of a changepoint if a change was identified or NA if no changepoint.}
   \item{p value}{The p-value of the identified changepoint.}
 	If method is PELT then a vector is returned containing the changepoint locations for the penalty supplied.  This always ends with n.
   If the penalty is CROPS then a list is returned with elements:
-  \item{cpt.out}{A data frame containing the value of the penalty value where the number of segmentations changes, the number of segmentations and the value of the cost at that penalty value.}
+  \item{ocpt.out}{A data frame containing the value of the penalty value where the number of segmentations changes, the number of segmentations and the value of the cost at that penalty value.}
   \item{changepoints}{The optimal changepoint for the different penalty values starting with the lowest penalty value}
 	If method is SegNeigh then a list is returned with elements:
 	\item{cps}{Matrix containing the changepoint positions for 1,...,Q changepoints.}
-	\item{op.cpts}{The optimal changepoint locations for the penalty supplied.}
+	\item{op.ocpts}{The optimal changepoint locations for the penalty supplied.}
   \item{pen}{Penalty used to find the optimal number of changepoints.}
 	\item{like}{Value of the -2*log(likelihood ratio) + penalty for the optimal number of changepoints selected.}
 	If method is BinSeg then a list is returned with elements:
 	\item{cps}{2xQ Matrix containing the changepoint positions on the first row and the test statistic on the second row.}
-	\item{op.cpts}{The optimal changepoint locations for the penalty supplied.}
+	\item{op.ocpts}{The optimal changepoint locations for the penalty supplied.}
 	\item{pen}{Penalty used to find the optimal number of changepoints.}
 }
 \references{
@@ -85,7 +85,7 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpt.var}},\code{\link{cpt.meanvar}},\code{\link{plot-methods}},\code{\linkS4class{cpt}}
+\code{\link{ocpt.var}},\code{\link{ocpt.meanvar}},\code{\link{plot-methods}},\code{\linkS4class{ocpt}}
 }
 \examples{
 # Example of changes in mean at 5, 10 and 3 in simulated normal data

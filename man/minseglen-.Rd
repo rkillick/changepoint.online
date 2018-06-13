@@ -32,10 +32,10 @@ Rebecca Killick
 \code{\link{minseglen<--methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 minseglen(x)<-5 # replaces the existing minseglen slot in x with 5
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

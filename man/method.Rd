@@ -29,10 +29,10 @@ Rebecca Killick
 \code{\link{method-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new cpt object
 method(x) # retrieves the method slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}

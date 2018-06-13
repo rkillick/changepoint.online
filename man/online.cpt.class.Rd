@@ -1,7 +1,7 @@
-\name{ocpt-class}
+\name{online.cpt.class}
 \Rdversion{1.1}
 \docType{class}
-\alias{ocpt-class}
+\alias{online.cpt.class}
 \alias{ocpt-method,ocpts}
 \alias{ocpt-method,ocpttype}
 \alias{ocpt-method,data.set}
@@ -17,7 +17,7 @@
 \alias{ocpt-method,ocpttype<-}
 \alias{ocpt-method,data.set<-}
 \alias{ocpt-method,test.stat<-}
-\alias{ocpt-method,ncpts.max<-}
+\alias{ocpt-method,nocpts.max<-}
 \alias{ocpt-method,method<-}
 \alias{ocpt-method,minseglen<-}
 \alias{ocpt-method,param.est<-}
@@ -69,11 +69,11 @@ Objects can be created by calls of the form \code{new("ocpt", ...)}.
     \item{param.est}{\code{signature(object = "ocpt")}: retrieves param.est slot }
     \item{pen.type}{\code{signature(object = "ocpt")}: retrieves pen.type slot }
     \item{pen.value}{\code{signature(object = "ocpt")}: retrieves pen.value slot }
-    \item{cpts<-}{\code{signature(object = "ocpt")}: replaces cpts slot }
+    \item{ocpts<-}{\code{signature(object = "ocpt")}: replaces cpts slot }
     \item{cpttype<-}{\code{signature(object = "ocpt")}: replaces cpttype slot }
     \item{data.set<-}{\code{signature(object = "ocpt")}: replaces data.set slot }
     \item{test.stat<-}{\code{signature(object = "ocpt")}: replaces test.stat slot }
-    \item{ncpts.max<-}{\code{signature(object = "ocpt")}: replaces ncpts.max slot }
+    \item{nocpts.max<-}{\code{signature(object = "ocpt")}: replaces ncpts.max slot }
     \item{method<-}{\code{signature(object = "ocpt")}: replaces method slot }
     \item{minseglen<-}{\code{signature(object = "ocpt")}: replaces minseglen slot }
     \item{param.est<-}{\code{signature(object = "ocpt")}: replaces param.est slot }

@@ -29,10 +29,10 @@ Rebecca Killick
 \code{\link{minseglen-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 minseglen(x) # retrieves the minseglen slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}

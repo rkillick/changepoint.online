@@ -29,10 +29,10 @@ Rebecca Killick
 \code{\link{data.set.ts-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 data.set.ts(x) # retrieves the data.set slot from x.  This is a ts object.
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

@@ -32,10 +32,10 @@ Rebecca Killick
 \code{\link{pen.type<--methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 pen.type(x)<-"SIC" # replaces the existing pen.type slot in x with "SIC"
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

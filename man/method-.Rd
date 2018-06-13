@@ -32,10 +32,10 @@ Rebecca Killick
 \code{\link{method<--methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 method(x)<-"mean" # replaces the existing method slot in x with "mean"
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

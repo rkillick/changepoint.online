@@ -68,7 +68,7 @@ Rebecca Killick
 \code{\link{ocpt.mean}},\code{\link{ocpt.meanvar}},\code{\link{plot-methods}},\code{\linkS4class{ocpt}}
 }
 \examples{
-#This function should only be used by developers, see its use in cpt.mean, cpt.var and cpt.meanvar.
+#This function should only be used by developers, see its use in ocpt.mean, ocpt.var and ocpt.meanvar.
 }
 
 \keyword{methods}

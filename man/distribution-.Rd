@@ -32,10 +32,10 @@ Rebecca Killick
 \code{\link{distribution<--methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new cpt object
 distribution(x)<-"normal" # replaces the current distribution slot of x with "normal"
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

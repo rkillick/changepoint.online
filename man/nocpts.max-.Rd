@@ -1,13 +1,13 @@
-\name{ncpts.max<-}
-\alias{ncpts.max<-}
+\name{nocpts.max<-}
+\alias{nocpts.max<-}
 \title{
-Generic Function - ncpts.max<-
+Generic Function - nocpts.max<-
 }
 \description{
 Generic function
 }
 \usage{
-ncpts.max(object)<-value
+nocpts.max(object)<-value
 }
 \arguments{
   \item{object}{
@@ -29,13 +29,13 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{ncpts.max<--methods}}
+\code{\link{nocpts.max<--methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
-ncpts.max(x)<-10 # replaces the vector of changepoint in object x with 10
+x=new("ocpt") # new cpt object
+nocpts.max(x)<-10 # replaces the vector of changepoint in object x with 10
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

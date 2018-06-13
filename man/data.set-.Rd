@@ -32,10 +32,10 @@ Rebecca Killick
 \code{\link{data.set<--methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 data.set(x)<-c(1,2,3,4,5) # replaces the existing data.set slot in x with c(1,2,3,4,5)
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

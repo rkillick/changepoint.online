@@ -32,10 +32,10 @@ Rebecca Killick
 \code{\link{test.stat<--methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 test.stat(x)<-"normal" # replaces the current test.stat slot of x with "normal"
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

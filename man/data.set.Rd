@@ -29,10 +29,10 @@ Rebecca Killick
 \code{\link{data.set-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 data.set(x) # retrieves the data.set slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}

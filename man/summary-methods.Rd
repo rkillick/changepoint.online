@@ -2,9 +2,9 @@
 \docType{methods}
 \alias{summary-methods}
 \alias{summary,ANY-method}
-\alias{summary,cpt-method}
-\alias{summary,cpt.range-method}
-\alias{summary,cpt.reg-method}
+\alias{summary,ocpt-method}
+\alias{summary,ocpt.range-method}
+\alias{summary,ocpt.reg-method}
 \title{ ~~ Methods for Function summary in Package `base' ~~}
 \description{
  ~~ Methods for function \code{summary} in Package `base' ~~
@@ -16,17 +16,17 @@
   Generic summary function, see base package description using ?summary
 }
 
-\item{\code{signature(object = "cpt")}}{
+\item{\code{signature(object = "ocpt")}}{
   Prints out a summary of the object to the terminal.
 }
-\item{\code{signature(object = "cpt.range")}}{
+\item{\code{signature(object = "ocpt.range")}}{
   Prints out a summary of the object to the terminal.
 }
-\item{\code{signature(object = "cpt.reg")}}{
+\item{\code{signature(object = "ocpt.reg")}}{
   Prints out a summary of the object to the terminal.
 }
 }}
 \keyword{methods}
 \keyword{summary}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

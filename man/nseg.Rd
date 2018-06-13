@@ -29,9 +29,9 @@ Rebecca Killick
 \code{\link{nseg-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
-nseg(x) # returns the number of segments (i.e. length of the cpts slot)
+x=new("ocpt") # new ocpt object
+nseg(x) # returns the number of segments (i.e. length of the ocpts slot)
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}

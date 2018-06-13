@@ -29,10 +29,10 @@ Rebecca Killick
 \code{\link{pen.value.full-methods}}
 }
 \examples{
-x=new("cpt.range") # new cpt.range object
+x=new("ocpt.range") # new ocpt.range object
 pen.value.full(x) # retrieves the pen.value.full slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}

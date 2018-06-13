@@ -32,7 +32,7 @@ Rebecca Killick
 \code{\link{ocpts<--methods}}
 }
 \examples{
-x=new("ocpt") # new cpt object
+x=new("ocpt") # new ocpt object
 }
 
 \keyword{methods}

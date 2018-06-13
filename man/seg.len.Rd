@@ -29,9 +29,9 @@ Rebecca Killick
 \code{\link{seg.len-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
+x=new("ocpt") # new ocpt object
 seg.len(x) # returns the length of each segment in the data (i.e. no. of obs between changepoints)
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}

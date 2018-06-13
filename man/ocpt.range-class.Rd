@@ -37,9 +37,9 @@ Objects can be created by calls of the form \code{new("ocpt.range", ...)}.
     \item{ocpts.full}{\code{signature(object = "ocpt.range")}: retrieves ocpts.full slot }
     \item{pen.value.full}{\code{signature(object = "ocpt.range")}: retrieves pen.value.full slot }
     \item{ocpts.full<-}{\code{signature(object = "ocpt.range")}: replaces ocpts.full slot }
-    \item{param}{\code{signature(object="ocpt.range",ncpts=NA)}: creates parameter estimates for the segmentation with \code{nocpts} number of online changepoints.  If nocpts=NA then the optimal set of online changepoints according to the set penalty is used.}
+    \item{param}{\code{signature(object="ocpt.range",nocpts=NA)}: creates parameter estimates for the segmentation with \code{nocpts} number of online changepoints.  If nocpts=NA then the optimal set of online changepoints according to the set penalty is used.}
     \item{pen.value.full<-}{\code{signature(object = "ocpt.range")}: replaces pen.value.full slot }
-    \item{plot}{\code{signature(object="ocpt.range",ncpts=NA,diagnostic=FALSE)}: by default plots the optimal segmentation as for \code{class="ocpt"}.  If nocpts is specified then plots the segmentation for \code{nocpts} number of online changepoints.  If \code{diagnostic=TRUE} then produces a diagnostic plot to aide selection of the number of changes.}
+    \item{plot}{\code{signature(object="ocpt.range",nocpts=NA,diagnostic=FALSE)}: by default plots the optimal segmentation as for \code{class="ocpt"}.  If nocpts is specified then plots the segmentation for \code{nocpts} number of online changepoints.  If \code{diagnostic=TRUE} then produces a diagnostic plot to aide selection of the number of changes.}
     \item{print}{\code{signature(object = "ocpt.range")}: prints details of the ocpt.range object including summary}
     \item{summary}{\code{signature(object = "ocpt.range")}: prints a summary of the ocpt.range object }
   }
@@ -53,10 +53,10 @@ Rebecca Killick
 \code{\link{ocpts.full-methods}},\code{\linkS4class{ocpt}},\code{\link{ocpt.mean}},\code{\link{ocpt.var}},\code{\link{ocpt.meanvar}}
 }
 \examples{
-showClass("ocpt.range") # shows the structure of the cpt.range class
+showClass("ocpt.range") # shows the structure of the ocpt.range class
 
-x=new("ocpt.range") # creates a new object with the cpt.range class defaults
-ocpts(x) # retrieves the cpts slot from x
+x=new("ocpt.range") # creates a new object with the ocpt.range class defaults
+ocpts(x) # retrieves the ocpts slot from x
 
 # Example of multiple changes in variance at 50,100,150 in simulated normal data
 set.seed(1)
@@ -69,5 +69,5 @@ plot(out,diagnostic=TRUE) # a diagnostic plot to identify number of changepoints
 plot(out,nocpts=3) # plots the segmentation for 3 changes
 }
 \keyword{classes}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

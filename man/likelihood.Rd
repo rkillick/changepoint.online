@@ -26,16 +26,16 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{likelihood-methods}}, \code{\link{cpt.mean}},\code{\link{cpt.var}},\code{\link{cpt.meanvar}}
+\code{\link{likelihood-methods}}, \code{\link{ocpt.mean}},\code{\link{ocpt.var}},\code{\link{ocpt.meanvar}}
 }
 \examples{
 set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
-out=cpt.var(x,penalty="Manual",pen.value="2*log(n)",method="BinSeg",Q=5)
+out=ocpt.var(x,penalty="Manual",pen.value="2*log(n)",method="BinSeg",Q=5)
 likelihood(out) # returns the raw scaled negative likelihood (925.8085) and the scaled negative
 #likelihood + penalty (957.5984)
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}

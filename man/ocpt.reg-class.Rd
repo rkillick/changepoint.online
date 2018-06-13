@@ -72,7 +72,7 @@ Objects can be created by calls of the form \code{new("ocpt", ...)}.
     \item{pen.type<-}{\code{signature(object = "ocpt.reg")}: replaces pen.type slot }
     \item{pen.value<-}{\code{signature(object = "ocpt.reg")}: replaces pen.value slot }
     \item{print}{\code{signature(object = "ocpt.reg")}: prints details of the ocpt object including summary}
-    \item{summary}{\code{signature(object = "ocpt.reg")}: prints a summary of the cpt object }
+    \item{summary}{\code{signature(object = "ocpt.reg")}: prints a summary of the ocpt object }
     \item{param}{\code{signature(object = "ocpt.reg")}: calculates the parameter estimates for the ocpt object}
 	 }
 }

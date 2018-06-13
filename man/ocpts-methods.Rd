@@ -11,11 +11,11 @@
 \describe{
 
 \item{\code{signature(object = "ocpt")}}{
-	Retrieves ocpts slot from an object of class ocpt, from version 1.0 this no longer prints the length of the dataset.
+	Retrieves ocpts slot from an object of class ocpt.
 }
 
 \item{\code{signature(object = "ocpt.reg")}}{
-	Retrieves ocpts slot from an object of class ocpt.reg, from version 1.0 this no longer prints the length of the dataset.
+	Retrieves ocpts slot from an object of class ocpt.reg.
 }
 }}
 \keyword{methods}
