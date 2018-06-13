@@ -24,7 +24,7 @@ online.decision<-function(tau,null,alt=NA,penalty="MBIC",n=0,diffparam=1,pen.val
 		rep=length(tau)
 		out=NULL
 		for(i in 1:rep){
-			out[i]=single.decision(tau[i],null[i],alt[i],n,diffparam,pen.value)
+			out[i]=online.single.decision(tau[i],null[i],alt[i],n,diffparam,pen.value)
 		}
 		names(out)=rep("ocpt",rep)
 		return(list(ocpt=out,pen=pen.value))

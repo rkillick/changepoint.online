@@ -1,12 +1,12 @@
-setClass("ocpt",slots=list(data.set="ts", ocpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",ocpts="numeric",nocpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(date=date(),version=as(packageVersion("changepoint.online"),'character')))
+setClass("ocpt",slots=list(data.set="ts", ocpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",ocpts="numeric",nocpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(ocpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
 
-setClass("ocpt.reg",slots=list(data.set="matrix", ocpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",ocpts="numeric",nocpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(ocpttype="regression",date=date(),version=as(packageVersion("changepoint.online"),"character")))
+setClass("ocpt.reg",slots=list(data.set="matrix", ocpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",ocpts="numeric",nocpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(ocpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),"character")))
 
 #  setClass("ocpt", representation(), prototype())
 #  ocpts is the optimal segementation
 #
 
-setClass("ocpt.range",slots=list(ocpts.full="matrix", pen.value.full="numeric"), prototype=prototype(ocpttype="regression",date=date(),version=as(packageVersion("changepoint.online"),"character")), contains="ocpt")
+setClass("ocpt.range",slots=list(ocpts.full="matrix", pen.value.full="numeric"), prototype=prototype(), contains="ocpt")
 # ocpts.full is the entire matrix
 # pen.value.full (beta) values as an extra slot (vector)
 
