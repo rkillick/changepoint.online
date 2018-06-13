@@ -58,13 +58,14 @@ online.single.mean.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,par
   if(n<2){stop('Data must have atleast 2 observations to fit a changepoint model.')}
   if(n<(2*minseglen)){stop('Minimum segment legnth is too large to include a change in this data')}
   
-  pen.value = penalty_decision(penalty, pen.value, n, diffparam=1, asymcheck="mean.norm", method="AMOC")
+  
+  
   if(is.null(dim(data))==TRUE){ # single dataset
 		tmp=online.single.mean.norm.calc(coredata(data),extrainf=TRUE,minseglen)
 		if(penalty=="MBIC"){
 		  tmp[3]=tmp[3]+log(tmp[1])+log(n-tmp[1]+1)
 		}
-		ans=decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=1,pen.value)
+		ans=online.decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=1,pen.value)
     
 		if(class==TRUE){
 		  return(online.class_input(data, ocpttype="mean", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$ocpt)))
@@ -82,7 +83,7 @@ online.single.mean.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,par
 		if(penalty=="MBIC"){
 		  tmp[,3]=tmp[,3]+log(tmp[,1])+log(n-tmp[,1]+1)
 		}
-		ans=decision(tmp[,1],tmp[,2],tmp[,3],penalty,n,diffparam=1,pen.value)
+		ans=online.decision(tmp[,1],tmp[,2],tmp[,3],penalty,n,diffparam=1,pen.value)
 		if(class==TRUE){
 			rep=nrow(data)
 			out=list()
@@ -155,7 +156,7 @@ online.single.var.norm<-function(data,penalty="MBIC",pen.value=0,know.mean=FALSE
 		if(penalty=="MBIC"){
 		  tmp[3]=tmp[3]+log(tmp[1])+log(n-tmp[1]+1)
 		}
-		ans=decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=1,pen.value)
+		ans=online.decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=1,pen.value)
 		if(class==TRUE){
 		  out=online.class_input(data, ocpttype="variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$ocpt))
 		  param.est(out)=c(param.est(out),mean=mu)
@@ -185,7 +186,7 @@ online.single.var.norm<-function(data,penalty="MBIC",pen.value=0,know.mean=FALSE
     if(penalty=="MBIC"){
 		  tmp[,3]=tmp[,3]+log(tmp[,1])+log(n-tmp[,1]+1)
 		}
-		ans=decision(tmp[,1],tmp[,2],tmp[,3],penalty,n,diffparam=1,pen.value)
+		ans=online.decision(tmp[,1],tmp[,2],tmp[,3],penalty,n,diffparam=1,pen.value)
 		if(class==TRUE){
 			out=list()
 			for(i in 1:rep){
@@ -283,7 +284,7 @@ online.single.meanvar.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,
 		if(penalty=="MBIC"){
 		  tmp[3]=tmp[3]+log(tmp[1])+log(n-tmp[1]+1)
 		}
-		ans=decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=2,pen.value)
+		ans=online.decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=2,pen.value)
 		if(class==TRUE){
       return(online.class_input(data, ocpttype="mean and variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$ocpt)))
 		}
@@ -300,7 +301,7 @@ online.single.meanvar.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,
 		if(penalty=="MBIC"){
 		  tmp[,3]=tmp[,3]+log(tmp[,1])+log(n-tmp[,1]+1)
 		}
-		ans=decision(tmp[,1],tmp[,2],tmp[,3],penalty,n,diffparam=2,pen.value)
+		ans=online.decision(tmp[,1],tmp[,2],tmp[,3],penalty,n,diffparam=2,pen.value)
 		if(class==TRUE){
 			rep=nrow(data)
 			out=list()
