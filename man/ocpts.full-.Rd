@@ -1,13 +1,13 @@
-\name{cpts.full<-}
-\alias{cpts.full<-}
+\name{ocpts.full<-}
+\alias{ocpts.full<-}
 \title{
-Generic Function - cpts.full<-
+Generic Function - ocpts.full<-
 }
 \description{
 Generic function
 }
 \usage{
-cpts.full(object)<-value
+ocpts.full(object)<-value
 }
 \arguments{
   \item{object}{
@@ -29,11 +29,11 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpts.full<--methods}}
+\code{\link{ocpts.full<--methods}}
 }
 \examples{
-x=new("cpt.range") # new cpt.range object
-cpts.full(x)<-matrix(c(10,20,10,NA),nrow=2,byrow=TRUE) 
+x=new("ocpt.range") # new cpt.range object
+ocpts.full(x)<-matrix(c(10,20,10,NA),nrow=2,byrow=TRUE) 
 # replaces the vector of changepoint in object x with the given matrix
 }
 

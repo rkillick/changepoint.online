@@ -1,13 +1,13 @@
-\name{cpts.full}
-\alias{cpts.full}
+\name{ocpts.ts}
+\alias{ocpts.ts}
 \title{
-Generic Function - cpts.full
+Generic Function - ocpts.ts
 }
 \description{
 Generic function
 }
 \usage{
-cpts.full(object)
+ocpts.ts(object)
 }
 \arguments{
   \item{object}{
@@ -26,13 +26,14 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpts.full-methods}}
+\code{\link{ocpts.ts-methods}}
 }
 \examples{
-x=new("cpt.range") # new cpt.range object
-cpts.full(x) # retrieves the cpts.full slot from x
+x=new("ocpt") # new cpt object
+ocpts.ts(x) # retrieves the cpts slot from x but unlike cpts, displays the "date" index rather than
+#the position within the vector
 }
 
 \keyword{methods}
 \keyword{cpt}
-\keyword{internal} 
+\keyword{internal}

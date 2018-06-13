@@ -1,13 +1,13 @@
-\name{cpts}
-\alias{cpts}
+\name{ocpts.full}
+\alias{ocpts.full}
 \title{
-Generic Function - cpts
+Generic Function - ocpts.full
 }
 \description{
 Generic function
 }
 \usage{
-cpts(object)
+ocpts.full(object)
 }
 \arguments{
   \item{object}{
@@ -26,13 +26,13 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpts-methods}}
+\code{\link{ocpts.full-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
-cpts(x) # retrieves the cpts slot from x
+x=new("ocpt.range") # new ocpt.range object
+ocpts.full(x) # retrieves the ocpts.full slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
-\keyword{internal}
+\keyword{ocpt}
+\keyword{internal} 

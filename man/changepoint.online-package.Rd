@@ -22,7 +22,7 @@ LazyLoad: \tab yes\cr
 \author{
 Rebecca Killick <r.killick@lancs.ac.uk>, Kaylea Haynes <k.haynes1@lancs.ac.uk> with contributions from Idris A. Eckley <i.eckley@lancs.ac.uk>, Paul Fearnhead <p.fearnhead@lancs.ac.uk>.
 
-Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>
+Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>, Andrew Connell <a.connell1@lancaster.ac.uk>
 }
 
 \references{

@@ -1,13 +1,13 @@
-\name{cpts.ts}
-\alias{cpts.ts}
+\name{ocpts}
+\alias{ocpts}
 \title{
-Generic Function - cpts.ts
+Generic Function - ocpts
 }
 \description{
 Generic function
 }
 \usage{
-cpts.ts(object)
+ocpts(object)
 }
 \arguments{
   \item{object}{
@@ -26,14 +26,13 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpts.ts-methods}}
+\code{\link{ocpts-methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
-cpts.ts(x) # retrieves the cpts slot from x but unlike cpts, displays the "date" index rather than
-#the position within the vector
+x=new("ocpt") # new ocpt object
+ocpts(x) # retrieves the ocpts slot from x
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal}
