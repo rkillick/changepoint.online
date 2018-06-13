@@ -154,7 +154,7 @@ int *numchangecpts; //stores the current number of changepoints
                 nchecktmp+=1;
             }
         }
-        *(checklist+nchecktmp)=tstar-(*minseglen-1);  // atleast 1 obs per seg
+        *(checklist+nchecktmp)=tstar-(*minseglen - 1);  // at least 1 obs per seg
         *nchecklist+=1;
     } // end taustar
     

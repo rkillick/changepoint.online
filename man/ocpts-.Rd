@@ -1,13 +1,13 @@
-\name{cpts<-}
-\alias{cpts<-}
+\name{ocpts<-}
+\alias{ocpts<-}
 \title{
-Generic Function - cpts<-
+Generic Function - ocpts<-
 }
 \description{
 Generic function
 }
 \usage{
-cpts(object)<-value
+ocpts(object)<-value
 }
 \arguments{
   \item{object}{
@@ -29,13 +29,12 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{cpts<--methods}}
+\code{\link{ocpts<--methods}}
 }
 \examples{
-x=new("cpt") # new cpt object
-cpts(x)<-10 # replaces the vector of changepoint in object x with 10
+x=new("ocpt") # new cpt object
 }
 
 \keyword{methods}
-\keyword{cpt}
+\keyword{ocpt}
 \keyword{internal} 

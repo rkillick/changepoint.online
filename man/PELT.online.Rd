@@ -11,7 +11,7 @@ This function is called by \code{ocpt.mean}, \code{ocpt.var} and \code{ocpt.mean
 WARNING: No checks on arguments are performed!
 }
 \usage{
-PELT.online(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts)
+PELT.online(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist)
 }
 \arguments{
   \item{sumstat}{
@@ -37,6 +37,9 @@ PELT.online(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,las
   }
   \item{numchangecpts}{
   Stores the current number of changepoints identified.
+  }
+  \item{checklist}{
+  Vector of locations of the potential last changepoint for next iteration.
   }
 }
 \details{
