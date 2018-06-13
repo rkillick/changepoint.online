@@ -1,4 +1,4 @@
-oclass_input <- function(data, ocpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out=list(), Q=NA, shape=NA){
+online.class_input <- function(data, ocpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out=list(), Q=NA, shape=NA){
   if(method=="BinSeg" || method=="SegNeigh" || penalty=="CROPS"){
     ans=new("ocpt.range")
   }else{

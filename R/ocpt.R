@@ -23,15 +23,15 @@ ocpt.mean=function(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.stat="
   
   if(test.stat=="Normal"){
     if(method=="AMOC"){
-      return(single.mean.norm(data,penalty,pen.value,class,param.estimates,minseglen))
+      return(online.single.mean.norm(data,penalty,pen.value,class,param.estimates,minseglen))
     }
     else if(method=="PELT" || method=="BinSeg"){
       
-      return(multiple.mean.norm(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen)) 
+      return(online.multiple.mean.norm(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else if(method=="SegNeigh"){
       warning("SegNeigh is computationally slow, use PELT instead")
-      return(multiple.mean.norm(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.mean.norm(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }	
     else{
       stop("Invalid Method, must be AMOC, PELT, SegNeigh or BinSeg")
@@ -40,10 +40,10 @@ ocpt.mean=function(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.stat="
   else if(test.stat=="CUSUM"){
     warning('Traditional penalty values are not appropriate for the CUSUM test statistic')
     if(method=="AMOC"){
-      return(single.mean.cusum(data,penalty,pen.value,class,param.estimates,minseglen))
+      return(online.single.mean.cusum(data,penalty,pen.value,class,param.estimates,minseglen))
     }
     else if(method=="SegNeigh" || method=="BinSeg"){
-      return(multiple.mean.cusum(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.mean.cusum(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else{
       stop("Invalid Method, must be AMOC, SegNeigh or BinSeg")
@@ -75,15 +75,15 @@ ocpt.var=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE, mu=NA,method=
   if(test.stat =="Normal"){
     
     if(method=="AMOC"){
-      return(single.var.norm(data,penalty,pen.value,know.mean,mu,class,param.estimates,minseglen))
+      return(online.single.var.norm(data,penalty,pen.value,know.mean,mu,class,param.estimates,minseglen))
     }
     else if(method=="PELT" || method=="BinSeg"){
       
-      return(multiple.var.norm(data,mul.method=method,penalty,pen.value,Q,know.mean,mu,class,param.estimates,minseglen))
+      return(online.multiple.var.norm(data,mul.method=method,penalty,pen.value,Q,know.mean,mu,class,param.estimates,minseglen))
     }
     else if(method=="SegNeigh"){
       warning("SegNeigh is computationally slow, use PELT instead")
-      return(multiple.var.norm(data,mul.method=method,penalty,pen.value,Q,know.mean,mu,class,param.estimates,minseglen))
+      return(online.multiple.var.norm(data,mul.method=method,penalty,pen.value,Q,know.mean,mu,class,param.estimates,minseglen))
     }
     else{
       stop("Invalid Method, must be AMOC, PELT, SegNeigh or BinSeg")
@@ -92,10 +92,10 @@ ocpt.var=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE, mu=NA,method=
   else if(test.stat=="CSS"){
     warning('Traditional penalty values are not appropriate for the CSS test statistic')
     if(method=="AMOC"){
-      return(single.var.css(data,penalty,pen.value,class,param.estimates,minseglen))
+      return(online.single.var.css(data,penalty,pen.value,class,param.estimates,minseglen))
     }
     else if(method=="PELT" || method=="SegNeigh" || method=="BinSeg"){
-      return(multiple.var.css(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.var.css(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else{
       stop("Invalid Method, must be AMOC, SegNeigh or BinSeg")
@@ -131,15 +131,15 @@ ocpt.meanvar=function(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.sta
   if(test.stat=="Normal"){
     
     if(method=="AMOC"){
-      return(single.meanvar.norm(data,penalty,pen.value,class,param.estimates,minseglen))
+      return(online.single.meanvar.norm(data,penalty,pen.value,class,param.estimates,minseglen))
     }
     else if(method=="PELT" || method=="BinSeg"){
       
-      return(multiple.meanvar.norm(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.meanvar.norm(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else if(method=="SegNeigh"){
       warning("SegNeigh is computationally slow, use PELT instead")
-      return(multiple.meanvar.norm(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.meanvar.norm(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else{
       stop("Invalid Method, must be AMOC, PELT, SegNeigh or BinSeg")
@@ -147,14 +147,14 @@ ocpt.meanvar=function(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.sta
   }
   else if(test.stat=="Gamma"){
     if(method=="AMOC"){
-      return(single.meanvar.gamma(data,shape,penalty,pen.value,class,param.estimates,minseglen))
+      return(online.single.meanvar.gamma(data,shape,penalty,pen.value,class,param.estimates,minseglen))
     }
     else if(method=="PELT" || method=="BinSeg"){
-      return(multiple.meanvar.gamma(data,shape,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.meanvar.gamma(data,shape,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else if(method=="SegNeigh"){
       warning("SegNeigh is computationally slow, use PELT instead")
-      return(multiple.meanvar.gamma(data,shape,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.meanvar.gamma(data,shape,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else{
       stop("Invalid Method, must be AMOC, PELT, SegNeigh or BinSeg")
@@ -162,15 +162,15 @@ ocpt.meanvar=function(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.sta
   }
   else if(test.stat=="Exponential"){
     if(method=="AMOC"){
-      return(single.meanvar.exp(data,penalty,pen.value,class,param.estimates,minseglen))
+      return(online.single.meanvar.exp(data,penalty,pen.value,class,param.estimates,minseglen))
     }
     else if(method=="PELT" || method=="BinSeg"){
       
-      return(multiple.meanvar.exp(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.meanvar.exp(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else if(method=="SegNeigh"){
       warning("SegNeigh is computationally slow, use PELT instead")
-      return(multiple.meanvar.exp(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.meanvar.exp(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else{
       stop("Invalid Method, must be AMOC, PELT, SegNeigh or BinSeg")
@@ -178,15 +178,15 @@ ocpt.meanvar=function(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.sta
   }
   else if(test.stat=="Poisson"){
     if(method=="AMOC"){
-      return(single.meanvar.poisson(data,penalty,pen.value,class,param.estimates,minseglen))
+      return(online.single.meanvar.poisson(data,penalty,pen.value,class,param.estimates,minseglen))
     }
     else if(method=="PELT" || method=="BinSeg"){
       
-      return(multiple.meanvar.poisson(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.meanvar.poisson(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else if(method=="SegNeigh"){
       warning("SegNeigh is computationally slow, use PELT instead")
-      return(multiple.meanvar.poisson(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
+      return(online.multiple.meanvar.poisson(data,mul.method=method,penalty,pen.value,Q,class,param.estimates,minseglen))
     }
     else{
       stop("Invalid Method, must be AMOC, PELT, SegNeigh or BinSeg")
@@ -212,9 +212,9 @@ ocpt.plot=function(data,Q=4){ #Q= maximum number of changepoints
             Sys.sleep(0.1)
             plot(x=1:i,y=data[1:i],xlim=c(0,n),ylim=range(data), xlab = i, ylab = "", type ="l")  #type = "l" can be used for line plot
             ansvar=ocpt.meanvar(data[1:i],method="BinSeg",Q=Q,penalty="Manual",pen.value=2*log(n))
-            changepoints <- cpts(ansvar)
+            changepoints <- ocpts(ansvar)
             abline(h=mean(data[1:i]), col = "red")
-            if(length(ansvar@cpts)>0){
+            if(length(ansvar@ocpts)>0){
                 for(i in 1:Q){
                     abline(v=changepoints, col = "blue")
                 }
