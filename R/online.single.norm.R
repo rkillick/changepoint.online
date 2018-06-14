@@ -58,7 +58,7 @@ online.single.mean.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,par
   if(n<2){stop('Data must have atleast 2 observations to fit a changepoint model.')}
   if(n<(2*minseglen)){stop('Minimum segment legnth is too large to include a change in this data')}
   
-  
+  pen.value = penalty_decision(penalty, pen.value, n, diffparam=1, asymcheck="mean.norm", method="AMOC")
   
   if(is.null(dim(data))==TRUE){ # single dataset
 		tmp=online.single.mean.norm.calc(coredata(data),extrainf=TRUE,minseglen)
