@@ -26,7 +26,7 @@ for(i in rn){
 }
 ###################
 
-data <- list(singvardata, mulvardata, nochangedata, constantdata, NAdata, shortdata, negativedata)
+data <- list(singmeanvardata,mulmeanvardata,mulmeanvardata, mulmeanvarexpdata, mulmeanvarpoisdata, nochangedata, constantdata, NAdata, shortdata, negativedata)
 
 # meandata <- list(singmeandata, mulmeandata, nochangedata)
 # vardata <-  list(singvardata, mulvardata, nochangedata)

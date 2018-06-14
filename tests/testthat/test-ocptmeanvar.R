@@ -133,7 +133,7 @@ checkOtherPenalties <- function(methodLog){
     
     ###Returns properly####
     if(cl == TRUE){
-      expect_that(x, is_a('cpt'))
+      expect_that(x, is_a('ocpt'))
     }else if(cl == FALSE && methodLog == TRUE){
       #expect_that(x, is_a('list'))#
     }else if(cl == FALSE && methodLog == FALSE){
@@ -173,14 +173,14 @@ checkCROPS <- function(){
           
           
         }else{
-          #       expect_that(cpt.mean(data=data[[d]], penalty=penalties[p], class=cl, param.estimates=pe), throws_error('For CROPS, pen.value must be supplied'))
+          #       expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], class=cl, param.estimates=pe), throws_error('For CROPS, pen.value must be supplied'))
           
           if(testStats[[ts]] == "Normal" || testStats[[ts]] == "Gamma" || testStats[[ts]] == "Exponential" || testStats[[ts]] == "Poisson" ){
             x <- ocpt.meanvar(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]], class=cl, param.estimates=pe)
             
             
             if(cl == TRUE){
-              expect_that(x, is_a('cpt.range'))
+              expect_that(x, is_a('ocpt.range'))
             }
             
             
