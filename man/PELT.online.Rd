@@ -50,9 +50,9 @@ PELT.online(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,las
 \value{
 	A list is returned with elements:
 	\item{lastchangecpts}{Vector of length n containing the last changepoint prior to each timepoint.}
-	\item{cpts}{Ordered list of optimal number of changepoints ending with n.}
+	\item{ocpts}{Ordered list of optimal number of changepoints ending with n.}
 	\item{lastchangelike}{Vector of lenght n containing the likelihood of the optimal segmentation up to each timepoint.}
-	\item{ncpts}{Number of changes identified.}
+	\item{nocpts}{Number of changes identified.}
 }
 \references{
 PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, \emph{JASA} \bold{107(500)}, 1590--1598

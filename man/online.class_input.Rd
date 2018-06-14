@@ -1,7 +1,7 @@
 \name{online.class_input}
 \alias{online.class_input}
 \title{
-Input all required arguments into ocpt classes - Only intended for developer use.
+Input all required arguments into online cpt classes - Only intended for developer use.
 }
 \description{
 This function helps to input all the necessary information into the correct format for \code{ocpt} and \code{ocpt.range} classes.

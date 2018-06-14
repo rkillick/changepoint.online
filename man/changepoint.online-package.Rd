@@ -38,7 +38,7 @@ Segment Neighbourhoods: Auger, I. E. And Lawrence, C. E. (1989) Algorithms for t
 \keyword{changepoint}
 \keyword{segmentation}
 \seealso{
-\code{\link{cpt.mean}},\code{\link{cpt.var}},\code{\link{cpt.meanvar}}
+\code{\link{ocpt.mean}},\code{\link{ocpt.var}},\code{\link{ocpt.meanvar}}
 }
 \examples{
 # change in variance
