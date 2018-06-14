@@ -46,7 +46,7 @@ set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
 y=rnorm(200,0,1)
 z=rbind(x,y)
-test_that('mean6',expect_equal(ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="SegNeigh",Q=5,class=FALSE),list(c(50,100,150,200),200)))
+test_that('mean6',expect_equal(ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),list(c(50,100,150,200),200)))
 ans=ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
 test_that('mean7',expect_equal(ocpts(ans[[1]]),c(1,50,100,150)))
 test_that('mean8',expect_equal(ocpts(ans[[2]]),1))
@@ -116,7 +116,7 @@ x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
 y=rnorm(200,0,1)
 z=rbind(x,y)
 truth=list();truth[[1]]=c(50,100,149,200);truth[[2]]=200
-test_that('var7',expect_equivalent(ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="SegNeigh",Q=5,class=FALSE),truth))
+test_that('var7',expect_equivalent(ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),truth))
 ans=ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
 test_that('var8',expect_equivalent(ocpts(ans[[1]]),c(1,50,100,149)))
 test_that('var9',expect_equivalent(ocpts(ans[[2]]),1))
@@ -300,7 +300,7 @@ test_that('class28',expect_equivalent(nocpts.max(x),numeric()))
 
 # From nocpts.max-.Rd
 x=new("ocpt") # new cpt object
-ncpts.max(x)<-10 # replaces the vector of changepoint in object x with 10
+nocpts.max(x)<-10 # replaces the vector of changepoint in object x with 10
 test_that('class29',expect_equivalent(nocpts.max(x),10))
 
 
@@ -308,9 +308,9 @@ test_that('class29',expect_equivalent(nocpts.max(x),10))
 
 
 
-# From ncpts.Rd
-x=new("ocpt") # new cpt object
-test_that('class30',expect_equivalent(ncpts(x),0)) # returns the number of changepoints (i.e. length of the cpts slot in x minus 1)
+# From nocpts.Rd
+x=new("ocpt") # new ocpt object
+test_that('class30',expect_equivalent(nocpts(x),0)) # returns the number of changepoints (i.e. length of the cpts slot in x minus 1)
 
 
 

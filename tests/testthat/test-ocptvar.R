@@ -26,7 +26,7 @@ for(i in rn){
 }
 ###################
 
-data <- list(singvardata,mulvardata, nochangedata, constantdata, NAdata, shortdata, negativedata)
+data <- list(singvardata, mulvardata, nochangedata, constantdata, NAdata, shortdata, negativedata)
 
 # meandata <- list(singmeandata, mulmeandata, nochangedata)
 # vardata <-  list(singvardata, mulvardata, nochangedata)
@@ -44,8 +44,7 @@ manpenval <- list(-1, "boston bob") #don't have varaibles so returns false test
 QValues <- list(3, -1, 'jamie', 200000) 
 #QValues <- c(3, 5)
 
-testStats <- c("Normal", "CSS") #add CSS and its error of only using certain values 
-#asym and cusum return user defined "no asymptotic penalty" && "asymptotic penalties not implemented"
+testStats <- c("Normal") 
 
 knowmean <- c(FALSE) #need to deal with TRUE values
 muValues <- c(NA)
@@ -53,7 +52,6 @@ muValues <- c(NA)
 class <- c(TRUE, FALSE)
 param.estimates <- c(TRUE, FALSE)
 
-cssAlphas <- c(0.01,0.05,0.1,0.25,0.5,0.75,0.9,0.95)
 cropspenval = list(c(2,2.5), c(3,1), c(5,5,6), c("a", "b"), 5, "a")
 
 t = 0 #count for number of iterations
@@ -139,7 +137,7 @@ checkOtherPenalties <- function(methodLog){
     
     ###Returns properly####
     if(cl == TRUE){
-      expect_that(x, is_a('cpt'))
+      expect_that(x, is_a('ocpt'))
     }else if(cl == FALSE && methodLog == TRUE){
  #     expect_that(x, is_a('list'))
     }else if(cl == FALSE && methodLog == FALSE){
@@ -188,7 +186,7 @@ checkCROPS <- function(){
             
             
             if(cl == TRUE){
-              expect_that(x, is_a('cpt.range'))
+              expect_that(x, is_a('ocpt.range'))
             }
             
             
@@ -222,7 +220,7 @@ for(d in 1:length(data)){
   }else if(length(data[[d]]) <= 2){
     test_that(paste0("Test #",t," :data=",d,", penalty=",penalties[p],", method=",methods[m],",class=",cl,", param=",pe,", test.stat=",testStats[ts]), {
       
-      expect_that(ocpt.var(data=data[[d]]),throws_error("Data must have atleast"))
+      expect_that(ocpt.var(data=data[[d]]),throws_error("Data must have at least"))
       t = t + 1
       
     }) 

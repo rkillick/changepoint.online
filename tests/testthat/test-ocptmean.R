@@ -30,13 +30,11 @@ for(i in rn){
 
 data <- list(singmeandata,mulmeandata, nochangedata, constantdata, NAdata, shortdata, negativedata, characterdata)
 
-# meandata <- list(singmeandata, mulmeandata, nochangedata)
-# vardata <-  list(singvardata, mulvardata, nochangedata)
-# meanvardata <-  list(singmeanvardata, mulmeanvardata, nochangedata)
+meandata <- list(singmeandata, mulmeandata, nochangedata)
+vardata <-  list(singvardata, mulvardata, nochangedata)
+meanvardata <-  list(singmeanvardata, mulmeanvardata, nochangedata)
 
-methods <- c("AMOC", "PELT") #might want to change code to convert to uppercase so less likely to break code
-#Segneigh taking too long and deprecation, so leaving until very last.
-#methods <- c("AMOC")
+methods <- c("AMOC", "PELT")
 
 penalties <- c("None", "SIC", "BIC", "AIC", "Hannan-Quinn", "Asymptotic", "Manual", "MBIC", "CROPS") 
 
@@ -68,7 +66,7 @@ checkManualPenalty <- function(methodLog){
   for(npv in 1:length(manpenval)){
     
     test_that(paste0("Test #",t," :data=", d, "penalty=",penalties[p],", method=",methods[m],",class=",cl,", param=",pe,", penvalue=",manpenval[[npv]],", test.stat=",testStats[ts]) ,{
-      #x <- cpt.mean(data=data[[d]], penalty=penalties[p], pen.value=manpenval[[npv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)
+      #x <- ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=manpenval[[npv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)
       # browser()
       if(is.numeric(manpenval[[npv]]) == FALSE){
         texttest = try(eval(parse(text=paste(manpenval[[npv]]))),silent=TRUE)
@@ -98,11 +96,7 @@ checkAsymptoticPenalty <- function(methodLog){
     
     # browser()
     test_that(paste0("Test #",t," :data=", d, "penalty=",penalties[p],", pen.value=", asympenval[[apv]],", method=",methods[m],",class=",cl,", param=",pe,", penvalue=",asympenval[[apv]],", test.stat=",testStats[ts]), {
-      if(testStats[ts] == "CUSUM"){
-        expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
-        #edit this line to include specific error messsage        
-      }
-      else if(is.numeric(asympenval[[apv]]) == FALSE){
+     if(is.numeric(asympenval[[apv]]) == FALSE){
         expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
       }
       else if(asympenval[[apv]] <= 0 || asympenval[[apv]] > 1){

@@ -1,6 +1,6 @@
 ######## Function to run PELT for a Range Of Penalty values.  ############
 
-online.range_of_penalties <- function(sumstat,cost = "norm.mean",PELT = T,min_pen=log(length(sumstat)/3-1),max_pen=10*log(length(sumstat)/3-1), shape = 1, minseglen=1) {
+online.range_of_penalties <- function(sumstat,cost = "mean.norm",PELT = T,min_pen=log(length(sumstat)/3-1),max_pen=10*log(length(sumstat)/3-1), shape = 1, minseglen=1) {
   
   NCALC=0
   pen_interval <- c(min_pen,max_pen)

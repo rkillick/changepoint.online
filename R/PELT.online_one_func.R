@@ -1,4 +1,4 @@
-PELT.online = function(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist){
+PELT.online = function(sumstat,pen=0, cost_func = "mean.norm", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist){
   # function that uses the PELT method to calculate changes in mean where the segments in the data are assumed to be Normal
   if(is.null(dim(sumstat))){sumstat=as.matrix(sumstat,ncol=1)}
   

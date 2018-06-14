@@ -10,7 +10,8 @@ CROPS <- function(data, penalty="CROPS", pen.value, costfunc="norm.mean", method
     "Poisson" = {stat = "poisson"},
     {stop("Only Normal, Exponential, Gamma and Poisson are valid test statistics")}
   )
-  
+    costfunc = paste0(func, ".", stat)
+    
   out = online.range_of_penalties(sumstat=sumstat, cost=costfunc, min_pen=pen.value[1], max_pen=pen.value[2], minseglen=minseglen)
   
   if(func=="var"){
