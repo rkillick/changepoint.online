@@ -11,7 +11,7 @@ This function is called by \code{ocpt.mean}, \code{ocpt.var} and \code{ocpt.mean
 WARNING: No checks on arguments are performed!
 }
 \usage{
-PELT.online(sumstat,pen=0, cost_func = "norm.mean", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist)
+PELT.online(sumstat,pen=0, cost_func = "mean.norm", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist)
 }
 \arguments{
   \item{sumstat}{
