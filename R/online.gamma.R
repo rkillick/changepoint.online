@@ -12,7 +12,7 @@ function(data,shape=1,extrainf=TRUE,minseglen){
     tau=tau+minseglen-1 # correcting for the fact that we are starting at minseglen
     if(extrainf==TRUE){
       out=c(tau,null,taulike)
-      names(out)=c('ocpt','null','alt')
+      names(out)=c('cpt','null','alt')
       return(out)
     }
     else{
@@ -23,29 +23,29 @@ function(data,shape=1,extrainf=TRUE,minseglen){
 
   if(is.null(dim(data))==TRUE){
     # single data set
-    ocpt=singledim(data,shape,extrainf,minseglen)
-    return(ocpt)
+    cpt=singledim(data,shape,extrainf,minseglen)
+    return(cpt)
   }
   else{
     rep=nrow(data)
     n=ncol(data)
-    ocpt=NULL
+    cpt=NULL
     if(length(shape)==1){
 	shape=rep(shape,rep)
     }
     if(extrainf==FALSE){
       for(i in 1:rep){
-        ocpt[i]=singledim(data[i,],shape[i],extrainf,minseglen)
+        cpt[i]=singledim(data[i,],shape[i],extrainf,minseglen)
       }
     }
     else{
-      ocpt=matrix(0,ncol=3,nrow=rep)
+      cpt=matrix(0,ncol=3,nrow=rep)
       for(i in 1:rep){
-        ocpt[i,]=singledim(data[i,],shape[i],extrainf,minseglen)
+        cpt[i,]=singledim(data[i,],shape[i],extrainf,minseglen)
       }
-      colnames(ocpt)=c('ocpt','null','alt')
+      colnames(cpt)=c('cpt','null','alt')
     }
-    return(ocpt)
+    return(cpt)
   }
 }
 
@@ -69,10 +69,10 @@ online.single.meanvar.gamma<-function(data,shape=1,penalty="MBIC",pen.value=0,cl
 		}
 		ans=online.decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=1,pen.value)
 		if(class==TRUE){
-      return(online.class_input(data, ocpttype="mean and variance", method="AMOC", test.stat="Gamma", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$ocpt), shape=shape))
+      return(online.class_input(data, cpttype="mean and variance", method="AMOC", test.stat="Gamma", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$cpt), shape=shape))
 		}
 		else{ 
-      return(ans$ocpt)
+      return(ans$cpt)
 		}
 	}
 	else{ 
@@ -85,11 +85,11 @@ online.single.meanvar.gamma<-function(data,shape=1,penalty="MBIC",pen.value=0,cl
 			rep=nrow(data)
 			out=list()
 			for(i in 1:rep){
-        out[[i]]=online.class_input(data[i,], ocpttype="mean and variance", method="AMOC", test.stat="Gamma", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$ocpt[i]), shape=shape)
+        out[[i]]=online.class_input(data[i,], cpttype="mean and variance", method="AMOC", test.stat="Gamma", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$cpt[i]), shape=shape)
 			}
 			return(out)
 		}
-		else{ return(ans$ocpt)}
+		else{ return(ans$cpt)}
 	}
 }
 
@@ -143,10 +143,10 @@ online.segneigh.meanvar.gamma=function(data,shape=1,Q=5,pen=0){
   }
 	if(op.cps==(Q-1)){warning('The number of segments identified is Q, it is advised to increase Q to make sure changepoints have not been missed.')}
   
-	if(op.cps==0){ocpts=n}
-	else{ocpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
+	if(op.cps==0){cpts=n}
+	else{cpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
   
-	return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),ocpts=ocpts,op.ocpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=like.Q[,n]))
+	return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),cpts=cpts,op.cpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=like.Q[,n]))
 }
 
 
@@ -182,7 +182,7 @@ online.multiple.meanvar.gamma=function(data,shape=1,mul.method="PELT",penalty="M
 	  out = online.data_input(data=data,method=mul.method,pen.value=pen.value,costfunc=costfunc,minseglen=minseglen,Q=Q,shape=shape)
 	 
 		if(class==TRUE){
-      return(online.class_input(data, ocpttype="mean and variance", method=mul.method, test.stat="Gamma", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q, shape=shape))
+      return(online.class_input(data, cpttype="mean and variance", method=mul.method, test.stat="Gamma", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q, shape=shape))
 		}
 		else{ return(out[[2]])}
 	}
@@ -196,16 +196,16 @@ online.multiple.meanvar.gamma=function(data,shape=1,mul.method="PELT",penalty="M
       out[[i]]=online.data_input(data[i,],method=mul.method,pen.value=pen.value,costfunc=costfunc,minseglen=minseglen,Q=Q, shape=shape)
     }
 
-    ocpts=lapply(out, '[[', 2)
+    cpts=lapply(out, '[[', 2)
 
 		if(class==TRUE){
 			ans=list()
 			for(i in 1:rep){
-        ans[[i]]=online.class_input(data[i,], ocpttype="mean and variance", method=mul.method, test.stat="Gamma", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[2]], Q=Q, shape=shape[[i]])
+        ans[[i]]=online.class_input(data[i,], cpttype="mean and variance", method=mul.method, test.stat="Gamma", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[2]], Q=Q, shape=shape[[i]])
 			}
 			return(ans)
 		}
-		else{return(ocpts)}
+		else{return(cpts)}
 	}
 }
 

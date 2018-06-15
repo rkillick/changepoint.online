@@ -205,16 +205,16 @@ checkData = function(data){
   
 }
 
-ocpt.plot=function(data,Q=4){ #Q= maximum number of changepoints
+ocpt.plot=function(data,Q=4){ #Q= maximum number of changepoints i=start of plot
     n = length(data)
     if(n > Q){
         for(i in (2*Q):n){
             Sys.sleep(0.1)
             plot(x=1:i,y=data[1:i],xlim=c(0,n),ylim=range(data), xlab = i, ylab = "", type ="l")  #type = "l" can be used for line plot
             ansvar=ocpt.meanvar(data[1:i],method="BinSeg",Q=Q,penalty="Manual",pen.value=2*log(n))
-            changepoints <- ocpts(ansvar)
+            changepoints <- cpts(ansvar)
             abline(h=mean(data[1:i]), col = "red")
-            if(length(ansvar@ocpts)>0){
+            if(length(ansvar@cpts)>0){
                 for(i in 1:Q){
                     abline(v=changepoints, col = "blue")
                 }

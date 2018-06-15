@@ -17,8 +17,8 @@ online.decision<-function(tau,null,alt=NA,penalty="MBIC",n=0,diffparam=1,pen.val
 	}
 	if(length(tau)==1){
 		out=online.single.decision(tau,null,alt,n,diffparam,pen.value)
-		names(out)="ocpt"
-		return(list(ocpt=out,pen=pen.value))
+		names(out)="cpt"
+		return(list(cpt=out,pen=pen.value))
 	}
 	else{
 		rep=length(tau)
@@ -26,7 +26,7 @@ online.decision<-function(tau,null,alt=NA,penalty="MBIC",n=0,diffparam=1,pen.val
 		for(i in 1:rep){
 			out[i]=online.single.decision(tau[i],null[i],alt[i],n,diffparam,pen.value)
 		}
-		names(out)=rep("ocpt",rep)
-		return(list(ocpt=out,pen=pen.value))
+		names(out)=rep("cpt",rep)
+		return(list(cpt=out,pen=pen.value))
 	}
 }

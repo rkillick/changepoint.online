@@ -36,9 +36,9 @@ online.segneigh.var.css=function(data,Q=5,pen=0){
   flag=0
   for(q in 2:Q){
     criterion=NULL
-    ocpttmp=c(0,sort(cps.Q[q,1:(q-1)]),n)
+    cpttmp=c(0,sort(cps.Q[q,1:(q-1)]),n)
     for(i in 1:(q-1)){
-      criterion[i]=abs(sqrt((ocpttmp[i+2]-ocpttmp[i])/2)*((y2[ocpttmp[i+1]+1]-y2[ocpttmp[i]+1])/(y2[ocpttmp[i+2]+1]-y2[ocpttmp[i]+1]) -(ocpttmp[i+1]-ocpttmp[i])/(ocpttmp[i+2]-ocpttmp[i])))
+      criterion[i]=abs(sqrt((cpttmp[i+2]-cpttmp[i])/2)*((y2[cpttmp[i+1]+1]-y2[cpttmp[i]+1])/(y2[cpttmp[i+2]+1]-y2[cpttmp[i]+1]) -(cpttmp[i+1]-cpttmp[i])/(cpttmp[i+2]-cpttmp[i])))
       if(criterion[i]<pen){flag=1}
     }
     if(flag==1){
@@ -47,10 +47,10 @@ online.segneigh.var.css=function(data,Q=5,pen=0){
     op.cps=op.cps+1
   }
   if(op.cps==(Q-1)){warning('The number of segments identified is Q, it is advised to increase Q to make sure changepoints have not been missed.')}
-  if(op.cps==0){ocpts=n}
-  else{ocpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
+  if(op.cps==0){cpts=n}
+  else{cpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
   
-  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),ocpts=ocpts,op.ocpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=like.Q[,n]))
+  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),cpts=cpts,op.cpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=like.Q[,n]))
 }
 
 
@@ -62,7 +62,7 @@ online.binseg.var.css=function(data,Q=5,pen=0,minseglen=2){
   
   y2=c(0,cumsum(data^2))
   tau=c(0,n)
-  ocpt=matrix(0,nrow=2,ncol=Q)
+  cpt=matrix(0,nrow=2,ncol=Q)
   oldmax=Inf
   
   for(q in 1:Q){
@@ -79,14 +79,14 @@ online.binseg.var.css=function(data,Q=5,pen=0,minseglen=2){
       }
     }
     k=which.max(abs(lambda))
-    ocpt[1,q]=k;ocpt[2,q]=min(oldmax,max(abs(lambda),na.rm=T))
+    cpt[1,q]=k;cpt[2,q]=min(oldmax,max(abs(lambda),na.rm=T))
     oldmax=min(oldmax,max(abs(lambda),na.rm=T))
     tau=sort(c(tau,k))
   }
   op.cps=NULL
   p=1:(Q-1)
   for(i in 1:length(pen)){
-    criterion=(ocpt[2,])>=pen[i]
+    criterion=(cpt[2,])>=pen[i]
     if(sum(criterion)==0){
       op.cps=0
     }
@@ -96,10 +96,10 @@ online.binseg.var.css=function(data,Q=5,pen=0,minseglen=2){
   }
   if(op.cps==Q){warning('The number of changepoints identified is Q, it is advised to increase Q to make sure changepoints have not been missed.')}
   
-  if(op.cps==0){ocpts=n}
-  else{ocpts=c(sort(ocpt[1,1:op.cps]),n)}
+  if(op.cps==0){cpts=n}
+  else{cpts=c(sort(cpt[1,1:op.cps]),n)}
   
-  return(list(cps=ocpt,cpts=cpts,op.ocpts=op.cps,pen=pen))
+  return(list(cps=cpt,cpts=cpts,op.cpts=op.cps,pen=pen))
 }
 
 
@@ -133,19 +133,19 @@ online.multiple.var.css=function(data,mul.method="BinSeg",penalty="MBIC",pen.val
       out=online.segneigh.var.css(data,Q,pen.value)
     }
     if(class==TRUE){
-      return(online.class_input(data, ocpttype="variance", method=mul.method, test.stat="CSS", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q))
+      return(online.class_input(data, cpttype="variance", method=mul.method, test.stat="CSS", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q))
     }
     else{ return(out)}
   }
   else{
     rep=nrow(data)
     out=list()
-    if(class==TRUE){ocpts=list()}
+    if(class==TRUE){cpts=list()}
     if(mul.method=="BinSeg"){
       for(i in 1:rep){
   			out=c(out,list(online.binseg.var.css(data[i,],Q,pen.value)))
       }
-      if(class==TRUE){ocpts=out}
+      if(class==TRUE){cpts=out}
     }
     else if(mul.method=="SegNeigh"){
       for(i in 1:rep){
@@ -155,7 +155,7 @@ online.multiple.var.css=function(data,mul.method="BinSeg",penalty="MBIC",pen.val
     if(class==TRUE){
       ans=list()
       for(i in 1:rep){
-        ans[[i]]=online.class_input(data[i,], ocpttype="variance", method=mul.method, test.stat="CSS", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[i]], Q=Q)
+        ans[[i]]=online.class_input(data[i,], cpttype="variance", method=mul.method, test.stat="CSS", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[i]], Q=Q)
       }
       return(ans)
     }
@@ -206,9 +206,9 @@ online.segneigh.mean.cusum=function(data,Q=5,pen=0){
   flag=0
   for(q in 2:Q){
     criterion=NULL
-    ocpttmp=c(0,sort(cps.Q[q,1:(q-1)]),n)
+    cpttmp=c(0,sort(cps.Q[q,1:(q-1)]),n)
     for(i in 1:(q-1)){
-      criterion[i]=abs(((y[ocpttmp[i+1]+1]-y[ocpttmp[i]+1])-((ocpttmp[i+1]-ocpttmp[i])/(ocpttmp[i+2]-ocpttmp[i]))*(y[ocpttmp[i+2]+1]-y[ocpttmp[i]+1]))/(ocpttmp[i+2]-ocpttmp[i]))
+      criterion[i]=abs(((y[cpttmp[i+1]+1]-y[cpttmp[i]+1])-((cpttmp[i+1]-cpttmp[i])/(cpttmp[i+2]-cpttmp[i]))*(y[cpttmp[i+2]+1]-y[cpttmp[i]+1]))/(cpttmp[i+2]-cpttmp[i]))
       if(criterion[i]<pen){flag=1}
     }
     if(flag==1){
@@ -222,7 +222,7 @@ online.segneigh.mean.cusum=function(data,Q=5,pen=0){
   if(op.cps==0){cpts=n}
   else{cpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
   
-  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),ocpts=ocpts,op.ocpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=like.Q[,n]))
+  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),cpts=cpts,op.cpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=like.Q[,n]))
 }
 
 
@@ -234,7 +234,7 @@ online.binseg.mean.cusum=function(data,Q=5,pen=0,minseglen=1){
   
   y=c(0,cumsum(data))
   tau=c(0,n)
-  ocpt=matrix(0,nrow=2,ncol=Q)
+  cpt=matrix(0,nrow=2,ncol=Q)
   oldmax=Inf
   
   for(q in 1:Q){
@@ -251,14 +251,14 @@ online.binseg.mean.cusum=function(data,Q=5,pen=0,minseglen=1){
       }
     }
     k=which.max(abs(lambda))
-    ocpt[1,q]=k;ocpt[2,q]=min(oldmax,max(abs(lambda)))
+    cpt[1,q]=k;cpt[2,q]=min(oldmax,max(abs(lambda)))
     oldmax=min(oldmax,max(abs(lambda)))
     tau=sort(c(tau,k))
   }
   op.cps=NULL
   p=1:(Q-1)
   for(i in 1:length(pen)){
-    criterion=(ocpt[2,])>=pen[i]
+    criterion=(cpt[2,])>=pen[i]
     if(sum(criterion)==0){
       op.cps=0
     }
@@ -268,10 +268,10 @@ online.binseg.mean.cusum=function(data,Q=5,pen=0,minseglen=1){
   }
   if(op.cps==Q){warning('The number of changepoints identified is Q, it is advised to increase Q to make sure changepoints have not been missed.')}
   
-  if(op.cps==0){ocpts=n}
-  else{ocpts=c(sort(ocpt[1,1:op.cps]),n)}
+  if(op.cps==0){cpts=n}
+  else{cpts=c(sort(cpt[1,1:op.cps]),n)}
   
-  return(list(cps=ocpt,ocpts=ocpts,op.cpts=op.cps,pen=pen))
+  return(list(cps=cpt,cpts=cpts,op.cpts=op.cps,pen=pen))
 }
 
 
@@ -306,7 +306,7 @@ online.multiple.mean.cusum=function(data,mul.method="BinSeg",penalty="Asymptotic
       out=online.segneigh.mean.cusum(coredata(data),Q,pen.value)
     }
     if(class==TRUE){
-      return(online.class_input(data, ocpttype="mean", method=mul.method, test.stat="CUSUM", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q))
+      return(online.class_input(data, cpttype="mean", method=mul.method, test.stat="CUSUM", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q))
     }
     else{ return(out)}
   }
@@ -328,7 +328,7 @@ online.multiple.mean.cusum=function(data,mul.method="BinSeg",penalty="Asymptotic
     if(class==TRUE){
       ans=list()
       for(i in 1:rep){
-        ans[[i]]=online.class_input(data[i,], ocpttype="mean", method=mul.method, test.stat="CUSUM", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q)
+        ans[[i]]=online.class_input(data[i,], cpttype="mean", method=mul.method, test.stat="CUSUM", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q)
       }
       return(ans)
     }

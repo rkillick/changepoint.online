@@ -13,7 +13,7 @@ function(data,extrainf=TRUE,minseglen){
     tau=tau+minseglen-1 # correcting for the fact that we are starting at minseglen
     if(extrainf==TRUE){
       out=c(tau,null,taulike)
-      names(out)=c('ocpt','null','alt')
+      names(out)=c('cpt','null','alt')
       return(out)
     }
     else{
@@ -24,26 +24,26 @@ function(data,extrainf=TRUE,minseglen){
 
   if(is.null(dim(data))==TRUE){
     # single data set
-    ocpt=singledim(data,extrainf,minseglen)
-    return(ocpt)
+    cpt=singledim(data,extrainf,minseglen)
+    return(cpt)
   }
   else{
     rep=nrow(data)
     n=ncol(data)
-    ocpt=NULL
+    cpt=NULL
     if(extrainf==FALSE){
       for(i in 1:rep){
-        ocpt[i]=singledim(data[i,],extrainf,minseglen)
+        cpt[i]=singledim(data[i,],extrainf,minseglen)
       }
     }
     else{
-      ocpt=matrix(0,ncol=3,nrow=rep)
+      cpt=matrix(0,ncol=3,nrow=rep)
       for(i in 1:rep){
-        ocpt[i,]=singledim(data[i,],extrainf,minseglen)
+        cpt[i,]=singledim(data[i,],extrainf,minseglen)
       }
-      colnames(ocpt)=c('ocpt','null','alt')
+      colnames(cpt)=c('cpt','null','alt')
     }
-    return(ocpt)
+    return(cpt)
   }
 }
 
@@ -68,13 +68,13 @@ online.single.mean.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,par
 		ans=online.decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=1,pen.value)
     
 		if(class==TRUE){
-		  return(online.class_input(data, ocpttype="mean", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$ocpt)))
+		  return(online.class_input(data, cpttype="mean", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cpt)))
 		}
 		else{ 
 		  alogn=(2*log(log(n)))^(-(1/2))
 		  blogn=(alogn^(-1))+(1/2)*alogn*log(log(log(n)))  # Chen & Gupta (2000) pg10
-		  out=c(ans$ocpt,exp(-2*(pi^(1/2))*exp(-alogn*sqrt(abs(tmp[2]-tmp[3]))+(alogn^{-1})*blogn))-exp(-2*(pi^(1/2))*exp((alogn^{-1})*blogn)))
-		  names(out)=c('ocpt','conf.value')
+		  out=c(ans$cpt,exp(-2*(pi^(1/2))*exp(-alogn*sqrt(abs(tmp[2]-tmp[3]))+(alogn^{-1})*blogn))-exp(-2*(pi^(1/2))*exp((alogn^{-1})*blogn)))
+		  names(out)=c('cpt','conf.value')
 		  return(out)
 		}
 	}
@@ -88,15 +88,15 @@ online.single.mean.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,par
 			rep=nrow(data)
 			out=list()
 			for(i in 1:rep){
-        out[[i]] = online.class_input(data, ocpttype="mean", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$ocpt[i]))
+        out[[i]] = online.class_input(data, cpttype="mean", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cpt[i]))
 			}
 			return(out)
 		}
 		else{ 
 		  alogn=(2*log(log(n)))^(-(1/2))
 		  blogn=(alogn^(-1))+(1/2)*alogn*log(log(log(n)))  # Chen & Gupta (2000) pg10
-		  out=cbind(ans$ocpt,exp(-2*(pi^(1/2))*exp(-alogn*sqrt(abs(tmp[,2]-tmp[,3]))+(alogn^{-1})*blogn))-exp(-2*(pi^(1/2))*exp((alogn^{-1})*blogn)))
-		  colnames(out)=c('ocpt','conf.value')
+		  out=cbind(ans$cpt,exp(-2*(pi^(1/2))*exp(-alogn*sqrt(abs(tmp[,2]-tmp[,3]))+(alogn^{-1})*blogn))-exp(-2*(pi^(1/2))*exp((alogn^{-1})*blogn)))
+		  colnames(out)=c('cpt','conf.value')
       rownames(out)=NULL
 		  return(out)
 		}
@@ -125,7 +125,7 @@ online.single.var.norm.calc <- function(data,mu,extrainf=TRUE,minseglen){
   tau=tau+minseglen-1 # correcting for the fact that we are starting at minseglen
   if(extrainf==TRUE){
     out=c(tau,null,taulike)
-    names(out)=c('ocpt','null','alt')
+    names(out)=c('cpt','null','alt')
     return(out)
   }
   else{
@@ -158,15 +158,15 @@ online.single.var.norm<-function(data,penalty="MBIC",pen.value=0,know.mean=FALSE
 		}
 		ans=online.decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=1,pen.value)
 		if(class==TRUE){
-		  out=online.class_input(data, ocpttype="variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$ocpt))
+		  out=online.class_input(data, cpttype="variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cpt))
 		  param.est(out)=c(param.est(out),mean=mu)
 		  return(out)
 		}
 		else{ 
 		  alogn=sqrt(2*log(log(n)))
 		  blogn=2*log(log(n))+ (log(log(log(n))))/2 - log(gamma(1/2))
-		  out=c(ans$ocpt,exp(-2*exp(-alogn*sqrt(abs(tmp[2]-tmp[3]))+blogn))-exp(-2*exp(blogn)))  # Chen & Gupta (2000) pg27
-		  names(out)=c('ocpt','conf.value')
+		  out=c(ans$cpt,exp(-2*exp(-alogn*sqrt(abs(tmp[2]-tmp[3]))+blogn))-exp(-2*exp(blogn)))  # Chen & Gupta (2000) pg27
+		  names(out)=c('cpt','conf.value')
 		  return(out)
 		}
 	}
@@ -190,7 +190,7 @@ online.single.var.norm<-function(data,penalty="MBIC",pen.value=0,know.mean=FALSE
 		if(class==TRUE){
 			out=list()
 			for(i in 1:rep){
-          out[[i]] = online.class_input(data, ocpttype="variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$ocpt[i]))
+          out[[i]] = online.class_input(data, cpttype="variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cpt[i]))
           param.est(out[[i]])=c(param.est(out[[i]]),mean=mu[i])
 			}
 			return(out)
@@ -198,8 +198,8 @@ online.single.var.norm<-function(data,penalty="MBIC",pen.value=0,know.mean=FALSE
 		else{ 
 		  alogn=sqrt(2*log(log(n)))
 		  blogn=2*log(log(n))+ (log(log(log(n))))/2 - log(gamma(1/2))
-		  out=cbind(ans$ocpt,exp(-2*exp(-alogn*sqrt(abs(tmp[,2]-tmp[,3]))+blogn))-exp(-2*exp(blogn)))  # Chen & Gupta (2000) pg27
-		  colnames(out)=c('ocpt','conf.value')
+		  out=cbind(ans$cpt,exp(-2*exp(-alogn*sqrt(abs(tmp[,2]-tmp[,3]))+blogn))-exp(-2*exp(blogn)))  # Chen & Gupta (2000) pg27
+		  colnames(out)=c('cpt','conf.value')
       rownames(out)=NULL
 		  return(out)
 		}
@@ -232,7 +232,7 @@ function(data,extrainf=TRUE,minseglen){
     tau=tau+minseglen-1 # correcting for the fact that we are starting at minseglen
     if(extrainf==TRUE){
       out=c(tau,null,taulike)
-      names(out)=c('ocpt','null','alt')
+      names(out)=c('cpt','null','alt')
       return(out)
     }
     else{
@@ -243,26 +243,26 @@ function(data,extrainf=TRUE,minseglen){
 
   if(is.null(dim(data))==TRUE){
     # single data set
-    ocpt=singledim(data,extrainf,minseglen)
-    return(ocpt)
+    cpt=singledim(data,extrainf,minseglen)
+    return(cpt)
   }
   else{
     rep=nrow(data)
     n=ncol(data)
-    ocpt=NULL
+    cpt=NULL
     if(extrainf==FALSE){
       for(i in 1:rep){
-        ocpt[i]=singledim(data[i,],extrainf,minseglen)
+        cpt[i]=singledim(data[i,],extrainf,minseglen)
       }
     }
     else{
-      ocpt=matrix(0,ncol=3,nrow=rep)
+      cpt=matrix(0,ncol=3,nrow=rep)
       for(i in 1:rep){
-        ocpt[i,]=singledim(data[i,],extrainf,minseglen)
+        cpt[i,]=singledim(data[i,],extrainf,minseglen)
       }
-      colnames(ocpt)=c('ocpt','null','alt')
+      colnames(cpt)=c('cpt','null','alt')
     }
-    return(ocpt)
+    return(cpt)
   }
 }
 
@@ -274,7 +274,7 @@ online.single.meanvar.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,
   else{
     n=ncol(data)
   } 
-  if(n<4){stop('Data must have atleast 4 observations to fit a changepoint model.')}
+  if(n<4){stop('Data must have at least 4 observations to fit a changepoint model.')}
   if(n<(2*minseglen)){stop('Minimum segment legnth is too large to include a change in this data')}
   
   pen.value = penalty_decision(penalty, pen.value, n, diffparam=1, asymcheck="meanvar.norm", method="AMOC")
@@ -286,13 +286,13 @@ online.single.meanvar.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,
 		}
 		ans=online.decision(tmp[1],tmp[2],tmp[3],penalty,n,diffparam=2,pen.value)
 		if(class==TRUE){
-      return(online.class_input(data, ocpttype="mean and variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$ocpt)))
+      return(online.class_input(data, cpttype="mean and variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$cpt)))
 		}
 		else{ 
 		  alogn=sqrt(2*log(log(n)))
 		  blogn=2*log(log(n))+ (log(log(log(n))))
-		  out=c(ans$ocpt,exp(-2*exp(-alogn*sqrt(abs(tmp[2]-tmp[3]))+blogn))-exp(-2*exp(blogn)))   # Chen & Gupta (2000) pg54
-		  names(out)=c('ocpt','conf.value')
+		  out=c(ans$cpt,exp(-2*exp(-alogn*sqrt(abs(tmp[2]-tmp[3]))+blogn))-exp(-2*exp(blogn)))   # Chen & Gupta (2000) pg54
+		  names(out)=c('cpt','conf.value')
 		  return(out)
 		}
 	}
@@ -306,15 +306,15 @@ online.single.meanvar.norm<-function(data,penalty="MBIC",pen.value=0,class=TRUE,
 			rep=nrow(data)
 			out=list()
 			for(i in 1:rep){
-        out[[i]]= online.class_input(data[i,], ocpttype="mean and variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$ocpt[i]))
+        out[[i]]= online.class_input(data[i,], cpttype="mean and variance", method="AMOC", test.stat="Normal", penalty=penalty, pen.value=ans$pen, minseglen=minseglen, param.estimates=param.estimates, out=c(0,ans$cpt[i]))
 			}
 			return(out)
 		}
 		else{ 
 		  alogn=sqrt(2*log(log(n)))
 		  blogn=2*log(log(n))+ (log(log(log(n))))
-		  out=cbind(ans$ocpt,exp(-2*exp(-alogn*sqrt(abs(tmp[,2]-tmp[,3]))+blogn))-exp(-2*exp(blogn)))   # Chen & Gupta (2000) pg54
-		  colnames(out)=c('ocpt','conf.value')
+		  out=cbind(ans$cpt,exp(-2*exp(-alogn*sqrt(abs(tmp[,2]-tmp[,3]))+blogn))-exp(-2*exp(blogn)))   # Chen & Gupta (2000) pg54
+		  colnames(out)=c('cpt','conf.value')
       rownames(out)=NULL
 		  return(out)
 		}

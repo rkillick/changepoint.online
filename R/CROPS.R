@@ -15,15 +15,15 @@ CROPS <- function(data, penalty="CROPS", pen.value, costfunc="norm.mean", method
   out = online.range_of_penalties(sumstat=sumstat, cost=costfunc, min_pen=pen.value[1], max_pen=pen.value[2], minseglen=minseglen)
   
   if(func=="var"){
-    ocpttype="variance"
+    cpttype="variance"
   }else if(func=="meanvar"){
-    ocpttype="mean and variance"
+    cpttype="mean and variance"
   }else{
-    ocpttype="mean"
+    cpttype="mean"
   }
   
   if(class==TRUE){
-      ans = online.class_input(data=data,ocpttype=ocpttype, method="PELT", test.stat=test.stat, penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.est, out=out,shape=shape)
+      ans = online.class_input(data=data,cpttype=cpttype, method="PELT", test.stat=test.stat, penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.est, out=out,shape=shape)
       if(func=="var"){
         param.est(ans)=c(param.est(ans),mean=mu)
       }

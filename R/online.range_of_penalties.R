@@ -19,44 +19,44 @@ online.range_of_penalties <- function(sumstat,cost = "mean.norm",PELT = T,min_pe
   
   while (length(pen_interval) > 0){
     
-    new_numocpts <- array()
+    new_numcpts <- array()
     new_penalty <- array()
-    new_ocpts <- array()
+    new_cpts <- array()
     
     for (b in 1:length(pen_interval)) {
       
       ans<- PELT.online(sumstat=sumstat,pen=pen_interval[b], cost_func = cost , shape = shape, minseglen = minseglen)
-      resultingocpts <- ans[[2]]
-      new_numocpts[b] <- length(resultingocpts)
-      new_ocpts[b] <- list(resultingocpts[-length(resultingocpts)])
+      resultingcpts <- ans[[2]]
+      new_numcpts[b] <- length(resultingcpts)
+      new_cpts[b] <- list(resultingcpts[-length(resultingcpts)])
       new_penalty[b] <- ans[[3]][n+1]-(ans[[4]][n+1]-1)*pen_interval[b]
     }
     
     if (count == 0){
-      print(paste("Maximum number of runs of algorithm = ", new_numocpts[1] - new_numocpts[2] + 2, sep = ""))
-      count <- count + length(new_numocpts)
+      print(paste("Maximum number of runs of algorithm = ", new_numcpts[1] - new_numcpts[2] + 2, sep = ""))
+      count <- count + length(new_numcpts)
       print(paste("Completed runs = ", count, sep = ""))
     }
     
     else{
-      count <- count + length(new_numocpts)
+      count <- count + length(new_numcpts)
       print(paste("Completed runs = ", count, sep = ""))
     }
     
     
     ## Add the values calculated to the already stored values 
     test_penalties <- unique((sort(c(test_penalties,pen_interval))))
-    new_numocpts <- c(numberofchangepoints,new_numocpts)
+    new_numcpts <- c(numberofchangepoints,new_numcpts)
     new_penalty <- c(penal,new_penalty)
     
-    new_ocpts <- c(segmentations,new_ocpts)
-    numberofchangepoints <- -sort(-new_numocpts) ##can use sort to re-order
+    new_cpts <- c(segmentations,new_cpts)
+    numberofchangepoints <- -sort(-new_numcpts) ##can use sort to re-order
     penal <- sort(new_penalty)
     
     ls <- array()
     
-    for (l in 1:length(new_ocpts)){
-      ls[l] <- length(new_ocpts[[l]])
+    for (l in 1:length(new_cpts)){
+      ls[l] <- length(new_cpts[[l]])
     } 
     
     
@@ -64,7 +64,7 @@ online.range_of_penalties <- function(sumstat,cost = "mean.norm",PELT = T,min_pe
     ls1 <- ls1$ix
     
     
-    segmentations <- new_ocpts[c(ls1)]
+    segmentations <- new_cpts[c(ls1)]
     
     pen_interval <- NULL
     tmppen_interval <- NULL
@@ -118,7 +118,7 @@ online.range_of_penalties <- function(sumstat,cost = "mean.norm",PELT = T,min_pe
     
   }
   
-  return(list(ocpt.out = rbind(beta_interval = beta.int,numberofchangepoints,penalised_cost = penal),changepoints = segmentations))
+  return(list(cpt.out = rbind(beta_interval = beta.int,numberofchangepoints,penalised_cost = penal),changepoints = segmentations))
   #segmentations is output matrix
   #beta.int
 }

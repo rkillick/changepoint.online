@@ -1,13 +1,13 @@
-setClass("ocpt",slots=list(data.set="ts", ocpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",ocpts="numeric",nocpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(ocpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
+setClass("ocpt",slots=list(data.set="ts", cpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
 
-setClass("ocpt.reg",slots=list(data.set="matrix", ocpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",ocpts="numeric",nocpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(ocpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),"character")))
+setClass("ocpt.reg",slots=list(data.set="matrix", cpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),"character")))
 
 #  setClass("ocpt", representation(), prototype())
-#  ocpts is the optimal segementation
+#  cpts is the optimal segementation
 #
 
-setClass("ocpt.range",slots=list(ocpts.full="matrix", pen.value.full="numeric"), prototype=prototype(), contains="ocpt")
-# ocpts.full is the entire matrix
+setClass("ocpt.range",slots=list(cpts.full="matrix", pen.value.full="numeric"), prototype=prototype(), contains="ocpt")
+# cpts.full is the entire matrix
 # pen.value.full (beta) values as an extra slot (vector)
 
 # retrival functions for slots
@@ -36,18 +36,18 @@ if(!isGeneric("data.set.ts")) {
 }
 setMethod("data.set.ts","ocpt",function(object) object@data.set)
 
-if(!isGeneric("ocpttype")) {
-    if (is.function("ocpttype")){
-        fun <- ocpttype
+if(!isGeneric("cpttype")) {
+    if (is.function("cpttype")){
+        fun <- cpttype
     }
     else {fun <- function(object){
-        standardGeneric("ocpttype")
+        standardGeneric("cpttype")
     }
     }
-    setGeneric("ocpttype", fun)
+    setGeneric("cpttype", fun)
 }
-setMethod("ocpttype","ocpt",function(object) object@ocpttype)
-setMethod("ocpttype","ocpt.reg",function(object) object@ocpttype)
+setMethod("cpttype","ocpt",function(object) object@cpttype)
+setMethod("cpttype","ocpt.reg",function(object) object@cpttype)
 
 if(!isGeneric("method")) {
     if (is.function("method")){
@@ -139,55 +139,55 @@ if(!isGeneric("minseglen")) {
 }
 setMethod("minseglen","ocpt",function(object) object@minseglen)
 
-if(!isGeneric("ocpts")) {
-    if (is.function("ocpts")){
-        fun <- ocpts
+if(!isGeneric("cpts")) {
+    if (is.function("cpts")){
+        fun <- cpts
     }
     else {fun <- function(object){
-        standardGeneric("ocpts")
+        standardGeneric("cpts")
     }
     }
-    setGeneric("ocpts", fun)
+    setGeneric("cpts", fun)
 }
-setMethod("ocpts","ocpt",function(object) object@ocpts[-length(object@ocpts)])
-setMethod("ocpts","ocpt.reg",function(object) object@ocpts[-length(object@ocpts)])
+setMethod("cpts","ocpt",function(object) object@cpts[-length(object@cpts)])
+setMethod("cpts","ocpt.reg",function(object) object@cpts[-length(object@cpts)])
 
-if(!isGeneric("ocpts.full")) {
-    if (is.function("ocpts.full")){
-        fun <- ocpts.full
+if(!isGeneric("cpts.full")) {
+    if (is.function("cpts.full")){
+        fun <- cpts.full
     }
     else {fun <- function(object){
-        standardGeneric("ocpts.full")
+        standardGeneric("cpts.full")
     }
     }
-    setGeneric("ocpts.full", fun)
+    setGeneric("cpts.full", fun)
 }
-setMethod("ocpts.full","ocpt.range",function(object) object@ocpts.full)
+setMethod("cpts.full","ocpt.range",function(object) object@cpts.full)
 
-if(!isGeneric("ocpts.ts")) {
-    if (is.function("ocpts.ts")){
-        fun <- ocpts.ts
+if(!isGeneric("cpts.ts")) {
+    if (is.function("cpts.ts")){
+        fun <- cpts.ts
     }
     else {fun <- function(object){
-        standardGeneric("ocpts.ts")
+        standardGeneric("cpts.ts")
     }
     }
-    setGeneric("ocpts.ts", fun)
+    setGeneric("cpts.ts", fun)
 }
-setMethod("ocpts.ts","ocpt",function(object) index(data.set.ts(object))[ocpts(object)] )
+setMethod("cpts.ts","ocpt",function(object) index(data.set.ts(object))[cpts(object)] )
 
-if(!isGeneric("nocpts.max")) {
-    if (is.function("nocpts.max")){
-        fun <- nocpts.max
+if(!isGeneric("ncpts.max")) {
+    if (is.function("ncpts.max")){
+        fun <- ncpts.max
     }
     else {fun <- function(object){
-        standardGeneric("nocpts.max")
+        standardGeneric("ncpts.max")
     }
     }
-    setGeneric("nocpts.max", fun)
+    setGeneric("ncpts.max", fun)
 }
-setMethod("nocpts.max","ocpt",function(object) object@nocpts.max)
-setMethod("nocpts.max","ocpt.reg",function(object) object@nocpts.max)
+setMethod("ncpts.max","ocpt",function(object) object@ncpts.max)
+setMethod("ncpts.max","ocpt.reg",function(object) object@ncpts.max)
 
 if(!isGeneric("param.est")) {
     if (is.function("param.est")){
@@ -206,19 +206,19 @@ setMethod("param.est","ocpt.reg",function(object) object@param.est)
 setMethod("coef","ocpt",function(object) object@param.est)
 setMethod("coef","ocpt.reg",function(object) object@param.est)
 
-# nocpts function
-if(!isGeneric("nocpts")) {
-    if (is.function("nocpts")){
-        fun <- nocpts
+# ncpts function
+if(!isGeneric("ncpts")) {
+    if (is.function("ncpts")){
+        fun <- ncpts
     }
     else {fun <- function(object){
-        standardGeneric("nocpts")
+        standardGeneric("ncpts")
     }
     }
-    setGeneric("nocpts", fun)
+    setGeneric("ncpts", fun)
 }
-setMethod("nocpts","ocpt",function(object) length(ocpts(object)))
-setMethod("nocpts","ocpt.reg",function(object) length(ocpts(object)))
+setMethod("ncpts","ocpt",function(object) length(cpts(object)))
+setMethod("ncpts","ocpt.reg",function(object) length(cpts(object)))
 
 # seg.len function
 if(!isGeneric("seg.len")) {
@@ -231,8 +231,8 @@ if(!isGeneric("seg.len")) {
     }
     setGeneric("seg.len", fun)
 }
-setMethod("seg.len","ocpt",function(object){object@ocpts-c(0,object@ocpts[-length(object@ocpts)])})
-setMethod("seg.len","ocpt.reg",function(object){object@ocpts-c(0,object@ocpts[-length(object@ocpts)])})
+setMethod("seg.len","ocpt",function(object){object@cpts-c(0,object@cpts[-length(object@cpts)])})
+setMethod("seg.len","ocpt.reg",function(object){object@cpts-c(0,object@cpts[-length(object@cpts)])})
 #i.e. if there is a changepoint in the data, return segment length. If not, return length of the data
 
 # nseg function
@@ -246,8 +246,8 @@ if(!isGeneric("nseg")) {
     }
     setGeneric("nseg", fun)
 }
-setMethod("nseg","ocpt",function(object){nocpts(object)+1})
-setMethod("nseg","ocpt.reg",function(object){nocpts(object)+1})
+setMethod("nseg","ocpt",function(object){ncpts(object)+1})
+setMethod("nseg","ocpt.reg",function(object){ncpts(object)+1})
 
 
 # replacement functions for slots
@@ -261,13 +261,13 @@ setReplaceMethod("data.set", "ocpt.reg", function(object, value) {
     return(object)
 })
 
-setGeneric("ocpttype<-", function(object, value) standardGeneric("ocpttype<-"))
-setReplaceMethod("ocpttype", "ocpt", function(object, value) {
-    object@ocpttype <- value
+setGeneric("cpttype<-", function(object, value) standardGeneric("cpttype<-"))
+setReplaceMethod("cpttype", "ocpt", function(object, value) {
+    object@cpttype <- value
     return(object)
 })
-setReplaceMethod("ocpttype", "ocpt.reg", function(object, value) {
-    object@ocpttype <- value
+setReplaceMethod("cpttype", "ocpt.reg", function(object, value) {
+    object@cpttype <- value
     return(object)
 })
 
@@ -336,30 +336,30 @@ setReplaceMethod("minseglen", "ocpt.reg", function(object, value) {
     return(object)
 })
 
-setGeneric("ocpts<-", function(object, value) standardGeneric("ocpts<-"))
-setReplaceMethod("ocpts", "ocpt", function(object, value) {
-    if((ocpttype(object)=="meanar")|(ocpttype(object)=="trendar")){
+setGeneric("cpts<-", function(object, value) standardGeneric("cpts<-"))
+setReplaceMethod("cpts", "ocpt", function(object, value) {
+    if((cpttype(object)=="meanar")|(cpttype(object)=="trendar")){
         n=length(object@data.set) - 1
     }
     else{n=length(object@data.set)}
     
-    if(value[length(value)]==n){object@ocpts <- value}
-    else{        object@ocpts <- c(value,n)  }
+    if(value[length(value)]==n){object@cpts <- value}
+    else{        object@cpts <- c(value,n)  }
     return(object)
 })
-setReplaceMethod("ocpts", "ocpt.reg", function(object, value) {
-    if(value[length(value)]==nrow(object@data.set)){object@ocpts <- value}
-    else{      object@ocpts <- c(value,nrow(object@data.set))  }
+setReplaceMethod("cpts", "ocpt.reg", function(object, value) {
+    if(value[length(value)]==nrow(object@data.set)){object@cpts <- value}
+    else{      object@cpts <- c(value,nrow(object@data.set))  }
     return(object)
 })
 
-setGeneric("nocpts.max<-", function(object, value) standardGeneric("nocpts.max<-"))
-setReplaceMethod("nocpts.max", "ocpt", function(object, value) {
-    object@nocpts.max <- value
+setGeneric("ncpts.max<-", function(object, value) standardGeneric("ncpts.max<-"))
+setReplaceMethod("ncpts.max", "ocpt", function(object, value) {
+    object@ncpts.max <- value
     return(object)
 })
-setReplaceMethod("nocpts.max", "ocpt.reg", function(object, value) {
-    object@nocpts.max <- value
+setReplaceMethod("ncpts.max", "ocpt.reg", function(object, value) {
+    object@ncpts.max <- value
     return(object)
 })
 
@@ -373,9 +373,9 @@ setReplaceMethod("param.est", "ocpt.reg", function(object, value) {
     return(object)
 })
 
-setGeneric("ocpts.full<-", function(object, value) standardGeneric("ocpts.full<-"))
-setReplaceMethod("ocpts.full", "ocpt.range", function(object, value) {
-    object@ocpts.full <- value
+setGeneric("cpts.full<-", function(object, value) standardGeneric("cpts.full<-"))
+setReplaceMethod("cpts.full", "ocpt.range", function(object, value) {
+    object@cpts.full <- value
     return(object)
 })
 setGeneric("pen.value.full<-", function(object, value) standardGeneric("pen.value.full<-"))
@@ -394,49 +394,49 @@ setReplaceMethod("pen.value.full", "ocpt.range", function(object, value) {
 setGeneric("param", function(object,...) standardGeneric("param"))
 setMethod("param", "ocpt", function(object,shape,...) {
     param.mean=function(object){
-        ocpts=c(0,object@ocpts)
-        #nseg=length(ocpts)-1
+        cpts=c(0,object@cpts)
+        #nseg=length(cpts)-1
         data=data.set(object)
         tmpmean=NULL
         for(j in 1:nseg(object)){
-            tmpmean[j]=mean(data[(ocpts[j]+1):(ocpts[j+1])])
+            tmpmean[j]=mean(data[(cpts[j]+1):(cpts[j+1])])
         }
         return(tmpmean)
     }
     param.var=function(object){
-        ocpts=c(0,object@ocpts)
-        #nseg=length(ocpts)-1
+        cpts=c(0,object@cpts)
+        #nseg=length(cpts)-1
         data=data.set(object)
         seglen=seg.len(object)
         tmpvar=NULL
         for(j in 1:nseg(object)){
-            tmpvar[j]=var(data[(ocpts[j]+1):(ocpts[j+1])])
+            tmpvar[j]=var(data[(cpts[j]+1):(cpts[j+1])])
         }
         tmpvar=tmpvar*(seglen-1)/seglen # correctly for the fact that the MLE estimate is /n but the var function is /n-1
         return(tmpvar)
     }
     param.scale=function(object,shape){
-        ocpts=c(0,object@ocpts)
-        #nseg=length(ocpts)-1
+        cpts=c(0,object@cpts)
+        #nseg=length(cpts)-1
         data=data.set(object)
         y=c(0,cumsum(data))
         tmpscale=NULL
         for(j in 1:nseg(object)){
-            tmpscale[j]=(y[(ocpts[j+1]+1)]-y[(ocpts[j]+1)])/((ocpts[j+1]-ocpts[j])*shape)
+            tmpscale[j]=(y[(cpts[j+1]+1)]-y[(cpts[j]+1)])/((cpts[j+1]-cpts[j])*shape)
         }
         return(tmpscale)
     }
     param.trend=function(object){
-        ocpts=c(0,object@ocpts)
+        cpts=c(0,object@cpts)
         seglen=seg.len(object)
         data=data.set(object)
         n=length(data)
         sumstat=cbind(cumsum(c(0,data)),cumsum(c(0,data*c(1:n))))
-        ocptsumstat=matrix(sumstat[object@ocpts+1,]-sumstat[c(0,ocpts(object))+1,],ncol=2)
-        ocptsumstat[,2]=ocptsumstat[,2]-ocptsumstat[,1]*c(0,ocpts(object)) # i.e. creating newx3
+        cptsumstat=matrix(sumstat[object@cpts+1,]-sumstat[c(0,cpts(object))+1,],ncol=2)
+        cptsumstat[,2]=cptsumstat[,2]-cptsumstat[,1]*c(0,cpts(object)) # i.e. creating newx3
         
-        thetaS=(2*ocptsumstat[,1]*(2*seglen + 1) - 6*ocptsumstat[,2]) / (2*seglen*(2*seglen + 1) - 3*seglen*(seglen+1))
-        thetaT=(6*ocptsumstat[,2])/((seglen+1)*(2*seglen+1)) + (thetaS * (1-((3*seglen)/((2*seglen)+1))))
+        thetaS=(2*cptsumstat[,1]*(2*seglen + 1) - 6*cptsumstat[,2]) / (2*seglen*(2*seglen + 1) - 3*seglen*(seglen+1))
+        thetaT=(6*cptsumstat[,2])/((seglen+1)*(2*seglen+1)) + (thetaS * (1-((3*seglen)/((2*seglen)+1))))
         return(cbind(thetaS,thetaT))
     }
     param.meanar=function(object){
@@ -444,9 +444,9 @@ setMethod("param", "ocpt", function(object,shape,...) {
         data=data.set(object)
         n=length(data)-1
         sumstat=cbind(cumsum(c(0,data[-1])),cumsum(c(0,data[-(n+1)])),cumsum(c(0,data[-1]*data[-(n+1)])),cumsum(c(0,data[-1]^2)),cumsum(c(0,data[-(n+1)]^2)))
-        ocptsumstat=matrix(sumstat[object@ocpts+1,]-sumstat[c(0,ocpts(object))+1,],ncol=5)
-        beta2=(2*seglen*ocptsumstat[,3]-ocptsumstat[,1]*ocptsumstat[,2])/(2*seglen*ocptsumstat[,5]*(1-ocptsumstat[,2]^2));
-        beta1=(2*ocptsumstat[,1]-beta2*ocptsumstat[,2])/(2*seglen);
+        cptsumstat=matrix(sumstat[object@cpts+1,]-sumstat[c(0,cpts(object))+1,],ncol=5)
+        beta2=(2*seglen*cptsumstat[,3]-cptsumstat[,1]*cptsumstat[,2])/(2*seglen*cptsumstat[,5]*(1-cptsumstat[,2]^2));
+        beta1=(2*cptsumstat[,1]-beta2*cptsumstat[,2])/(2*seglen);
         
         return(cbind(beta1,beta2))
     }
@@ -455,24 +455,24 @@ setMethod("param", "ocpt", function(object,shape,...) {
         data=data.set(object)
         n=length(data)-1
         sumstat=cbind(cumsum(c(0,data[-1])),cumsum(c(0,data[-(n+1)])),cumsum(c(0,data[-1]*data[-(n+1)])),cumsum(c(0,data[-1]*c(1:n))),cumsum(c(0,data[-(n+1)]*c(0:(n-1)))),cumsum(c(0,data[-1]^2)),cumsum(c(0,data[-(n+1)]^2)))
-        ocptsumstat=matrix(sumstat[object@ocpts+1,]-sumstat[c(0,ocpts(object))+1,],ncol=7)
-        ocptsumstat[,4]=ocptsumstat[,4]-ocptsumstat[,1]*c(0,ocpts(object)) # i.e. creating newx4
-        ocptsumstat[,5]=ocptsumstat[,5]-ocptsumstat[,2]*c(0,ocpts(object)) # i.e. creating newx5
-        betatop=seglen*(seglen-1)*(seglen*(seglen-1)*ocptsumstat[,3] + 2*(2*seglen+1)*ocptsumstat[,1]*(ocptsumstat[,5]-seglen*ocptsumstat[,2]) + 6*ocptsumstat[,4]*(ocptsumstat[,2]-ocptsumstat[,5]))
-        betabottom=seglen*(seglen-1)*ocptsumstat[,7] + 2*(2*seglen+1)*ocptsumstat[,2]*(seglen*ocptsumstat[,2]-ocptsumstat[,5]) + 6*ocptsumstat[,5]*(ocptsumstat[,5]-ocptsumstat[,2]);
+        cptsumstat=matrix(sumstat[object@cpts+1,]-sumstat[c(0,cpts(object))+1,],ncol=7)
+        cptsumstat[,4]=cptsumstat[,4]-cptsumstat[,1]*c(0,cpts(object)) # i.e. creating newx4
+        cptsumstat[,5]=cptsumstat[,5]-cptsumstat[,2]*c(0,cpts(object)) # i.e. creating newx5
+        betatop=seglen*(seglen-1)*(seglen*(seglen-1)*cptsumstat[,3] + 2*(2*seglen+1)*cptsumstat[,1]*(cptsumstat[,5]-seglen*cptsumstat[,2]) + 6*cptsumstat[,4]*(cptsumstat[,2]-cptsumstat[,5]))
+        betabottom=seglen*(seglen-1)*cptsumstat[,7] + 2*(2*seglen+1)*cptsumstat[,2]*(seglen*cptsumstat[,2]-cptsumstat[,5]) + 6*cptsumstat[,5]*(cptsumstat[,5]-cptsumstat[,2]);
         beta=betatop/betabottom;
-        thetajpo=(6*(seglen+2)*(ocptsumstat[,4]-beta*ocptsumstat[,5]))/((seglen+1)*(2*seglen+1)) - 2*(ocptsumstat[,1]-beta*ocptsumstat[,2])
-        thetaj=(2*(2*seglen+1)*(ocptsumstat[,1]-beta*ocptsumstat[,2])-6*(ocptsumstat[,4]-beta*ocptsumstat[,5]))/(seglen-1)
+        thetajpo=(6*(seglen+2)*(cptsumstat[,4]-beta*cptsumstat[,5]))/((seglen+1)*(2*seglen+1)) - 2*(cptsumstat[,1]-beta*cptsumstat[,2])
+        thetaj=(2*(2*seglen+1)*(cptsumstat[,1]-beta*cptsumstat[,2])-6*(cptsumstat[,4]-beta*cptsumstat[,5]))/(seglen-1)
         
         return(cbind(beta,thetajpo,thetaj))
     }
-    if(ocpttype(object)=="mean"){
+    if(cpttype(object)=="mean"){
         param.est(object)<-list(mean=param.mean(object))
     }
-    else if(ocpttype(object)=="variance"){
+    else if(cpttype(object)=="variance"){
         param.est(object)<-list(variance=param.var(object))
     }
-    else if(ocpttype(object)=="mean and variance"){
+    else if(cpttype(object)=="mean and variance"){
         if(test.stat(object)=="Normal"){
             param.est(object)<-list(mean=param.mean(object),variance=param.var(object))
         }
@@ -489,7 +489,7 @@ setMethod("param", "ocpt", function(object,shape,...) {
             stop("Unknown test statistic for a change in mean and variance")
         }
     }
-    else if(ocpttype(object)=="trend"){
+    else if(cpttype(object)=="trend"){
         if(test.stat(object)=="Normal"){
             tmp=param.trend(object)
             param.est(object)<-list(thetaS=tmp[,1],thetaT=tmp[,2])
@@ -498,7 +498,7 @@ setMethod("param", "ocpt", function(object,shape,...) {
             stop("Unknown test statistic for a change in trend")
         }
     }
-    else if(ocpttype(object)=="trendar"){
+    else if(cpttype(object)=="trendar"){
         if(test.stat(object)=="Normal"){
             tmp=param.trendar(object)
             param.est(object)<-list(beta=tmp[,1],thetajpo=tmp[,2],thetaj=tmp[,3])
@@ -507,7 +507,7 @@ setMethod("param", "ocpt", function(object,shape,...) {
             stop("Unknown test statistic for a change in trend+ar")
         }
     }
-    else if(ocpttype(object)=="meanar"){
+    else if(cpttype(object)=="meanar"){
         if(test.stat(object)=="Normal"){
             tmp=param.meanar(object)
             param.est(object)<-list(beta1=tmp[,1],beta2=tmp[,2])
@@ -522,60 +522,60 @@ setMethod("param", "ocpt", function(object,shape,...) {
     return(object)
 })
 
-setMethod("param", "ocpt.range", function(object,nocpts=NA,shape,...) {
-    if(is.na(nocpts)){
-        ocpts=c(0,object@ocpts)
+setMethod("param", "ocpt.range", function(object,ncpts=NA,shape,...) {
+    if(is.na(ncpts)){
+        cpts=c(0,object@cpts)
     }
     else{
-        nocpts.full=apply(ocpts.full(object),1,function(x){sum(x>0,na.rm=TRUE)})
-        row=try(which(nocpts.full==nocpts),silent=TRUE)
+        ncpts.full=apply(cpts.full(object),1,function(x){sum(x>0,na.rm=TRUE)})
+        row=try(which(ncpts.full==ncpts),silent=TRUE)
         if(class(row)=='try-error'){
             stop("Your input object doesn't have a segmentation with the requested number of changepoints.")
         }
-        ocpts=c(0,ocpts.full(object)[row,1:nocpts],length(data.set(object)))
+        cpts=c(0,cpts.full(object)[row,1:ncpts],length(data.set(object)))
     }
     
-    param.mean=function(object,ocpts){
-        nseg=length(ocpts)-1
+    param.mean=function(object,cpts){
+        nseg=length(cpts)-1
         data=data.set(object)
         tmpmean=NULL
         for(j in 1:nseg){
-            tmpmean[j]=mean(data[(ocpts[j]+1):(ocpts[j+1])])
+            tmpmean[j]=mean(data[(cpts[j]+1):(cpts[j+1])])
         }
         return(tmpmean)
     }
-    param.var=function(object,ocpts){
-        nseg=length(ocpts)-1
+    param.var=function(object,cpts){
+        nseg=length(cpts)-1
         data=data.set(object)
         seglen=seg.len(object)
         tmpvar=NULL
         for(j in 1:nseg){
-            tmpvar[j]=var(data[(ocpts[j]+1):(ocpts[j+1])])
+            tmpvar[j]=var(data[(cpts[j]+1):(cpts[j+1])])
         }
         tmpvar=tmpvar*(seglen-1)/seglen
         return(tmpvar)
     }
-    param.scale=function(object,ocpts,shape){
-        nseg=length(ocpts)-1
+    param.scale=function(object,cpts,shape){
+        nseg=length(cpts)-1
         data=data.set(object)
         y=c(0,cumsum(data))
         tmpscale=NULL
         for(j in 1:nseg){
-            tmpscale[j]=(y[(ocpts[j+1]+1)]-y[(ocpts[j]+1)])/((ocpts[j+1]-ocpts[j])*shape)
+            tmpscale[j]=(y[(cpts[j+1]+1)]-y[(cpts[j]+1)])/((cpts[j+1]-cpts[j])*shape)
         }
         return(tmpscale)
     }
     param.trend=function(object){
-        ocpts=c(0,object@ocpts)
+        cpts=c(0,object@cpts)
         seglen=seg.len(object)
         data=data.set(object)
         n=length(data)
         sumstat=cbind(cumsum(c(0,data)),cumsum(c(0,data*c(1:n))))
-        ocptsumstat=matrix(sumstat[object@ocpts+1,]-sumstat[c(0,ocpts(object))+1,],ncol=2)
-        ocptsumstat[,2]=ocptsumstat[,2]-ocptsumstat[,1]*c(0,ocpts(object)) # i.e. creating newx3
+        cptsumstat=matrix(sumstat[object@cpts+1,]-sumstat[c(0,cpts(object))+1,],ncol=2)
+        cptsumstat[,2]=cptsumstat[,2]-cptsumstat[,1]*c(0,cpts(object)) # i.e. creating newx3
         
-        thetaS=(2*ocptsumstat[,1]*(2*seglen + 1) - 6*ocptsumstat[,2]) / (2*seglen*(2*seglen + 1) - 3*seglen*(seglen+1))
-        thetaT=(6*ocptsumstat[,2])/((seglen+1)*(2*seglen+1)) + (thetaS * (1-((3*seglen)/((2*seglen)+1))))
+        thetaS=(2*cptsumstat[,1]*(2*seglen + 1) - 6*cptsumstat[,2]) / (2*seglen*(2*seglen + 1) - 3*seglen*(seglen+1))
+        thetaT=(6*cptsumstat[,2])/((seglen+1)*(2*seglen+1)) + (thetaS * (1-((3*seglen)/((2*seglen)+1))))
         return(cbind(thetaS,thetaT))
     }
     param.meanar=function(object){
@@ -583,9 +583,9 @@ setMethod("param", "ocpt.range", function(object,nocpts=NA,shape,...) {
         data=data.set(object)
         n=length(data)-1
         sumstat=cbind(cumsum(c(0,data[-1])),cumsum(c(0,data[-(n+1)])),cumsum(c(0,data[-1]*data[-(n+1)])),cumsum(c(0,data[-1]^2)),cumsum(c(0,data[-(n+1)]^2)))
-        ocptsumstat=matrix(sumstat[object@ocpts+1,]-sumstat[c(0,ocpts(object))+1,],ncol=5)
-        beta2=(2*seglen*ocptsumstat[,3]-ocptsumstat[,1]*ocptsumstat[,2])/(2*seglen*ocptsumstat[,5]*(1-ocptsumstat[,2]^2));
-        beta1=(2*ocptsumstat[,1]-beta2*ocptsumstat[,2])/(2*seglen);
+        cptsumstat=matrix(sumstat[object@cpts+1,]-sumstat[c(0,cpts(object))+1,],ncol=5)
+        beta2=(2*seglen*cptsumstat[,3]-cptsumstat[,1]*cptsumstat[,2])/(2*seglen*cptsumstat[,5]*(1-cptsumstat[,2]^2));
+        beta1=(2*cptsumstat[,1]-beta2*cptsumstat[,2])/(2*seglen);
         
         return(cbind(beta1,beta2))
     }
@@ -594,42 +594,42 @@ setMethod("param", "ocpt.range", function(object,nocpts=NA,shape,...) {
         data=data.set(object)
         n=length(data)-1
         sumstat=cbind(cumsum(c(0,data[-1])),cumsum(c(0,data[-(n+1)])),cumsum(c(0,data[-1]*data[-(n+1)])),cumsum(c(0,data[-1]*c(1:n))),cumsum(c(0,data[-(n+1)]*c(0:(n-1)))))
-        ocptsumstat=matrix(sumstat[object@ocpts+1,]-sumstat[c(0,ocpts(object))+1,],ncol=7)
-        ocptsumstat[,4]=ocptsumstat[,4]-ocptsumstat[,1]*c(0,ocpts(object)) # i.e. creating newx4
-        ocptsumstat[,5]=ocptsumstat[,5]-ocptsumstat[,2]*c(0,ocpts(object)) # i.e. creating newx5
-        betatop=seglen*(seglen-1)*(seglen*(seglen-1)*ocptsumstat[,3] + 2*(2*seglen+1)*ocptsumstat[,1]*(ocptsumstat[,5]-seglen*ocptsumstat[,2]) + 6*ocptsumstat[,4]*(ocptsumstat[,2]-ocptsumstat[,5]))
-        betabottom=seglen*(seglen-1)*ocptsumstat[,7] + 2*(2*seglen+1)*ocptsumstat[,2]*(seglen*ocptsumstat[,2]-ocptsumstat[,5]) + 6*ocptsumstat[,5]*(ocptsumstat[,5]-ocptsumstat[,2]);
+        cptsumstat=matrix(sumstat[object@cpts+1,]-sumstat[c(0,cpts(object))+1,],ncol=7)
+        cptsumstat[,4]=cptsumstat[,4]-cptsumstat[,1]*c(0,cpts(object)) # i.e. creating newx4
+        cptsumstat[,5]=cptsumstat[,5]-cptsumstat[,2]*c(0,cpts(object)) # i.e. creating newx5
+        betatop=seglen*(seglen-1)*(seglen*(seglen-1)*cptsumstat[,3] + 2*(2*seglen+1)*cptsumstat[,1]*(cptsumstat[,5]-seglen*cptsumstat[,2]) + 6*cptsumstat[,4]*(cptsumstat[,2]-cptsumstat[,5]))
+        betabottom=seglen*(seglen-1)*cptsumstat[,7] + 2*(2*seglen+1)*cptsumstat[,2]*(seglen*cptsumstat[,2]-cptsumstat[,5]) + 6*cptsumstat[,5]*(cptsumstat[,5]-cptsumstat[,2]);
         beta=betatop/betabottom;
-        thetajpo=(6*(seglen+2)*(ocptsumstat[,4]-beta*ocptsumstat[,5]))/((seglen+1)*(2*seglen+1)) - 2*(ocptsumstat[,1]-beta*ocptsumstat[,2])
-        thetaj=(2*(2*seglen+1)*(ocptsumstat[,1]-beta*ocptsumstat[,2])-6*(ocptsumstat[,4]-beta*ocptsumstat[,5]))/(seglen-1)
+        thetajpo=(6*(seglen+2)*(cptsumstat[,4]-beta*cptsumstat[,5]))/((seglen+1)*(2*seglen+1)) - 2*(cptsumstat[,1]-beta*cptsumstat[,2])
+        thetaj=(2*(2*seglen+1)*(cptsumstat[,1]-beta*cptsumstat[,2])-6*(cptsumstat[,4]-beta*cptsumstat[,5]))/(seglen-1)
         
         return(cbind(beta,thetajpo,thetaj))
     }
     
-    if(ocpttype(object)=="mean"){
-        param.est<-list(mean=param.mean(object,ocpts))
+    if(cpttype(object)=="mean"){
+        param.est<-list(mean=param.mean(object,cpts))
     }
-    else if(ocpttype(object)=="variance"){
-        param.est<-list(variance=param.var(object,ocpts))
+    else if(cpttype(object)=="variance"){
+        param.est<-list(variance=param.var(object,cpts))
     }
-    else if(ocpttype(object)=="mean and variance"){
+    else if(cpttype(object)=="mean and variance"){
         if(test.stat(object)=="Normal"){
-            param.est<-list(mean=param.mean(object,ocpts),variance=param.var(object,ocpts))
+            param.est<-list(mean=param.mean(object,cpts),variance=param.var(object,cpts))
         }
         else if(test.stat(object)=="Gamma"){
-            param.est<-list(scale=param.scale(object,ocpts,shape=shape),shape=shape)
+            param.est<-list(scale=param.scale(object,cpts,shape=shape),shape=shape)
         }
         else if(test.stat(object)=="Exponential"){
-            param.est<-list(rate=1/param.mean(object,ocpts))
+            param.est<-list(rate=1/param.mean(object,cpts))
         }
         else if(test.stat(object)=="Poisson"){
-            param.est<-list(lambda=param.mean(object,ocpts))
+            param.est<-list(lambda=param.mean(object,cpts))
         }
         else{
             stop("Unknown test statistic for a change in mean and variance")
         }
     }
-    else if(ocpttype(object)=="trend"){
+    else if(cpttype(object)=="trend"){
         if(test.stat(object)=="Normal"){
             tmp=param.trend(object)
             param.est(object)<-list(thetaS=tmp[,1],thetaT=tmp[,2])
@@ -638,7 +638,7 @@ setMethod("param", "ocpt.range", function(object,nocpts=NA,shape,...) {
             stop("Unknown test statistic for a change in trend")
         }
     }
-    else if(ocpttype(object)=="trendar"){
+    else if(cpttype(object)=="trendar"){
         if(test.stat(object)=="Normal"){
             tmp=param.trendar(object)
             param.est(object)<-list(beta=tmp[,1],thetajpo=tmp[,2],thetaj=tmp[,3])
@@ -647,7 +647,7 @@ setMethod("param", "ocpt.range", function(object,nocpts=NA,shape,...) {
             stop("Unknown test statistic for a change in trend+ar")
         }
     }
-    else if(ocpttype(object)=="meanar"){
+    else if(cpttype(object)=="meanar"){
         if(test.stat(object)=="Normal"){
             tmp=param.meanar(object)
             param.est(object)<-list(beta1=tmp[,1],beta2=tmp[,2])
@@ -659,7 +659,7 @@ setMethod("param", "ocpt.range", function(object,nocpts=NA,shape,...) {
     else{
         stop("Unknown changepoint type, must be 'mean', 'variance', 'mean and variance', 'trend', 'meanar' or 'trendar'")
     }
-    if(is.na(nocpts)){
+    if(is.na(ncpts)){
         param.est(object)=param.est
         return(object)
     }
@@ -670,20 +670,20 @@ setMethod("param", "ocpt.range", function(object,nocpts=NA,shape,...) {
 
 setMethod("param", "ocpt.reg", function(object,shape,...) {
     param.norm=function(object){
-        ocpts=c(0,object@ocpts)
-        #    nseg=length(ocpts)-1 #nseg(object)
+        cpts=c(0,object@cpts)
+        #    nseg=length(cpts)-1 #nseg(object)
         data=data.set(object)
         p=ncol(data)-1
         tmpbeta=matrix(NA,ncol=p,nrow=nseg(object))
         tmpsigma=rep(NA,nseg(object))
         for(j in 1:nseg(object)){
-            formula=paste('-1+data[',ocpts[j]+1,':',ocpts[j+1],',2]',sep='')
+            formula=paste('-1+data[',cpts[j]+1,':',cpts[j+1],',2]',sep='')
             if(p>1){
                 for(i in 2:p){
-                    formula=paste(formula,'+data[',(ocpts[j]+1),':',ocpts[j+1],',',i+1,']',sep='')
+                    formula=paste(formula,'+data[',(cpts[j]+1),':',cpts[j+1],',',i+1,']',sep='')
                 }
             }
-            tmpfit=eval(parse(text=paste('lm(data[',(ocpts[j]+1),':',ocpts[j+1],',1]~',formula,')',sep='')))
+            tmpfit=eval(parse(text=paste('lm(data[',(cpts[j]+1),':',cpts[j+1],',1]~',formula,')',sep='')))
             tmpbeta[j,]=tmpfit$coefficients
             tmpsigma[j]=var(tmpfit$residuals)
         }
@@ -701,39 +701,39 @@ setMethod("param", "ocpt.reg", function(object,shape,...) {
 # summary functions
 setMethod("summary","ocpt",function(object){
     cat("Created Using changepoint version",object@version,'\n')
-    cat("Changepoint type      : Change in",ocpttype(object),'\n')
+    cat("Changepoint type      : Change in",cpttype(object),'\n')
     cat("Method of analysis    :",method(object),"\n")
     cat("Test Statistic  :", test.stat(object),"\n")
     cat("Type of penalty       :", pen.type(object), "with value,",pen.value(object),"\n")
     cat("Minimum Segment Length :", minseglen(object),"\n")
-    cat("Maximum no. of cpts   :", nocpts.max(object),"\n")
-    if(length(ocpts(object))<=20){cat("Changepoint Locations :",ocpts(object),"\n")}
-    else{cat("Number of changepoints:", nocpts(object),"\n")}
+    cat("Maximum no. of cpts   :", ncpts.max(object),"\n")
+    if(length(cpts(object))<=20){cat("Changepoint Locations :",cpts(object),"\n")}
+    else{cat("Number of changepoints:", ncpts(object),"\n")}
 })
 
 setMethod("summary","ocpt.range",function(object){
     cat("Created Using changepoint version",object@version,'\n')
-    cat("Changepoint type      : Change in",ocpttype(object),'\n')
+    cat("Changepoint type      : Change in",cpttype(object),'\n')
     cat("Method of analysis    :",method(object),"\n")
     cat("Test Statistic  :", test.stat(object),"\n")
     cat("Type of penalty       :", pen.type(object), "with value,",pen.value(object),"\n")
     cat("Minimum Segment Length :", minseglen(object),"\n")
-    cat("Maximum no. of cpts   :", nocpts.max(object),"\n")
-    if(length(ocpts(object))<=20){cat("Changepoint Locations :",ocpts(object),"\n")}
-    else{cat("Number of changepoints:", nocpts(object),"\n")}
-    if((nrow(ocpts.full(object))<=5)&(ncol(ocpts.full(object)<=20))){cat("Range of segmentations:\n");print(ocpts.full(object));cat("\n For penalty values:", pen.value.full(object),"\n")}
-    else{cat("Number of segmentations recorded:", nrow(ocpts.full(object)), " with between ", sum(ocpts.full(object)[nrow(ocpts.full(object)),]>0,na.rm=T), " and ", sum(ocpts.full(object)[1,]>0,na.rm=T), "changepoints.\n Penalty value ranges from:",min(pen.value.full(object))," to ",max(pen.value.full(object)))}
+    cat("Maximum no. of cpts   :", ncpts.max(object),"\n")
+    if(length(cpts(object))<=20){cat("Changepoint Locations :",cpts(object),"\n")}
+    else{cat("Number of changepoints:", ncpts(object),"\n")}
+    if((nrow(cpts.full(object))<=5)&(ncol(cpts.full(object)<=20))){cat("Range of segmentations:\n");print(cpts.full(object));cat("\n For penalty values:", pen.value.full(object),"\n")}
+    else{cat("Number of segmentations recorded:", nrow(cpts.full(object)), " with between ", sum(cpts.full(object)[nrow(cpts.full(object)),]>0,na.rm=T), " and ", sum(cpts.full(object)[1,]>0,na.rm=T), "changepoints.\n Penalty value ranges from:",min(pen.value.full(object))," to ",max(pen.value.full(object)))}
 })
 
 setMethod("summary","ocpt.reg",function(object){
     cat("Created Using changepoint version",object@version,'\n')
-    cat("Changepoint type     : Change in",ocpttype(object),'\n')
+    cat("Changepoint type     : Change in",cpttype(object),'\n')
     cat("Method of analysis   :",method(object),"\n")
     cat("Test Statistic :", test.stat(object),"\n")
     cat("Type of penalty      :", pen.type(object), "with value,",pen.value(object),"\n")
-    cat("Maximum no. of cpts   :", nocpts.max(object),"\n")
-    if(length(ocpts(object))<=20){cat("Changepoint Locations :",ocpts(object),"\n")}
-    else{cat("Number of changepoints:", nocpts(object),"\n")}
+    cat("Maximum no. of cpts   :", ncpts.max(object),"\n")
+    if(length(cpts(object))<=20){cat("Changepoint Locations :",cpts(object),"\n")}
+    else{cat("Number of changepoints:", ncpts(object),"\n")}
 })
 
 # show functions
@@ -755,19 +755,28 @@ setMethod("show","ocpt.reg",function(object){
 })
 
 # plot functions
-setMethod("plot","ocpt",function(x,ocpt.col='red',ocpt.width=1,ocpt.style=1,...){
+setMethod("plot","ocpt",function(x,cpt.col='red',cpt.width=1,cpt.style=1,window=NA,...){
     if(length(param.est(x))==0){# i.e. parameter.estimates=FALSE in call
         cat('Calculating parameter estimates...')
         object=param(x)
         cat('done.\n')
     }
-    plot(data.set.ts(x),...)
-    if(ocpttype(x)=="variance"){
-        abline(v=index(data.set.ts(x))[ocpts(x)],col=ocpt.col,lwd=ocpt.width,lty=ocpt.style)
+    if(is.na(window)){
+        plot(data.set.ts(x),...)
     }
-    else if(ocpttype(x)=="mean"  ||  ocpttype(x)=="mean and variance"){
-        #nseg=length(ocpts(x))+1
-        ocpts=c(0,x@ocpts)
+    else{
+        if(window>(ndone(x)+nupdate(x))){
+            window=ndone(x)+nupdate(x)
+        }
+        start=ndone(x)+nupdate(x)-window
+        plot(data.set.ts(x)[start:(ndone(x)+nupdate(x))],...)
+    }
+    if(cpttype(x)=="variance"){
+        abline(v=index(data.set.ts(x))[cpts(x)],col=cpt.col,lwd=cpt.width,lty=cpt.style)
+    }
+    else if(cpttype(x)=="mean"  ||  cpttype(x)=="mean and variance"){
+        #nseg=length(cpts(x))+1
+        cpts=c(0,x@cpts)
         if((test.stat(x)=="Normal")||(test.stat(x)=="CUSUM")){
             means=param.est(x)$mean
         }
@@ -784,18 +793,18 @@ setMethod("plot","ocpt",function(x,ocpt.col='red',ocpt.width=1,ocpt.style=1,...)
             stop('Invalid Changepoint test statistic')
         }
         for(i in 1:nseg(x)){
-            segments(index(data.set.ts(x))[ocpts[i]+1],means[i],index(data.set.ts(x))[ocpts[i+1]],means[i],ocol=ocpt.col,lwd=ocpt.width,lty=ocpt.style)
+            segments(index(data.set.ts(x))[cpts[i]+1],means[i],index(data.set.ts(x))[cpts[i+1]],means[i],col=cpt.col,lwd=cpt.width,lty=cpt.style)
         }
     }
-    else if(ocpttype(x)=="trend"){
-        ocpts=c(0,x@ocpts)
-        intercept=rep(param.est(x)$thetaS,x@ocpts-c(0,ocpts(x)))
-        slope=rep(param.est(x)$thetaT-param.est(x)$thetaS,x@ocpts-c(0,ocpts(x)))/rep(x@ocpts-c(0,ocpts(x)),x@ocpts-c(0,ocpts(x)))
-        ocptn=rep(c(0,ocpts(x)),x@ocpts-c(0,ocpts(x)))
+    else if(cpttype(x)=="trend"){
+        cpts=c(0,x@cpts)
+        intercept=rep(param.est(x)$thetaS,x@cpts-c(0,cpts(x)))
+        slope=rep(param.est(x)$thetaT-param.est(x)$thetaS,x@cpts-c(0,cpts(x)))/rep(x@cpts-c(0,cpts(x)),x@cpts-c(0,cpts(x)))
+        cptn=rep(c(0,cpts(x)),x@cpts-c(0,cpts(x)))
         n=length(data.set(x))
-        means=intercept+slope*((1:n)-ocptn)
+        means=intercept+slope*((1:n)-cptn)
         for(i in 1:nseg(x)){
-            segments(index(data.set.ts(x))[ocpts[i]+1],means[ocpts[i]+1],index(data.set.ts(x))[ocpts[i+1]],means[ocpts[i+1]],col=ocpt.col,lwd=ocpt.width,lty=ocpt.style)
+            segments(index(data.set.ts(x))[cpts[i]+1],means[cpts[i]+1],index(data.set.ts(x))[cpts[i+1]],means[cpts[i+1]],col=cpt.col,lwd=cpt.width,lty=cpt.style)
         }
     }
     else{
@@ -803,36 +812,36 @@ setMethod("plot","ocpt",function(x,ocpt.col='red',ocpt.width=1,ocpt.style=1,...)
     }
 })
 
-setMethod("plot","ocpt.range",function(x,nocpts=NA,diagnostic=FALSE,ocpt.col='red',ocpt.width=1,ocpt.style=1,...){
+setMethod("plot","ocpt.range",function(x,ncpts=NA,diagnostic=FALSE,cpt.col='red',cpt.width=1,cpt.style=1,...){
     if(diagnostic==TRUE){
-        return(plot(apply(ocpts.full(x),1,function(x){sum(x>0,na.rm=TRUE)}),pen.value.full(x),type='l',xlab='Number of Changepoints',ylab='Difference in Test Statistic',...))
+        return(plot(apply(cpts.full(x),1,function(x){sum(x>0,na.rm=TRUE)}),pen.value.full(x),type='l',xlab='Number of Changepoints',ylab='Difference in Test Statistic',...))
     }
     plot(data.set.ts(x),...)
-    if(is.na(nocpts)){
+    if(is.na(ncpts)){
         if(pen.type(x)=="CROPS"){
-            stop('CROPS does not supply an optimal set of changepoints, set nocpts to the desired segmentation to plot or use diagnostic=TRUE to identify an appropriate number of changepoints')
+            stop('CROPS does not supply an optimal set of changepoints, set ncpts to the desired segmentation to plot or use diagnostic=TRUE to identify an appropriate number of changepoints')
         }
-        ocpts.to.plot=ocpts(x)
+        cpts.to.plot=cpts(x)
         param.est=x
     }
     else{
-        nocpts.full=apply(ocpts.full(x),1,function(x){sum(x>0,na.rm=TRUE)})
-        row=which(nocpts.full==nocpts)
+        ncpts.full=apply(cpts.full(x),1,function(x){sum(x>0,na.rm=TRUE)})
+        row=which(ncpts.full==ncpts)
         if(length(row)==0){
-            stop(paste("Your input object doesn't have a segmentation with the requested number of changepoints.\n Possible nocpts are: "),paste(nocpts.full,collapse=','))
+            stop(paste("Your input object doesn't have a segmentation with the requested number of changepoints.\n Possible ncpts are: "),paste(ncpts.full,collapse=','))
         }
-        ocpts.to.plot=ocpts.full(x)[row,1:nocpts]
+        cpts.to.plot=cpts.full(x)[row,1:ncpts]
         if(test.stat(x)=="Gamma"){
-            param.est=param(x,nocpts,shape=param.est(x)$shape)
+            param.est=param(x,ncpts,shape=param.est(x)$shape)
         }
         else{
-            param.est=param(x,nocpts)
+            param.est=param(x,ncpts)
         }
     }
-    if(ocpttype(x)=="variance"){
-        abline(v=index(data.set.ts(x))[ocpts.to.plot],col=ocpt.col,lwd=ocpt.width,lty=ocpt.style)
+    if(cpttype(x)=="variance"){
+        abline(v=index(data.set.ts(x))[cpts.to.plot],col=cpt.col,lwd=cpt.width,lty=cpt.style)
     }
-    else if(ocpttype(x)=="mean"  ||  ocpttype(x)=="mean and variance"){
+    else if(cpttype(x)=="mean"  ||  cpttype(x)=="mean and variance"){
         if((test.stat(x)=="Normal")||(test.stat(x)=="CUSUM")){
             means=param.est(param.est)$mean
         }
@@ -848,10 +857,10 @@ setMethod("plot","ocpt.range",function(x,nocpts=NA,diagnostic=FALSE,ocpt.col='re
         else{
             stop('Invalid Changepoint test statistic')
         }
-        nseg=nocpts+1
-        ocpts.to.plot=c(0,ocpts.to.plot,length(data.set(x)))
+        nseg=ncpts+1
+        cpts.to.plot=c(0,cpts.to.plot,length(data.set(x)))
         for(i in 1:nseg){
-            segments(index(data.set.ts(x))[ocpts.to.plot[i]+1],means[i],index(data.set.ts(x))[ocpts.to.plot[i+1]],means[i],col=ocpt.col,lwd=ocpt.width,lty=ocpt.style)
+            segments(index(data.set.ts(x))[cpts.to.plot[i]+1],means[i],index(data.set.ts(x))[cpts.to.plot[i+1]],means[i],col=cpt.col,lwd=cpt.width,lty=cpt.style)
         }
     }
     else{
@@ -859,7 +868,7 @@ setMethod("plot","ocpt.range",function(x,nocpts=NA,diagnostic=FALSE,ocpt.col='re
     }
 })
 
-setMethod("plot","ocpt.reg",function(x,ocpt.col='red',ocpt.width=1,ocpt.style=1,...){
+setMethod("plot","ocpt.reg",function(x,cpt.col='red',cpt.width=1,cpt.style=1,...){
     if(length(param.est(x))==0){# i.e. parameter.estimates=FALSE in call
         cat('Calculating parameter estimates...')
         object=param(x)
@@ -867,10 +876,10 @@ setMethod("plot","ocpt.reg",function(x,ocpt.col='red',ocpt.width=1,ocpt.style=1,
     }
     plot(data.set(x)[,1],type='l',...)
     if(test.stat(x)=="Normal"){
-        ocpts=c(0,x@ocpts)
+        cpts=c(0,x@cpts)
         betas=param.est(x)$beta
         for(i in 1:nseg(x)){
-            lines((ocpts[i]+1):ocpts[i+1],betas[i,]%*%t(data.set(x)[(ocpts[i]+1):ocpts[i+1],-1]),col=ocpt.col,lwd=ocpt.width,lty=ocpt.style)
+            lines((cpts[i]+1):cpts[i+1],betas[i,]%*%t(data.set(x)[(cpts[i]+1):cpts[i+1],-1]),col=cpt.col,lwd=cpt.width,lty=cpt.style)
         }
     }
     else{
@@ -886,8 +895,8 @@ setMethod("logLik", "ocpt", function(object) {
         cat('done.\n')
     }
     if(test.stat(object)=="Normal"){
-        if(ocpttype(object)=="mean"){
-            means=rep(param.est(object)$mean,object@ocpts-c(0,ocpts(object)))
+        if(cpttype(object)=="mean"){
+            means=rep(param.est(object)$mean,object@cpts-c(0,cpts(object)))
             rss=sum((data.set(object)-means)^2)
             n=length(data.set(object))
             like=n*(log(2*pi)+log(rss/n)+1) # -2*loglik
@@ -897,12 +906,12 @@ setMethod("logLik", "ocpt", function(object) {
                 like=c(tmplike,tmplike+(nseg(object)-1)*pen.value(object))
             }
         }
-        else if(ocpttype(object)=="variance"){
+        else if(cpttype(object)=="variance"){
             rss=c(0,cumsum((data.set(object)-param.est(object)$mean)^2))
-            ocpts=c(0,object@ocpts)
+            cpts=c(0,object@cpts)
             n=length(data.set(object))
             seglen=seg.len(object)
-            sigmas=(rss[ocpts[-1]+1]-rss[ocpts[-length(ocpts)]+1])/seglen
+            sigmas=(rss[cpts[-1]+1]-rss[cpts[-length(cpts)]+1])/seglen
             like=n*log(2*pi)+sum(seglen*log(sigmas))+n
             if(pen.type(object)=="MBIC"){
                 like=c(like, like+(nseg(object)-2)*pen.value(object)+sum(log(seglen)))
@@ -910,11 +919,11 @@ setMethod("logLik", "ocpt", function(object) {
                 like=c(like,like+(nseg(object)-1)*pen.value(object))
             }
         }
-        else if(ocpttype(object)=="mean and variance"){
-            means=rep(param.est(object)$mean,object@ocpts-c(0,ocpts(object)))
+        else if(cpttype(object)=="mean and variance"){
+            means=rep(param.est(object)$mean,object@cpts-c(0,cpts(object)))
             rss=sum((data.set(object)-means)^2)
             n=length(data.set(object))
-            ocpts=c(0,object@ocpts)
+            cpts=c(0,object@cpts)
             seglen=seg.len(object)
             sigmas=param.est(object)$variance
             like=n*log(2*pi)+sum(seglen*log(sigmas))+n
@@ -924,10 +933,10 @@ setMethod("logLik", "ocpt", function(object) {
                 like=c(like,like+(nseg(object)-1)*pen.value(object))
             }
         }
-        else if(ocpttype(object)=="trend"){
-            intercept=rep(param.est(object)$thetaS,object@ocpts-c(0,ocpts(object)))
-            slope=rep(param.est(object)$thetaT-param.est(object)$thetaS,object@copts-c(0,ocpts(object)))/rep(object@ocpts-c(0,ocpts(object)),object@ocpts-c(0,ocpts(object)))
-            ocptn=rep(c(0,ocpts(object)),object@ocpts-c(0,ocpts(object)))
+        else if(cpttype(object)=="trend"){
+            intercept=rep(param.est(object)$thetaS,object@cpts-c(0,cpts(object)))
+            slope=rep(param.est(object)$thetaT-param.est(object)$thetaS,object@cpts-c(0,cpts(object)))/rep(object@cpts-c(0,cpts(object)),object@cpts-c(0,cpts(object)))
+            cptn=rep(c(0,cpts(object)),object@cpts-c(0,cpts(object)))
             n=length(data.set(object))
             means=intercept+slope*((1:n)-ocptn)
             rss=sum((data.set(object)-means)^2)
@@ -938,15 +947,15 @@ setMethod("logLik", "ocpt", function(object) {
                 like=c(like,like+(nseg(object)-1)*pen.value(object))
             }
         }
-        else if(ocpttype(object)=="trendar"){
+        else if(cpttype(object)=="trendar"){
             seglen=seg.len(object)
             intercept=rep(param.est(object)$thetaj,seglen)
             slope=rep(param.est(object)$thetajpo-param.est(object)$thetaj,seglen)/rep(seglen,seglen)
             ar=rep(param.est(object)$beta,seglen)
-            ocptn=rep(c(0,ocpts(object)),seglen)
+            cptn=rep(c(0,cpts(object)),seglen)
             n=length(data.set(object))
             means=NULL;means[1]=0
-            for(i in 2:n){means[i]=intercept+slope*((1:n)-ocptn)+ar*means[i-1]}
+            for(i in 2:n){means[i]=intercept+slope*((1:n)-cptn)+ar*means[i-1]}
             means=means[-1]
             rss=sum((data.set(object)[-1]-means)^2)
             like=n*(log(2*pi)+log(rss/n)+1) # -2*loglik
@@ -956,11 +965,11 @@ setMethod("logLik", "ocpt", function(object) {
                 like=c(like,like+(nseg(object)-1)*pen.value(object))
             }
         }
-        else if(ocpttype(object)=="meanar"){
+        else if(cpttype(object)=="meanar"){
             seglen=seg.len(object)
             intercept=rep(param.est(object)$beta1,seglen)
             ar=rep(param.est(object)$beta2,seglen)
-            ocptn=rep(c(0,ocpts(object)),seglen)
+            cptn=rep(c(0,cpts(object)),seglen)
             n=length(data.set(object))
             means[1]=0;for(i in 2:n){means[i]=intercept+ar*means[i-1]}
             means=means[-1]
@@ -977,7 +986,7 @@ setMethod("logLik", "ocpt", function(object) {
         }
     }
     else if(test.stat(object)=="Gamma"){
-        if(ocpttype(object)!="mean and variance"){
+        if(cpttype(object)!="mean and variance"){
             stop("Unknown changepoint type for test.stat='Gamma', must be 'mean and variance'")
         }
         else{
@@ -987,11 +996,11 @@ setMethod("logLik", "ocpt", function(object) {
             }
             y=c(0,cumsum(data.set(object)))
             shape=param.est(object)$shape
-            ocpts=c(0,object@ocpts)
-            #nseg=length(ocpts)-1
+            cpts=c(0,object@cpts)
+            #nseg=length(cpts)-1
             tmplike=0
             for(j in 1:nseg(object)){
-                tmplike=tmplike+mll.meanvarg(y[ocpts[j+1]+1]-y[ocpts[j]+1],ocpts[j+1]-ocpts[j],shape)
+                tmplike=tmplike+mll.meanvarg(y[cpts[j+1]+1]-y[cpts[j]+1],cpts[j+1]-cpts[j],shape)
             }
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg(object)-2)*pen.value(object)+sum(log(seg.len(object))))
@@ -1001,7 +1010,7 @@ setMethod("logLik", "ocpt", function(object) {
         }
     }
     else if(test.stat(object)=="Exponential"){
-        if(ocpttype(object)!="mean and variance"){
+        if(cpttype(object)!="mean and variance"){
             stop("Unknown changepoint type for test.stat='Exponential', must be 'mean and variance'")
         }
         else{
@@ -1010,11 +1019,11 @@ setMethod("logLik", "ocpt", function(object) {
                 return(n*log(n)-n*log(x))
             }
             y=c(0,cumsum(data.set(object)))
-            ocpts=c(0,object@ocpts)
-            #nseg=length(ocpts)-1
+            cpts=c(0,object@cpts)
+            #nseg=length(cpts)-1
             tmplike=0
             for(j in 1:nseg(object)){
-                tmplike=tmplike+mll.meanvare(y[ocpts[j+1]+1]-y[ocpts[j]+1],ocpts[j+1]-ocpts[j])
+                tmplike=tmplike+mll.meanvare(y[cpts[j+1]+1]-y[cpts[j]+1],cpts[j+1]-cpts[j])
             }
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg(object)-2)*pen.value(object)+sum(log(seg.len(object))))
@@ -1024,7 +1033,7 @@ setMethod("logLik", "ocpt", function(object) {
         }
     }
     else if(test.stat(object)=="Poisson"){
-        if(ocpttype(object)!="mean and variance"){
+        if(cpttype(object)!="mean and variance"){
             stop("Unknown changepoint type for test.stat='Poisson', must be 'mean and variance'")
         }
         else{
@@ -1033,11 +1042,11 @@ setMethod("logLik", "ocpt", function(object) {
                 return(x*log(x)-x*log(n))
             }
             y=c(0,cumsum(data.set(object)))
-            ocpts=c(0,object@ocpts)
-            #nseg=length(ocpts)-1
+            cpts=c(0,object@cpts)
+            #nseg=length(cpts)-1
             tmplike=0
             for(j in 1:nseg(object)){
-                tmplike=tmplike+mll.meanvarp(y[ocpts[j+1]+1]-y[ocpts[j]+1],ocpts[j+1]-ocpts[j])
+                tmplike=tmplike+mll.meanvarp(y[cpts[j+1]+1]-y[cpts[j]+1],cpts[j+1]-cpts[j])
             }
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg(object)-2)*pen.value(object)+sum(log(seg.len(object))))
@@ -1051,28 +1060,28 @@ setMethod("logLik", "ocpt", function(object) {
     return(like)
 })
 
-setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
+setMethod("logLik", "ocpt.range", function(object,ncpts=NA) {
     warning("Not changed to be -2*logLik")
-    if(is.na(nocpts)){
+    if(is.na(ncpts)){
         if(pen.type(object)=="CROPS"){
-            stop('CROPS does not supply an optimal set of changepoints, set nocpts argument to the desired segmentation to plot or use diagnostic=TRUE to identify an appropriate number of changepoints')
+            stop('CROPS does not supply an optimal set of changepoints, set ncpts argument to the desired segmentation to plot or use diagnostic=TRUE to identify an appropriate number of changepoints')
         }
-        ocpts=c(0,object@ocpts)
+        cpts=c(0,object@cpts)
         pen.value=pen.value(object)
     }
     else{
-        nocpts.full=apply(ocpts.full(object),1,function(x){sum(x>0,na.rm=TRUE)})
-        row=which(nocpts.full==nocpts)
+        ncpts.full=apply(cpts.full(object),1,function(x){sum(x>0,na.rm=TRUE)})
+        row=which(ncpts.full==ncpts)
         if(length(row)==0){
-            stop(paste("Your input object doesn't have a segmentation with the requested number of changepoints.\n Possible nocpts are: "),paste(nocpts.full,collapse=','))
+            stop(paste("Your input object doesn't have a segmentation with the requested number of changepoints.\n Possible ncpts are: "),paste(ncpts.full,collapse=','))
         }
-        ocpts=c(0,ocpts.full(object)[row,1:nocpts],length(data.set(object)))
+        cpts=c(0,cpts.full(object)[row,1:ncpts],length(data.set(object)))
         pen.value=pen.value.full(object)[row]
     }
-    nseg=length(ocpts)-1
+    nseg=length(cpts)-1
     
     if(test.stat(object)=="Normal"){
-        if(ocpttype(object)=="mean"){
+        if(cpttype(object)=="mean"){
             mll.mean=function(x2,x,n){
                 return( x2-(x^2)/n)
             }
@@ -1080,9 +1089,9 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
             y=c(0,cumsum(data.set(object)))
             tmplike=0
             for(j in 1:nseg){
-                tmplike=tmplike+mll.mean(y2[ocpts[j+1]+1]-y2[ocpts[j]+1],y[ocpts[j+1]+1]-y[ocpts[j]+1],ocpts[j+1]-ocpts[j])
+                tmplike=tmplike+mll.mean(y2[cpts[j+1]+1]-y2[cpts[j]+1],y[cpts[j+1]+1]-y[cpts[j]+1],cpts[j+1]-cpts[j])
             }
-            ##c(tmplike, tmplike+(nseg-2)*pen.value(object)+sum(log(ocpts[-1]-ocpts[-(nseg+1)])))
+            ##c(tmplike, tmplike+(nseg-2)*pen.value(object)+sum(log(cpts[-1]-cpts[-(nseg+1)])))
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg-2)*pen.value+sum(log(seg.len(object))))
             }else{
@@ -1090,7 +1099,7 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
             }
             names(like)=c("-like","-likepen")
         }
-        else if(ocpttype(object)=="variance"){
+        else if(cpttype(object)=="variance"){
             mll.var=function(x,n){
                 neg=x<=0
                 x[neg==TRUE]=0.00000000001
@@ -1099,7 +1108,7 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
             y2=c(0,cumsum((data.set(object)-param.est(object)$mean)^2))
             tmplike=0
             for(j in 1:nseg){
-                tmplike=tmplike+mll.var(y2[ocpts[j+1]+1]-y2[ocpts[j]+1],ocpts[j+1]-ocpts[j])
+                tmplike=tmplike+mll.var(y2[cpts[j+1]+1]-y2[cpts[j]+1],cpts[j+1]-cpts[j])
             }
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg-2)*pen.value+sum(log(seg.len(object))))
@@ -1108,7 +1117,7 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
             }
             names(like)=c("-like","-likepen")
         }
-        else if(ocpttype(object)=="mean and variance"){
+        else if(cpttype(object)=="mean and variance"){
             mll.meanvar=function(x2,x,n){
                 sigmasq=(1/n)*(x2-(x^2)/n)
                 neg=sigmasq<=0
@@ -1119,7 +1128,7 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
             y=c(0,cumsum(data.set(object)))
             tmplike=0
             for(j in 1:nseg){
-                tmplike=tmplike+mll.meanvar(y2[ocpts[j+1]+1]-y2[ocpts[j]+1],y[ocpts[j+1]+1]-y[ocpts[j]+1],ocpts[j+1]-ocpts[j])
+                tmplike=tmplike+mll.meanvar(y2[cpts[j+1]+1]-y2[cpts[j]+1],y[cpts[j+1]+1]-y[cpts[j]+1],cpts[j+1]-cpts[j])
             }
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg-2)*pen.value+sum(log(seg.len(object))))
@@ -1133,7 +1142,7 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
         }
     }
     else if(test.stat(object)=="Gamma"){
-        if(ocpttype(object)!="mean and variance"){
+        if(cpttype(object)!="mean and variance"){
             stop("Unknown changepoint type for test.stat='Gamma', must be 'mean and variance'")
         }
         else{
@@ -1142,11 +1151,11 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
             }
             y=c(0,cumsum(data.set(object)))
             shape=param.est(object)$shape
-            ocpts=c(0,object@ocpts)
-            #nseg=length(ocpts)-1
+            cpts=c(0,object@cpts)
+            #nseg=length(cpts)-1
             tmplike=0
             for(j in 1:nseg){
-                tmplike=tmplike+mll.meanvarg(y[ocpts[j+1]+1]-y[ocpts[j]+1],ocpts[j+1]-ocpts[j],shape)
+                tmplike=tmplike+mll.meanvarg(y[cpts[j+1]+1]-y[cpts[j]+1],cpts[j+1]-cpts[j],shape)
             }
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg-2)*pen.value+sum(log(seg.len(object))))
@@ -1157,7 +1166,7 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
         }
     }
     else if(test.stat(object)=="Exponential"){
-        if(ocpttype(object)!="mean and variance"){
+        if(cpttype(object)!="mean and variance"){
             stop("Unknown changepoint type for test.stat='Exponential', must be 'mean and variance'")
         }
         else{
@@ -1165,11 +1174,11 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
                 return(n*log(n)-n*log(x))
             }
             y=c(0,cumsum(data.set(object)))
-            ocpts=c(0,object@ocpts)
-            #nseg=length(ocpts)-1
+            cpts=c(0,object@cpts)
+            #nseg=length(cpts)-1
             tmplike=0
             for(j in 1:nseg){
-                tmplike=tmplike+mll.meanvare(y[ocpts[j+1]+1]-y[ocpts[j]+1],ocpts[j+1]-ocpts[j])
+                tmplike=tmplike+mll.meanvare(y[cpts[j+1]+1]-y[cpts[j]+1],cpts[j+1]-cpts[j])
             }
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg-2)*pen.value+sum(log(seg.len(object))))
@@ -1180,7 +1189,7 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
         }
     }
     else if(test.stat(object)=="Poisson"){
-        if(ocpttype(object)!="mean and variance"){
+        if(cpttype(object)!="mean and variance"){
             stop("Unknown changepoint type for test.stat='Poisson', must be 'mean and variance'")
         }
         else{
@@ -1188,11 +1197,11 @@ setMethod("logLik", "ocpt.range", function(object,nocpts=NA) {
                 return(x*log(x)-x*log(n))
             }
             y=c(0,cumsum(data.set(object)))
-            ocpts=c(0,object@ocpts)
-            #nseg=length(ocpts)-1
+            cpts=c(0,object@cpts)
+            #nseg=length(cpts)-1
             tmplike=0
             for(j in 1:nseg){
-                tmplike=tmplike+mll.meanvarp(y[ocpts[j+1]+1]-y[ocpts[j]+1],ocpts[j+1]-ocpts[j])
+                tmplike=tmplike+mll.meanvarp(y[cpts[j+1]+1]-y[cpts[j]+1],cpts[j+1]-cpts[j])
             }
             if(pen.type(object)=="MBIC"){
                 like=c(tmplike, tmplike+(nseg-2)*pen.value+sum(log(seg.len(object))))
@@ -1213,14 +1222,14 @@ setMethod("logLik", "ocpt.reg", function(object) {
         cat('done.\n')
     }
     if(test.stat(object)=="Normal"){
-        ocpts=c(0,object@ocpts)
+        cpts=c(0,object@cpts)
         seglen=seg.len(object)
         data=data.set(object)
         beta=param.est(object)$beta
         sigmas=param.est(object)$sig2
         rss=NULL
         for(i in 1:length(seglen)){
-            rss[i]=sum((data[(ocpts[i]+1):ocpts[i+1],1]-data[(ocpts[i]+1):ocpts[i+1],-1]%*%beta[i,])^2)
+            rss[i]=sum((data[(cpts[i]+1):cpts[i+1],1]-data[(cpts[i]+1):cpts[i+1],-1]%*%beta[i,])^2)
         }
         like=sum(seglen*log(2*pi*sigmas))+sum(rss/sigmas)
         if(pen.type(object)=="MBIC"){
@@ -1241,19 +1250,19 @@ setMethod("likelihood", "ocpt", function(object) {
 # acf functions
 setGeneric("acf", function(object,...) standardGeneric("acf"))
 setMethod("acf", "ocpt", function(object,lag.max=NULL,...) {
-    ocpts=c(0,object@ocpts)
+    cpts=c(0,object@cpts)
     nseg=nseg(object)
     data=data.set(object)
     for(i in 1:nseg){
-        stats::acf(data[(ocpts[i]+1):ocpts[i+1]],main=paste("Series part:",(ocpts[i]+1),":",ocpts[i+1]),...)
+        stats::acf(data[(cpts[i]+1):cpts[i+1]],main=paste("Series part:",(cpts[i]+1),":",cpts[i+1]),...)
     }
 })
 
 setMethod("acf", "ocpt.reg", function(object,lag.max=NULL,...) {
-    ocpts=c(0,object@ocpts)
+    cpts=c(0,object@cpts)
     nseg=nseg(object)
     data=data.set(object)[,1]
     for(i in 1:nseg){
-        stats::acf(data[(ocpts[i]+1):ocpts[i+1]],main=paste("Series part:",(ocpts[i]+1),"-",ocpts[i+1]),...)
+        stats::acf(data[(cpts[i]+1):cpts[i+1]],main=paste("Series part:",(cpts[i]+1),"-",cpts[i+1]),...)
     }
     })

@@ -53,10 +53,10 @@ online.segneigh.var.norm=function(data,Q=5,pen=0,know.mean=FALSE,mu=NA){
   }
   if(op.cps==(Q-1)){warning('The number of segments identified is Q, it is advised to increase Q to make sure changepoints have not been missed.')}
   
-  if(op.cps==0){ocpts=n}
-  else{ocpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
+  if(op.cps==0){cpts=n}
+  else{cpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
   
-  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),ocpts=ocpts,op.ocpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=-2*like.Q[,n]))
+  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),cpts=cpts,op.cpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=-2*like.Q[,n]))
 }
 
 
@@ -106,10 +106,10 @@ online.segneigh.mean.norm=function(data,Q=5,pen=0){
     op.cps=c(op.cps,which(criterion==min(criterion,na.rm=T))-1)
   }
   if(op.cps==(Q-1)){warning('The number of segments identified is Q, it is advised to increase Q to make sure changepoints have not been missed.')}
-  if(op.cps==0){ocpts=n}
-  else{ocpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
+  if(op.cps==0){cpts=n}
+  else{cpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
   
-  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),ocpts=ocpts,op.ocpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=-2*like.Q[,n]))
+  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),cpts=cpts,op.cpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=-2*like.Q[,n]))
 }
 
 
@@ -168,11 +168,11 @@ online.segneigh.meanvar.norm=function(data,Q=5,pen=0){
   }
   if(op.cps==(Q-1)){warning('The number of segments identified is Q, it is advised to increase Q to make sure changepoints have not been missed.')}
   
-  if(op.cps==0){ocpts=n}
-  else{ocpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
+  if(op.cps==0){cpts=n}
+  else{cpts=c(sort(cps.Q[op.cps+1,][cps.Q[op.cps+1,]>0]),n)}
   
   
-  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),ocpts=ocpts,op.ocpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=-2*like.Q[,n]))
+  return(list(cps=t(apply(cps.Q,1,sort,na.last=TRUE)),cpts=cpts,op.cpts=op.cps,pen=pen,like=criterion[op.cps+1],like.Q=-2*like.Q[,n]))
 }
 
 
@@ -210,7 +210,7 @@ online.multiple.var.norm=function(data,mul.method="PELT",penalty="MBIC",pen.valu
     out = online.data_input(data=data,method=mul.method,pen.value=pen.value,costfunc=costfunc,minseglen=minseglen,Q=Q,var=mu)
     
     if(class==TRUE){
-      out=online.class_input(data, ocpttype="variance", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q)
+      out=online.class_input(data, cpttype="variance", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q)
       param.est(out)=c(param.est(out),mean=mu)
       return(out)
     }
@@ -230,17 +230,17 @@ online.multiple.var.norm=function(data,mul.method="PELT",penalty="MBIC",pen.valu
       out[[i]]=online.data_input(data[i,],method=mul.method,pen.value=pen.value,costfunc=costfunc,minseglen=minseglen,Q=Q,var=mu)
     }
     
-      ocpts=lapply(out, '[[', 2)
+      cpts=lapply(out, '[[', 2)
         
     if(class==TRUE){
       ans=list()
       for(i in 1:rep){
-        ans[[i]]=online.class_input(data[i,], ocpttype="variance", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[i]], Q=Q)
+        ans[[i]]=online.class_input(data[i,], cpttype="variance", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[i]], Q=Q)
         param.est(ans[[i]])=c(param.est(ans[[i]]),mean=mu[i])
       }
       return(ans)
     }
-    else{return(ocpts)}
+    else{return(cpts)}
   }
 }
 
@@ -273,14 +273,14 @@ online.multiple.mean.norm=function(data,mul.method="PELT",penalty="MBIC",pen.val
     out = online.data_input(data=data,method=mul.method,pen.value=pen.value,costfunc=costfunc,minseglen=minseglen,Q=Q)
      
     if(class==TRUE){
-      return(online.class_input(data, ocpttype="mean", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q))
+      return(online.class_input(data, cpttype="mean", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q))
     }
     else{ return(out[[2]])}
   }
   else{
     rep=nrow(data)
     out=list()
-    if(class==TRUE){ocpts=list()}
+    if(class==TRUE){cpts=list()}
     for(i in 1:rep){
       out[[i]]=online.data_input(data[i,],method=mul.method,pen.value=pen.value,costfunc=costfunc,minseglen=minseglen,Q=Q)
     }
@@ -290,7 +290,7 @@ online.multiple.mean.norm=function(data,mul.method="PELT",penalty="MBIC",pen.val
     if(class==TRUE){
       ans=list()
       for(i in 1:rep){
-        ans[[i]]=online.class_input(data[i,], ocpttype="mean", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[i]], Q=Q)
+        ans[[i]]=online.class_input(data[i,], cpttype="mean", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[i]], Q=Q)
       }
       return(ans)
     }
@@ -317,7 +317,7 @@ online.multiple.meanvar.norm=function(data,mul.method="PELT",penalty="MBIC",pen.
   else{
     n=ncol(data)
   }
-  if(n<(2*minseglen)){stop('Minimum segment legnth is too large to include a change in this data')}
+  if(n<(2*minseglen)){stop('Minimum segment length is too large to include a change in this data')}
   
   pen.value = penalty_decision(penalty, pen.value, n, diffparam, asymcheck = costfunc, method=mul.method)
 
@@ -326,7 +326,7 @@ online.multiple.meanvar.norm=function(data,mul.method="PELT",penalty="MBIC",pen.
     out = online.data_input(data=data,method=mul.method,pen.value=pen.value,costfunc=costfunc,minseglen=minseglen,Q=Q)
 
     if(class==TRUE){
-      return(online.class_input(data, ocpttype="mean and variance", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q))
+      return(online.class_input(data, cpttype="mean and variance", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out, Q=Q))
     }
     else{ return(out[[2]])}
   }
@@ -342,7 +342,7 @@ online.multiple.meanvar.norm=function(data,mul.method="PELT",penalty="MBIC",pen.
     if(class==TRUE){
       ans=list()
       for(i in 1:rep){
-        ans[[i]] = online.class_input(data[i,], ocpttype="mean and variance", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[i]], Q=Q)
+        ans[[i]] = online.class_input(data[i,], cpttype="mean and variance", method=mul.method, test.stat="Normal", penalty=penalty, pen.value=pen.value, minseglen=minseglen, param.estimates=param.estimates, out=out[[i]], Q=Q)
       }
       return(ans)
     }
