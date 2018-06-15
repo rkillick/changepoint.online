@@ -5,19 +5,19 @@ context("man file example tests")
 set.seed(1)
 x=c(rnorm(100,0,1),rnorm(100,0,10))
 ansvar=ocpt.var(x)
-test_that('var1',expect_identical(ocpts(ansvar),100))
+test_that('var1',expect_identical(cpts(ansvar),100))
 
 # change in mean
 set.seed(1)
 y=c(rnorm(100,0,1),rnorm(100,5,1))
 ansmean=ocpt.mean(y)
-test_that('mean1',expect_identical(ocpts(ansmean),100))
+test_that('mean1',expect_identical(cpts(ansmean),100))
 
 # change in mean and variance
 set.seed(1)
 z=c(rnorm(100,0,1),rnorm(100,2,10))
 ansmeanvar=ocpt.meanvar(z)
-test_that('meanvar1',expect_identical(ocpts(ansmeanvar),100))
+test_that('meanvar1',expect_identical(cpts(ansmeanvar),100))
 
 
 
@@ -31,9 +31,9 @@ set.seed(1)
 x=c(rnorm(100,0,1),rnorm(100,10,1))
 test_that('mean2',expect_equivalent(ocpt.mean(x,penalty="SIC",method="AMOC",class=FALSE),c(100,1)))
 ans=ocpt.mean(x,penalty="Asymptotic",pen.value=0.01,method="AMOC") 
-test_that('mean3',expect_identical(ocpts(ans),100))
+test_that('mean3',expect_identical(cpts(ans),100))
 ans=ocpt.mean(x,penalty="Manual",pen.value=0.8,method="AMOC")
-test_that('mean4',expect_equivalent(ocpts(ans),100))
+test_that('mean4',expect_equivalent(cpts(ans),100))
 
 # Example of multiple changes in mean at 50,100,150 in simulated normal data
 set.seed(1)
@@ -48,8 +48,8 @@ y=rnorm(200,0,1)
 z=rbind(x,y)
 test_that('mean6',expect_equal(ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),list(c(50,100,150,200),200)))
 ans=ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
-test_that('mean7',expect_equal(ocpts(ans[[1]]),c(1,50,100,150)))
-test_that('mean8',expect_equal(ocpts(ans[[2]]),1))
+test_that('mean7',expect_equal(cpts(ans[[1]]),c(1,50,100,150)))
+test_that('mean8',expect_equal(cpts(ans[[2]]),1))
 
 
 
@@ -71,8 +71,8 @@ x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
 y=rnorm(200,0,1)
 z=rbind(x,y)
 ans=ocpt.meanvar(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
-test_that('meanvar6',expect_equivalent(ocpts(ans[[1]]),c(1,50,100,150)))
-test_that('meanvar7',expect_equivalent(ocpts(ans[[2]]),1))
+test_that('meanvar6',expect_equivalent(cpts(ans[[1]]),c(1,50,100,150)))
+test_that('meanvar7',expect_equivalent(cpts(ans[[2]]),1))
 
 
 
@@ -81,8 +81,8 @@ test_that('meanvar7',expect_equivalent(ocpts(ans[[2]]),1))
 # From ocpt.range-class.Rd
 x=new("ocpt.range")
 test_that('class1',expect_is(x,"ocpt.range"))
-ocpts(x)<-c(10,50,100)
-test_that('class2',expect_equivalent(ocpts(x),c(10,50,100)))
+cpts(x)<-c(10,50,100)
+test_that('class2',expect_equivalent(cpts(x),c(10,50,100)))
 
 
 
@@ -107,7 +107,7 @@ set.seed(1)
 x=c(rnorm(100,0,1),rnorm(100,0,10))
 test_that('var2',expect_equivalent(ocpt.var(x,penalty="SIC",method="AMOC",class=FALSE),c(100,1)))
 ans=ocpt.var(x,penalty="Asymptotic",pen.value=0.01,method="AMOC") 
-test_that('var3',expect_equivalent(ocpts(ans),100))
+test_that('var3',expect_equivalent(cpts(ans),100))
 
 # Example multiple datasets where the first row has multiple changes in variance and the second row
 #has no change in variance
@@ -118,8 +118,8 @@ z=rbind(x,y)
 truth=list();truth[[1]]=c(50,100,149,200);truth[[2]]=200
 test_that('var7',expect_equivalent(ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),truth))
 ans=ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
-test_that('var8',expect_equivalent(ocpts(ans[[1]]),c(1,50,100,149)))
-test_that('var9',expect_equivalent(ocpts(ans[[2]]),1))
+test_that('var8',expect_equivalent(cpts(ans[[1]]),c(1,50,100,149)))
+test_that('var9',expect_equivalent(cpts(ans[[2]]),1))
 
 
 
@@ -129,9 +129,9 @@ test_that('var9',expect_equivalent(ocpts(ans[[2]]),1))
 # From ocpt-class.Rd
 x=new("ocpt") # creates a new object with the cpt class defaults
 test_that('class7',expect_is(x,"ocpt"))
-test_that('class8',expect_equivalent(ocpts(x),numeric()))
-ocpts(x)<-c(10,50,100) # replaces the cpts slot from x with c(10,50,100)
-test_that('class9',expect_equivalent(ocpts(x),c(10,50,100)))
+test_that('class8',expect_equivalent(cpts(x),numeric()))
+cpts(x)<-c(10,50,100) # replaces the cpts slot from x with c(10,50,100)
+test_that('class9',expect_equivalent(cpts(x),c(10,50,100)))
 
 # Example of a change in variance at 100 in simulated normal data
 set.seed(1)
@@ -145,22 +145,22 @@ test_that('class10',expect_equivalent(logLik(ans),c(1003.2283241358,1012.438665)
 # From cpts.full.Rd
 x=new("ocpt.range") # new cpt.range object
 test_that('class11',expect_is(x,"ocpt.range"))
-test_that('class12',expect_is(ocpts.full(x),"matrix")) # retrieves the cpts.full slot from x
+test_that('class12',expect_is(cpts.full(x),"matrix")) # retrieves the cpts.full slot from x
 
 
 
 
 # From cpts.full-.Rd
 x=new("ocpt.range") # new cpt.range object
-ocpts.full(x)<-matrix(c(10,20,10,NA),nrow=2,byrow=TRUE) 
-test_that('class13',expect_equivalent(ocpts.full(x),matrix(c(10,20,10,NA),nrow=2,byrow=TRUE) ))
+cpts.full(x)<-matrix(c(10,20,10,NA),nrow=2,byrow=TRUE) 
+test_that('class13',expect_equivalent(cpts.full(x),matrix(c(10,20,10,NA),nrow=2,byrow=TRUE) ))
 
 
 
 
 # From cpts.Rd
 x=new("ocpt") # new cpt object
-test_that('class14',expect_equivalent(ocpts(x),numeric())) # retrieves the cpts slot from x
+test_that('class14',expect_equivalent(cpts(x),numeric())) # retrieves the cpts slot from x
 
 
 
@@ -168,15 +168,15 @@ test_that('class14',expect_equivalent(ocpts(x),numeric())) # retrieves the cpts 
 
 # From cpts.ts.Rd
 x=new("ocpt") # new cpt object
-test_that('class15',expect_equivalent(ocpts.ts(x),numeric()))
+test_that('class15',expect_equivalent(cpts.ts(x),numeric()))
 
 
 
 
 # From cpts-.Rd
 x=new("ocpt") # new cpt object
-ocpts(x)<-10 # replaces the vector of changepoint in object x with 10
-test_that('class16',expect_equivalent(ocpts(x),10))
+cpts(x)<-10 # replaces the vector of changepoint in object x with 10
+test_that('class16',expect_equivalent(cpts(x),10))
 
 
 
@@ -184,7 +184,7 @@ test_that('class16',expect_equivalent(ocpts(x),10))
 
 # From cpttype.Rd
 x=new("ocpt") # new cpt object
-test_that('class17',expect_equivalent(ocpttype(x),"Not Set")) # retrieves the cpttype slot from x
+test_that('class17',expect_equivalent(cpttype(x),"Not Set")) # retrieves the cpttype slot from x
 
 
 
@@ -192,8 +192,8 @@ test_that('class17',expect_equivalent(ocpttype(x),"Not Set")) # retrieves the cp
 
 # From cpttype-.Rd
 x=new("ocpt") # new cpt object
-ocpttype(x)<-"mean" # replaces the existing cpttype in object x with "mean"
-test_that('class18',expect_equivalent(ocpttype(x),'mean'))
+cpttype(x)<-"mean" # replaces the existing cpttype in object x with "mean"
+test_that('class18',expect_equivalent(cpttype(x),'mean'))
 
 
 
@@ -290,27 +290,27 @@ test_that('class27',expect_equivalent(minseglen(x),5))
 
 
 
-# From nocpts.max.Rd
+# From ncpts.max.Rd
 x=new("ocpt") # new cpt object
-test_that('class28',expect_equivalent(nocpts.max(x),numeric()))
+test_that('class28',expect_equivalent(ncpts.max(x),numeric()))
 
 
 
 
 
-# From nocpts.max-.Rd
+# From ncpts.max-.Rd
 x=new("ocpt") # new cpt object
-nocpts.max(x)<-10 # replaces the vector of changepoint in object x with 10
-test_that('class29',expect_equivalent(nocpts.max(x),10))
+ncpts.max(x)<-10 # replaces the vector of changepoint in object x with 10
+test_that('class29',expect_equivalent(ncpts.max(x),10))
 
 
 
 
 
 
-# From nocpts.Rd
+# From ncpts.Rd
 x=new("ocpt") # new ocpt object
-test_that('class30',expect_equivalent(nocpts(x),0)) # returns the number of changepoints (i.e. length of the cpts slot in x minus 1)
+test_that('class30',expect_equivalent(ncpts(x),0)) # returns the number of changepoints (i.e. length of the cpts slot in x minus 1)
 
 
 

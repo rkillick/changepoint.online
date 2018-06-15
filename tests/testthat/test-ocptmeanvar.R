@@ -216,7 +216,7 @@ for(d in 1:length(data)){
   }else if(length(data[[d]]) <= 2){
     test_that(paste0("Test #",t," :data=",d,"penalty=",penalties[p],", method=",methods[m],",class=",cl,", param=",pe,", test.stat=",testStats[ts]), {
       
-      expect_that(ocpt.meanvar(data=data[[d]]),throws_error("Data must have atleast"))
+      expect_that(ocpt.meanvar(data=data[[d]]),throws_error("Data must have at least"))
       t = t + 1
       
     }) 
