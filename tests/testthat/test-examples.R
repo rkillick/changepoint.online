@@ -35,18 +35,13 @@ test_that('mean3',expect_identical(cpts(ans),100))
 ans=ocpt.mean(x,penalty="Manual",pen.value=0.8,method="AMOC")
 test_that('mean4',expect_equivalent(cpts(ans),100))
 
-# Example of multiple changes in mean at 50,100,150 in simulated normal data
-set.seed(1)
-x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
-test_that('mean5',expect_identical(ocpt.mean(x,penalty="Manual",pen.value="2*log(n)",method="BinSeg",Q=5,class=FALSE),c(50,100,150,200)))
-
 # Example multiple datasets where the first row has multiple changes in mean and the second row has
 #no change in mean
 set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
 y=rnorm(200,0,1)
 z=rbind(x,y)
-test_that('mean6',expect_equal(ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),list(c(50,100,150,200),200)))
+test_that('mean6',expect_equal(ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),list(c(1,50,100,150,200),c(1,200))))
 ans=ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
 test_that('mean7',expect_equal(cpts(ans[[1]]),c(1,50,100,150)))
 test_that('mean8',expect_equal(cpts(ans[[2]]),1))
@@ -62,7 +57,7 @@ ocpt.meanvar(x,penalty="SIC",method="PELT",class=FALSE,shape=1)
 # Example of multiple changes in mean and variance at 50,100,150 in simulated normal data
 set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
-test_that('meanvar4',expect_equal(ocpt.meanvar(x,penalty="Manual",pen.value="4*log(n)",method="BinSeg",Q=5,class=FALSE),c(50,100,150,152,200)))
+test_that('meanvar4',expect_equal(ocpt.meanvar(x,penalty="Manual",pen.value="4*log(n)",method="BinSeg",Q=5,class=FALSE),c(1,50,100,150,200)))
 
 # Example multiple datasets where the first row has multiple changes in mean and variance and the
 #second row has no change in mean or variance
@@ -115,7 +110,7 @@ set.seed(10)
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
 y=rnorm(200,0,1)
 z=rbind(x,y)
-truth=list();truth[[1]]=c(50,100,149,200);truth[[2]]=200
+truth=list();truth[[1]]=c(1,50,100,149,200);truth[[2]]=c(1,200)
 test_that('var7',expect_equivalent(ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),truth))
 ans=ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
 test_that('var8',expect_equivalent(cpts(ans[[1]]),c(1,50,100,149)))
@@ -237,23 +232,11 @@ test_that('class23',expect_equivalent(distribution(x),"normal"))
 
 
 
-
-
-# From likelihood.Rd
-set.seed(1)
-x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
-out=ocpt.var(x,penalty="Manual",pen.value="2*log(n)",method="BinSeg",Q=5)
-test_that('logLik1',expect_equivalent(likelihood(out),c(925.8085, 957.5984)))
-
-
-
-
-
 # From logLik-methods.Rd
 set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
-out=ocpt.var(x,penalty="Manual",pen.value="2*log(n)",method="BinSeg",Q=5)
-test_that('logLik1',expect_equivalent(logLik(out),c(925.8085, 957.5984)))
+out=ocpt.var(x,penalty="Manual",pen.value="2*log(n)",method="PELT",Q=5)
+test_that('logLik1',expect_equivalent(logLik(out),c(925.8005652, 968.1871)))
 
 
 
@@ -425,3 +408,4 @@ test_that('class42',expect_equivalent(test.stat(x),character()))
 x=new("ocpt") # new cpt object
 test.stat(x)<-"normal" # replaces the current test.stat slot of x with "normal"
 test_that('class43',expect_equivalent(test.stat(x),"normal"))
+

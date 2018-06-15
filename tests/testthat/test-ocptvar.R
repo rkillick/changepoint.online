@@ -32,7 +32,7 @@ data <- list(singmeanvardata,mulmeanvardata,mulmeanvardata, mulmeanvarexpdata, m
 # vardata <-  list(singvardata, mulvardata, nochangedata)
 # meanvardata <-  list(singmeanvardata, mulmeanvardata, nochangedata)
 
-methods <- c("AMOC", "PELT", "BinSeg") #might want to change code to convert to uppercase so less likely to break code
+methods <- c("AMOC", "PELT") #might want to change code to convert to uppercase so less likely to break code
 #Segneigh taking too long and deprecation, so leaving until very last.
 #methods <- c("AMOC")
 
