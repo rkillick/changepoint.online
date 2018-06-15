@@ -1,4 +1,4 @@
-setClass("ocpt",slots=list(data.set="ts", cpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
+setClass("ocpt",slots=list(data.set="ts", cpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character",lastchangelike="array",lastchangecpts="array",numchangecpts="array",checklist="array",ndone="numeric",nupdate="numeric"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
 
 setClass("ocpt.reg",slots=list(data.set="matrix", cpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),"character")))
 
@@ -249,6 +249,90 @@ if(!isGeneric("nseg")) {
 setMethod("nseg","ocpt",function(object){ncpts(object)+1})
 setMethod("nseg","ocpt.reg",function(object){ncpts(object)+1})
 
+#lastchangelike function
+if(!isGeneric("lastchangelike")) {
+    if (is.function("lastchangelike")){
+        fun <- lastchangelike
+    }
+    else {fun <- function(object){
+        standardGeneric("lastchangelike")
+    }
+    }
+    setGeneric("lastchangelike", fun)
+}
+setMethod("lastchangelike","ocpt",function(object) object@lastchangelike)
+setMethod("lastchangelike","ocpt.reg",function(object) object@lastchangelike)
+
+#lastchangecpts function
+if(!isGeneric("lastchangecpts")) {
+    if (is.function("lastchangecpts")){
+        fun <- lastchangecpts
+    }
+    else {fun <- function(object){
+        standardGeneric("lastchangecpts")
+    }
+    }
+    setGeneric("lastchangecpts", fun)
+}
+setMethod("lastchangecpts","ocpt",function(object) object@lastchangecpts)
+setMethod("lastchangecpts","ocpt.reg",function(object) object@lastchangecpts)
+
+#numchangecpts function
+if(!isGeneric("numchangecpts")) {
+    if (is.function("numchangecpts")){
+        fun <- numchangecpts
+    }
+    else {fun <- function(object){
+        standardGeneric("numchangecpts")
+    }
+    }
+    setGeneric("numchangecpts", fun)
+}
+setMethod("numchangecpts","ocpt",function(object) object@numchangecpts)
+setMethod("numchangecpts","ocpt.reg",function(object) object@numchangecpts)
+
+#checklist function
+if(!isGeneric("checklist")) {
+    if (is.function("checklist")){
+        fun <- checklist
+    }
+    else {fun <- function(object){
+        standardGeneric("checklist")
+    }
+    }
+    setGeneric("checklist", fun)
+}
+setMethod("checklist","ocpt",function(object) object@checklist)
+setMethod("checklist","ocpt.reg",function(object) object@checklist)
+
+#ndone
+if(!isGeneric("ndone")) {
+    if (is.function("ndone")){
+        fun <- ndone
+    }
+    else {fun <- function(object){
+        standardGeneric("ndone")
+    }
+    }
+    setGeneric("ndone", fun)
+}
+setMethod("ndone","ocpt",function(object) object@ndone)
+setMethod("ndone","ocpt.reg",function(object) object@ndone)
+
+#nupdate
+if(!isGeneric("nupdate")) {
+    if (is.function("nupdate")){
+        fun <- nupdate
+    }
+    else {fun <- function(object){
+        standardGeneric("nupdate")
+    }
+    }
+    setGeneric("nupdate", fun)
+}
+setMethod("nupdate","ocpt",function(object) object@nupdate)
+setMethod("nupdate","ocpt.reg",function(object) object@nupdate)
+
 
 # replacement functions for slots
 setGeneric("data.set<-", function(object, value) standardGeneric("data.set<-"))
@@ -389,6 +473,72 @@ setReplaceMethod("pen.value.full", "ocpt.range", function(object, value) {
 #       return(object)
 #     })
 
+
+#lastchangelike
+setGeneric("lastchangelike<-", function(object, value) standardGeneric("lastchangelike<-"))
+setReplaceMethod("lastchangelike", "ocpt", function(object, value) {
+    object@lastchangelike <- value
+    return(object)
+})
+setReplaceMethod("lastchangelike", "ocpt.reg", function(object, value) {
+    object@lastchangelike <- value
+    return(object)
+})
+
+#lastchangecpts
+setGeneric("lastchangecpts<-", function(object, value) standardGeneric("lastchangecpts<-"))
+setReplaceMethod("lastchangecpts", "ocpt", function(object, value) {
+    object@lastchangecpts <- value
+    return(object)
+})
+setReplaceMethod("lastchangecpts", "ocpt.reg", function(object, value) {
+    object@lastchangecpts <- value
+    return(object)
+})
+
+#numchangecpts
+setGeneric("numchangecpts<-", function(object, value) standardGeneric("numchangecpts<-"))
+setReplaceMethod("numchangecpts", "ocpt", function(object, value) {
+    object@numchangecpts <- value
+    return(object)
+})
+setReplaceMethod("numchangecpts", "ocpt.reg", function(object, value) {
+    object@numchangecpts <- value
+    return(object)
+})
+
+#checklist
+setGeneric("checklist<-", function(object, value) standardGeneric("checklist<-"))
+setReplaceMethod("checklist", "ocpt", function(object, value) {
+    object@checklist <- value
+    return(object)
+})
+setReplaceMethod("checklist", "ocpt.reg", function(object, value) {
+    object@checklist <- value
+    return(object)
+})
+
+#ndone
+setGeneric("ndone<-", function(object, value) standardGeneric("ndone<-"))
+setReplaceMethod("ndone", "ocpt", function(object, value) {
+    object@ndone <- value
+    return(object)
+})
+setReplaceMethod("ndone", "ocpt.reg", function(object, value) {
+    object@ndone <- value
+    return(object)
+})
+
+#nupdate
+setGeneric("nupdate<-", function(object, value) standardGeneric("nupdate<-"))
+setReplaceMethod("nupdate", "ocpt", function(object, value) {
+    object@nupdate <- value
+    return(object)
+})
+setReplaceMethod("nupdate", "ocpt.reg", function(object, value) {
+    object@nupdate <- value
+    return(object)
+})
 
 # parameter functions
 setGeneric("param", function(object,...) standardGeneric("param"))
@@ -1266,3 +1416,5 @@ setMethod("acf", "ocpt.reg", function(object,lag.max=NULL,...) {
         stats::acf(data[(cpts[i]+1):cpts[i+1]],main=paste("Series part:",(cpts[i]+1),"-",cpts[i+1]),...)
     }
     })
+
+

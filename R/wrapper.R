@@ -1,13 +1,11 @@
-PELT.online.initialise=function(data,pen=0,cost_func = "mean.norm", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist){
+PELT.online.initialise=function(sumstat,pen=0,cost_func = "mean.norm", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist){
   # function that uses the PELT method to calculate changes in mean where the segments in the data are assumed to be Normal
   # initialisation function for online use
 
   # assumes dyn.load('PELTonline.so') has already been done
   ndone=1
   nupdate=length(data) - 1
-  mu=mean(data)
-  
-sumstat=cbind(c(0,cumsum(coredata(data))),c(0,cumsum(coredata(data)^2)),cumsum(c(0,(coredata(data)-mu)^2)))
+ 
 storage.mode(sumstat) = 'double'
 
   if(missing(lastchangelike)) {lastchangelike = array(0,dim = nupdate + ndone + 1)}

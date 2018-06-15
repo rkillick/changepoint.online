@@ -11,9 +11,9 @@ SEGNEIGH.online <- function(data, pen.value, costfunc, Q, var=0, shape=1){
   
   split=strsplit(costfunc, "\\.")
   if(var!=0){  
-  text = c("segneigh",".", split[[1]][1],".", split[[1]][2],"(",dataToString(data),",",Q,",",pen.value,",","know.mean=",TRUE,",","mu=",var,")")
+  text = c("online.segneigh",".", split[[1]][1],".", split[[1]][2],"(",dataToString(data),",",Q,",",pen.value,",","know.mean=",TRUE,",","mu=",var,")")
   }else{
-    text = c("segneigh",".", split[[1]][1],".", split[[1]][2],"(",dataToString(data),",",Q,",",pen.value,")")    
+    text = c("online.segneigh",".", split[[1]][1],".", split[[1]][2],"(",dataToString(data),",",Q,",",pen.value,")")    
   }
  
   
