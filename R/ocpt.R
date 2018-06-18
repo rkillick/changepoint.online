@@ -205,7 +205,7 @@ checkData = function(data){
   
 }
 
-ocpt.plot=function(data,Q=4){ #Q= maximum number of changepoints i=start of plot
+ocpt.plot=function(data,Q=4){ #Q= maximum number of changepoints
     n = length(data)
     if(n > Q){
         for(i in (2*Q):n){
