@@ -53,4 +53,8 @@ return(ocpt.var.initialise(data,penalty,pen.value,method,Q,test.stat,class,param
 
 }
 
+ocpt.var.update = function(){
+    "Not done yet"
+}
+
 

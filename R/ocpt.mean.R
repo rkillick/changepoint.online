@@ -51,4 +51,8 @@ return(ocpt.mean.initialise(data,penalty,pen.value,method,Q,test.stat,class,para
 
 }
 
+opt.mean.update=function(){
+    "Not done yet"
+}
+
 

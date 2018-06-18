@@ -51,4 +51,7 @@ return(ocpt.meanvar.initialise(data,penalty,pen.value,method,Q,test.stat,class,p
 
 }
 
+ocpt.meanvar.update = function(){
+    "Not done yet"
+}
 
