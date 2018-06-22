@@ -5,20 +5,17 @@ PELT.online.initialise=function(sumstat,pen=0,cost_func = "mean.norm", shape = 1
   # assumes dyn.load('PELTonline.so') has already been done
   ndone=1
   nupdate=length(sumstat[,1]) - 1
- if(nupdate<2){stop('Data must have at least 2 observations to fit a changepoint model.')}
- 
-storage.mode(sumstat) = 'double'
-
-  if(missing(lastchangelike)) {lastchangelike = array(0,dim = nupdate + ndone + 1)}
+  
+  if(missing(lastchangelike)) {lastchangelike = c(rep(0,nupdate + ndone + 1))}
   storage.mode(lastchangelike) = 'double'
   
-  if(missing(lastchangecpts)) {lastchangecpts = array(0,dim = nupdate + ndone + 1)}
+  if(missing(lastchangecpts)) {lastchangecpts = c(rep(0,nupdate + ndone + 1))}
   storage.mode(lastchangecpts) = 'integer'
   
-  if(missing(numchangecpts)) {numchangecpts = array(0,dim = nupdate + ndone + 1)}
+  if(missing(numchangecpts)) {numchangecpts = c(rep(0,nupdate + ndone + 1))}
   storage.mode(numchangecpts) = 'integer'
   
-  if(missing(checklist)) {checklist = array(0,dim = nupdate + ndone + 1)}
+  if(missing(checklist)) {checklist = c(rep(0,nupdate + ndone + 1))}
   storage.mode(checklist) = 'integer'
   
   if(missing(checklist)){nchecklist=0}
@@ -33,7 +30,7 @@ storage.mode(sumstat) = 'double'
   
   error=0
 
-  answer=.C('PELT_online',cost_func=cost_func,sumstat=sumstat,ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(pen),cptsout=cptsout,error=as.integer(error),shape=as.double(shape), minseglen=as.integer(minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=as.integer(nchecklist),numchangecpts=numchangecpts)
+  answer=.C('PELT_online',cost_func=as.character(cost_func),sumstat=as.double(sumstat),ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(pen),cptsout=cptsout,error=as.integer(error),shape=as.double(shape), minseglen=as.integer(minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=as.integer(nchecklist),numchangecpts=numchangecpts)
   names(answer)=c('cost_func','sumstat','ndone','nupdate','penalty','cptsout','error','shape','minseglen','lastchangelike','lastchangecpts','checklist','nchecklist','numchangecpts')
 
   if(answer$error>0){
@@ -54,23 +51,23 @@ PELT.online.update=function(previousanswer,newdata){
     # new data is a numerical vector of length 1 or more
     
     # assumes dyn.load('PELTonline.so') has already been done
-    ndone=previousanswer$ndone+previousanswer$nupdate
+    ndone=previousanswer@ndone+previousanswer@nupdate
     nupdate=length(newdata)
     mu=mean(newdata)
     sumstat=cbind(c(0,cumsum(coredata(newdata))),c(0,cumsum(coredata(newdata)^2)),cumsum(c(0,(coredata(newdata)-mu)^2)))
     storage.mode(sumstat) = 'double'
     
     
-    lastchangelike=c(previousanswer[[10]],rep(0,nupdate))
+    lastchangelike=c(previousanswer@lastchangelike,rep(0,nupdate))
     storage.mode(lastchangelike)='double'
     
-    lastchangecpts=c(previousanswer[[11]],rep(0,nupdate))
+    lastchangecpts=c(previousanswer@lastchangecpts,rep(0,nupdate))
     storage.mode(lastchangecpts)='integer'
     
-    numchangecpts=c(previousanswer[[14]],rep(0,nupdate))
+    numchangecpts=c(previousanswer@numchangecpts,rep(0,nupdate))
     storage.mode='integer'
 
-    checklist=c(previousanswer[[12]][1:previousanswer[[13]]],rep(0,nupdate))
+    checklist=c(previousanswer@checklist[1:length(previousanswer@checklist)],rep(0,nupdate))
     storage.mode(checklist)='integer'
     
     nchecklist=sum(checklist>0)
@@ -82,7 +79,7 @@ PELT.online.update=function(previousanswer,newdata){
     answer=list()
     answer[[7]]=1
     on.exit(.C("FreePELT",answer[[7]]))
-     answer=.C('PELT_online',cost_func=previousanswer$cost_func,sumstat=sumstat,ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(previousanswer$pen),cptsout=cptsout,error=as.integer(error),shape=as.double(previousanswer$shape), minseglen=as.integer(previousanswer$minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=nchecklist,numchangecpts=numchangecpts)
+     answer=.C('PELT_online',cost_func=previousanswer@cost_func,sumstat=sumstat,ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(previousanswer@pen.value),cptsout=cptsout,error=as.integer(error),shape=previousanswer@shape, minseglen=as.integer(previousanswer@minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=nchecklist,numchangecpts=numchangecpts)
     if(answer[[7]]>0){
         print("C code error:",answer[[7]])
         stop(call.=F)

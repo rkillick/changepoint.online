@@ -6,8 +6,8 @@ Date: 2016-03-21
 Authors@R: c(person("Rebecca", "Killick", role=c("aut","cre"),email="r.killick@lancs.ac.uk"),
 	person("Matt", "Nunes", role="aut"),person("Andrew", "Connell", role="aut"))
 Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>
-Description: To be described later ...
-Depends: R(>= 3.1), changepoint
+Description: Brings the functionality of the offline changepoint package online. This package breaks the original functions in to initalise and update functions.
+Depends: R(>= 3.1), changepoint,methods,zoo
 Suggests: testthat
 License: GPL
 LazyLoad: yes

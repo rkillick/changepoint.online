@@ -6,21 +6,21 @@
 Methods for online Changepoint Detection
 }
 \description{
-Implements various mainstream and specialised changepoint methods for finding single and multiple changepoints within data.  Many popular non-parametric and frequentist methods are included.  Users should start by looking at the documentation for ocpt.mean(), ocpt.var(), ocpt.meanvar() and ocpt.plot().
+Implements various mainstream and specialised changepoint methods for finding single and multiple changepoints within data.  Many popular non-parametric and frequentist methods are included.  Users should start by looking at the documentation for ocpt.mean.initialise() and ocpt.mean.update().
 }
 \details{
 \tabular{ll}{
-Package: \tab changepoint\cr
+Package: \tab changepoint.online\cr
 Type: \tab Package\cr
 Version: \tab 0.0.1 \cr
-Date: \tab 2018-06-20\cr
+Date: \tab 2018-06-25\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }
 
 }
 \author{
-Rebecca Killick <r.killick@lancs.ac.uk>, Kaylea Haynes <k.haynes1@lancs.ac.uk> with contributions from Idris A. Eckley <i.eckley@lancs.ac.uk>, Paul Fearnhead <p.fearnhead@lancs.ac.uk>.
+Andrew Connell <a.connell1@lancaster.ac.uk>, Rebecca Killick <r.killick@lancs.ac.uk>, Kaylea Haynes <k.haynes1@lancs.ac.uk> with contributions from Idris A. Eckley <i.eckley@lancs.ac.uk>, Paul Fearnhead <p.fearnhead@lancs.ac.uk>.
 
 Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>, Andrew Connell <a.connell1@lancaster.ac.uk>
 }
@@ -38,29 +38,8 @@ Segment Neighbourhoods: Auger, I. E. And Lawrence, C. E. (1989) Algorithms for t
 \keyword{changepoint}
 \keyword{segmentation}
 \seealso{
-\code{\link{ocpt.mean}},\code{\link{ocpt.var}},\code{\link{ocpt.meanvar}}
+\code{\link{ocpt.mean.initialise}},\code{\link{ocpt.mean.update}}\code{\link{ocpt.var.initialise}},\code{\link{ocpt.var.update}},\code{\link{ocpt.meanvar.initialise}},\code{\link{ocpt.meanvar.update}}
 }
 \examples{
-# change in variance
-set.seed(1)
-x=c(rnorm(100,0,1),rnorm(100,0,10))
-ansvar=ocpt.var(x)
-plot(ansvar)
-print(ansvar) # identifies 1 changepoint at 100
-
-# change in mean
-y=c(rnorm(100,0,1),rnorm(100,5,1))
-ansmean=ocpt.mean(y)
-plot(ansmean,cpt.col='blue')
-print(ansmean)
-
-# change in mean and variance
-z=c(rnorm(100,0,1),rnorm(100,2,10))
-ansmeanvar=ocpt.meanvar(z)
-plot(ansmeanvar,cpt.width=3)
-print(ansmeanvar)
-
-# Real time plotting of Time Series
-p=c(rnorm(100,5,1),rnorm(100,10,10))
-ocpt.plot(p)
+#Please look in the desired function for examples.
 }

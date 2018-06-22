@@ -4,60 +4,39 @@ context("man file example tests")
 # change in variance
 set.seed(1)
 x=c(rnorm(100,0,1),rnorm(100,0,10))
-ansvar=ocpt.var(x)
-test_that('var1',expect_identical(cpts(ansvar),100))
+ansvar=ocpt.var.initialise(x)
+test_that('var1',expect_identical(cpts(ansvar),201))
 
 # change in mean
 set.seed(1)
 y=c(rnorm(100,0,1),rnorm(100,5,1))
-ansmean=ocpt.mean(y)
-test_that('mean1',expect_identical(cpts(ansmean),100))
+ansmean=ocpt.mean.initialise(y)
+test_that('mean1',expect_identical(cpts(ansmean),201))
 
 # change in mean and variance
 set.seed(1)
 z=c(rnorm(100,0,1),rnorm(100,2,10))
-ansmeanvar=ocpt.meanvar(z)
-test_that('meanvar1',expect_identical(cpts(ansmeanvar),100))
+ansmeanvar=ocpt.meanvar.initialise(z)
+test_that('meanvar1',expect_identical(cpts(ansmeanvar),201))
 
 
 
-
-
-
-
-# From cpt.mean.Rd
+# From ocpt.mean.Rd
 # Example of a change in mean at 100 in simulated normal data
 set.seed(1)
 x=c(rnorm(100,0,1),rnorm(100,10,1))
-test_that('mean2',expect_equivalent(ocpt.mean(x,penalty="SIC",method="AMOC",class=FALSE),c(100,1)))
-ans=ocpt.mean(x,penalty="Asymptotic",pen.value=0.01,method="AMOC") 
-test_that('mean3',expect_identical(cpts(ans),100))
-ans=ocpt.mean(x,penalty="Manual",pen.value=0.8,method="AMOC")
-test_that('mean4',expect_equivalent(cpts(ans),100))
-
-# Example multiple datasets where the first row has multiple changes in mean and the second row has
-#no change in mean
-set.seed(1)
-x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
-y=rnorm(200,0,1)
-z=rbind(x,y)
-test_that('mean6',expect_equal(ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),list(c(1,50,100,150,200),c(1,200))))
-ans=ocpt.mean(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
-test_that('mean7',expect_equal(cpts(ans[[1]]),c(1,50,100,150)))
-test_that('mean8',expect_equal(cpts(ans[[2]]),1))
-
-
+ansmean = ocpt.mean.initialise(x,penalty="SIC",method="AMOC",class=FALSE)
+test_that('mean2',expect_equivalent(cpts(ansmean),201))
+ans=ocpt.mean.initialise(x,penalty="Asymptotic",pen.value=0.01,method="AMOC") 
+test_that('mean3',expect_identical(cpts(ans),201))
+ans=ocpt.mean.initialise(x,penalty="Manual",pen.value=0.8,method="AMOC")
+test_that('mean4',expect_equivalent(cpts(ans),201))
 
 # From ocpt.meanvar.Rd
 # Example of a change in scale parameter (mean and variance) at 100 in simulated gamma data
 set.seed(1)
 x=c(rgamma(100,shape=1,rate=1),rgamma(100,shape=1,rate=5))
-ocpt.meanvar(x,penalty="SIC",method="PELT",class=FALSE,shape=1)
-
-# Example of multiple changes in mean and variance at 50,100,150 in simulated normal data
-set.seed(1)
-x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
-test_that('meanvar4',expect_equal(ocpt.meanvar(x,penalty="Manual",pen.value="4*log(n)",method="BinSeg",Q=5,class=FALSE),c(1,50,100,150,200)))
+ocpt.meanvar.initialise(x,penalty="SIC",method="PELT",class=FALSE,shape=1)
 
 # Example multiple datasets where the first row has multiple changes in mean and variance and the
 #second row has no change in mean or variance
@@ -65,12 +44,7 @@ set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
 y=rnorm(200,0,1)
 z=rbind(x,y)
-ans=ocpt.meanvar(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
-test_that('meanvar6',expect_equivalent(cpts(ans[[1]]),c(1,50,100,150)))
-test_that('meanvar7',expect_equivalent(cpts(ans[[2]]),1))
-
-
-
+ans=ocpt.meanvar.initialise(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
 
 
 # From ocpt.range-class.Rd
@@ -93,17 +67,6 @@ test_that('class6',expect_equivalent(data.set(x),matrix(1:10,nrow=5,ncol=2)))
 
 
 
-
-
-
-# From cpt.var.Rd
-# Example of a change in variance at 100 in simulated normal data
-set.seed(1)
-x=c(rnorm(100,0,1),rnorm(100,0,10))
-test_that('var2',expect_equivalent(ocpt.var(x,penalty="SIC",method="AMOC",class=FALSE),c(100,1)))
-ans=ocpt.var(x,penalty="Asymptotic",pen.value=0.01,method="AMOC") 
-test_that('var3',expect_equivalent(cpts(ans),100))
-
 # Example multiple datasets where the first row has multiple changes in variance and the second row
 #has no change in variance
 set.seed(10)
@@ -111,11 +74,8 @@ x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
 y=rnorm(200,0,1)
 z=rbind(x,y)
 truth=list();truth[[1]]=c(1,50,100,149,200);truth[[2]]=c(1,200)
-test_that('var7',expect_equivalent(ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="BinSeg",Q=5,class=FALSE),truth))
-ans=ocpt.var(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
-test_that('var8',expect_equivalent(cpts(ans[[1]]),c(1,50,100,149)))
-test_that('var9',expect_equivalent(cpts(ans[[2]]),1))
-
+ans=ocpt.var.initialise(z,penalty="Asymptotic",pen.value=0.01,method="PELT") 
+test_that('var8',expect_equivalent(cpts(ans),401))
 
 
 
@@ -127,14 +87,6 @@ test_that('class7',expect_is(x,"ocpt"))
 test_that('class8',expect_equivalent(cpts(x),numeric()))
 cpts(x)<-c(10,50,100) # replaces the cpts slot from x with c(10,50,100)
 test_that('class9',expect_equivalent(cpts(x),c(10,50,100)))
-
-# Example of a change in variance at 100 in simulated normal data
-set.seed(1)
-x=c(rnorm(100,0,1),rnorm(100,0,10))
-ans=ocpt.var(x) 
-test_that('class10',expect_equivalent(logLik(ans),c(1003.2283241358,1012.438665)))
-
-
 
 
 # From cpts.full.Rd
@@ -406,6 +358,7 @@ test_that('class42',expect_equivalent(test.stat(x),character()))
 
 # From test.stat-.Rd
 x=new("ocpt") # new cpt object
+
 test.stat(x)<-"normal" # replaces the current test.stat slot of x with "normal"
 test_that('class43',expect_equivalent(test.stat(x),"normal"))
 

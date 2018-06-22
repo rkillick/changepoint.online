@@ -6,7 +6,7 @@ PELT (Pruned Exact Linear Time) - Only intended for developer use.
 \description{
 Implements the PELT method for identifying changepoints in a given set of summary statistics for a specified cost function and penalty.
 
-This function is called by \code{ocpt.mean}, \code{ocpt.var} and \code{ocpt.meanvar} when \code{method="PELT"}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed increases or to fit alternative cost functions.
+This function is not called but is the basis for \code{PELT.online.initialise} and \code{PELT.online.update} when \code{method="PELT"}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed increases or to fit alternative cost functions.
 
 WARNING: No checks on arguments are performed!
 }
@@ -50,9 +50,9 @@ PELT.online(sumstat,pen=0, cost_func = "mean.norm", shape = 1, minseglen = 1,las
 \value{
 	A list is returned with elements:
 	\item{lastchangecpts}{Vector of length n containing the last changepoint prior to each timepoint.}
-	\item{ocpts}{Ordered list of optimal number of changepoints ending with n.}
+	\item{cpts}{Ordered list of optimal number of changepoints ending with n.}
 	\item{lastchangelike}{Vector of lenght n containing the likelihood of the optimal segmentation up to each timepoint.}
-	\item{nocpts}{Number of changes identified.}
+	\item{ncpts}{Number of changes identified.}
 }
 \references{
 PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, \emph{JASA} \bold{107(500)}, 1590--1598
@@ -60,15 +60,16 @@ PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of ch
 CROPS: Haynes K, Eckley IA, Fearnhead P (2014) Efficient penalty search for multiple changepoint problems (in submission), arXiv:1412.3617
 }
 \author{
+Andrew Connell
 Rebecca Killick
 }
 
 
 \seealso{
-\code{\link{ocpt.mean}},\code{\link{ocpt.meanvar}},\code{\link{plot-methods}},\code{\linkS4class{ocpt}}
+\code{\link{PELT.online.initialise}},,\code{\link{PELT.online.update}},\code{\linkS4class{ocpt}}
 }
 \examples{
-#This function should only be used by developers, see its use in ocpt.mean, ocpt.var and ocpt.meanvar.
+#This function should only be used by developers.
 }
 
 \keyword{methods}

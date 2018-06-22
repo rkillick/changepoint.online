@@ -1,4 +1,4 @@
-context("ocpt.mean tests")
+context("ocpt.mean.initialise tests")
 
 set.seed(1) # Note: new data sets must be added at the end.
 singmeandata <- c(rnorm(100,0,1),rnorm(100,10,1))
@@ -66,17 +66,17 @@ checkManualPenalty <- function(methodLog){
   for(npv in 1:length(manpenval)){
     
     test_that(paste0("Test #",t," :data=", d, "penalty=",penalties[p],", method=",methods[m],",class=",cl,", param=",pe,", penvalue=",manpenval[[npv]],", test.stat=",testStats[ts]) ,{
-      #x <- ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=manpenval[[npv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)
+      #x <- ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], pen.value=manpenval[[npv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)
       # browser()
       if(is.numeric(manpenval[[npv]]) == FALSE){
         texttest = try(eval(parse(text=paste(manpenval[[npv]]))),silent=TRUE)
         if(class(texttest)=='try-error'){
-                 expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=manpenval[[npv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error("Your manual penalty cannot be evaluated"))
+                 expect_that(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], pen.value=manpenval[[npv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error("Your manual penalty cannot be evaluated"))
           t = t + 1
         }
       }
             if(manpenval[[npv]] < 0){
-              expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=manpenval[[npv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error('pen.value cannot be negative, please change your penalty value'))
+              expect_that(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], pen.value=manpenval[[npv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error('pen.value cannot be negative, please change your penalty value'))
             }
       expect_that(2+2, equals(4))
       
@@ -97,16 +97,16 @@ checkAsymptoticPenalty <- function(methodLog){
     # browser()
     test_that(paste0("Test #",t," :data=", d, "penalty=",penalties[p],", pen.value=", asympenval[[apv]],", method=",methods[m],",class=",cl,", param=",pe,", penvalue=",asympenval[[apv]],", test.stat=",testStats[ts]), {
      if(is.numeric(asympenval[[apv]]) == FALSE){
-        expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
+        expect_that(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
       }
       else if(asympenval[[apv]] <= 0 || asympenval[[apv]] > 1){
-        expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error("Asymptotic penalty values must be > 0 and <= 1"))
+        expect_that(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error("Asymptotic penalty values must be > 0 and <= 1"))
       }
       else if(methods[m] == "PELT" || methods[m] == "BinSeg"){
-          expect_warning(ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)) 
+          expect_warning(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)) 
       }
       else{
-        x <- ocpt.mean(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)
+        x <- ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], pen.value=asympenval[[apv]], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)
         expect_that(2+2, equals(4))
       }
     })  
@@ -119,7 +119,7 @@ checkCROPS <- function(){
   #test the returns of the class
   
   if(methods[m]!="PELT"){
-    expect_that(ocpt.mean(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[1]], test.stat=testStats[[ts]], class=cl, param.estimates=pe), throws_error('CROPS is a valid penalty choice only if method="PELT", please change your method or your penalty.'))    
+    expect_that(ocpt.mean.initialise(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[1]], test.stat=testStats[[ts]], class=cl, param.estimates=pe), throws_error('CROPS is a valid penalty choice only if method="PELT", please change your method or your penalty.'))    
     t=t+1
   }
   else{
@@ -128,16 +128,16 @@ checkCROPS <- function(){
       test_that(paste0("Test #",t,"data:",d," :penalty=",penalties[p],", penval=",cropspenval[cr],", method=",methods[m],",class=",cl,", param=",pe,", test.stat=",testStats[ts]), {      
         
         if(is.numeric(cropspenval[[cr]]) == FALSE ){
-          expect_that(ocpt.mean(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]], class=cl, param.estimates=pe), throws_error('For CROPS, pen.value must be supplied'))
+          expect_that(ocpt.mean.initialise(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]], class=cl, param.estimates=pe), throws_error('For CROPS, pen.value must be supplied'))
         }else if(length(cropspenval[[cr]]) != 2 ){
-          expect_that(ocpt.mean(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]],class=cl, param.estimates=pe), throws_error('The length of pen.value must be 2'))
+          expect_that(ocpt.mean.initialise(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]],class=cl, param.estimates=pe), throws_error('The length of pen.value must be 2'))
           
           
         }else{
           #       expect_that(cpt.mean(data=data[[d]], penalty=penalties[p], class=cl, param.estimates=pe), throws_error('For CROPS, pen.value must be supplied'))
           
           if(testStats[[ts]] == "Normal" || testStats[[ts]] == "Gamma" || testStats[[ts]] == "Exponential" || testStats[[ts]] == "Poisson" ){
-            x <- ocpt.mean(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]], class=cl, param.estimates=pe)
+            x <- ocpt.mean.initialise(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]], class=cl, param.estimates=pe)
             
             
             if(cl == TRUE){
@@ -146,7 +146,7 @@ checkCROPS <- function(){
             
             
           }else{
-            expect_that(ocpt.mean(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]], class=cl, param.estimates=pe), throws_error('Only Normal, Exponential, Gamma and Poisson are valid test statistics'))   
+            expect_that(ocpt.mean.initialise(data=data[[d]], method=methods[m],penalty=penalties[p], pen.value=cropspenval[[cr]], test.stat=testStats[[ts]], class=cl, param.estimates=pe), throws_error('Only Normal, Exponential, Gamma and Poisson are valid test statistics'))   
           }
         }
       })
@@ -165,7 +165,7 @@ checkOtherPenalties <- function(methodLog){
   }
   
   test_that(paste0("Test #",t," :data=", d, "penalty=",penalties[p],", method=",methods[m],",class=",cl,", param=",pe,", test.stat=",testStats[ts]), {
-    x <- ocpt.mean(data=data[[d]], penalty=penalties[p], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)
+    x <- ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], method=methods[m], Q=aQv, test.stat=testStats[ts], class=cl, param.estimates=pe)
     #                     if(length(data=data[[d]]) <= 2){
     #                       expect_that(cpt.mean(data[[d]], penalty=penalties[p], 0, method=methods[m], QValues[[v]], testStats[ts], class=cl, pe), throws_error())
     #                     }
@@ -190,7 +190,7 @@ checkOtherPenalties <- function(methodLog){
       #  expect_that(x, is_a('list'))  #####this is now an integer in BINSEG.
     }else if(cl == FALSE && methodLog == FALSE){
       if(methods[m] == "PELT"){
-        expect_that(x, is_a('integer'))
+        expect_that(x, is_a('ocpt'))
       }
       #                       }else if(methods[m] == "AMOC"){
       #                         #if(testStats[ts] == "CUSUM"){
@@ -210,18 +210,18 @@ checkOtherPenalties <- function(methodLog){
 for(d in 1:length(data)){
   if(is.element(NA, data[[d]])){
     test_that(paste0("Test #",t," :data=",d), {      
-      expect_that(ocpt.mean(data=data[[d]]),throws_error("Missing value: NA is not allowed in the data as changepoint methods are only sensible for regularly spaced data."))
+      expect_that(ocpt.mean.initialise(data=data[[d]]),throws_error("Missing value: NA is not allowed in the data as changepoint methods are only sensible for regularly spaced data."))
       t = t + 1
     })
     
   }else if(length(data[[d]]) < 2){
     test_that(paste0("Test #",t," :data=",d), {      
-      expect_that(ocpt.mean(data=data[[d]]),throws_error())
+      expect_that(ocpt.mean.initialise(data=data[[d]]),throws_error())
       t = t + 1
     }) 
   }else if(is.numeric(data[[d]]) == FALSE){
     test_that(paste0("Test #",t," :data=",d), {
-      expect_that(ocpt.mean(data=data[[d]]),throws_error("Only numeric data allowed"))
+      expect_that(ocpt.mean.initialise(data=data[[d]]),throws_error("Only numeric data allowed"))
       t = t + 1
     }) 
   }
@@ -245,11 +245,11 @@ for(d in 1:length(data)){
                     test_that(paste0("Test #",t," :data=", d, "penalty=",penalties[p],", method=",methods[m],",class=",cl,", param=",pe,", test.stat=",testStats[ts],"QVal=",QValues[[v]]), {
                       
                       if(is.numeric(QValues[[v]]) == FALSE){
-                        expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], method=methods[m], Q=QValues[[v]], test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
+                        expect_that(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], method=methods[m], Q=QValues[[v]], test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
                       }else if(QValues[[v]] < 0){
-                        expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], method=methods[m], Q=QValues[[v]], test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
+                        expect_that(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], method=methods[m], Q=QValues[[v]], test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
                       }else if(QValues[[v]] > (length(data[[d]]))/2+1){
-                        expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], method=methods[m], Q=QValues[[v]], test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
+                        expect_that(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], method=methods[m], Q=QValues[[v]], test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error())
                         #specific user defined error "Q is larger than the maximum number of segments"
                       }
                       t = t + 1
@@ -273,7 +273,7 @@ for(d in 1:length(data)){
                   #Normal and Asymptotic penalty pen values
                   if(methods[m] == "PELT" && testStats[ts] == "CUSUM"){
                     test_that(paste0("Test #",t," :data=", d, "penalty=",penalties[p],", method=",methods[m],",class=",cl,", param=",pe,", test.stat=",testStats[ts],"QVal=",Qv), {
-                      expect_that(ocpt.mean(data=data[[d]], penalty=penalties[p], method=methods[m], Q=Qv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error("Invalid Method, must be AMOC, SegNeigh or BinSeg")) 
+                      expect_that(ocpt.mean.initialise(data=data[[d]], penalty=penalties[p], method=methods[m], Q=Qv, test.stat=testStats[ts], class=cl, param.estimates=pe), throws_error("Invalid Method, must be AMOC, SegNeigh or BinSeg")) 
                     })
                     t = t + 1
                   }else{

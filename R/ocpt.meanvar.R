@@ -39,19 +39,30 @@ ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,method="PELT",Q
           
           ans=PELT.online.initialise(sumstat=sumstat,pen=pen.value,cost_func = costfunc, shape = shape, minseglen = minseglen)
           
-          return(online.class_input(data, cpttype="mean and variance", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cptsout),lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,numchangecpts=ans$numchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate))
+          return(online.class_input(data, cpttype="mean and variance", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cptsout),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,numchangecpts=ans$numchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
       }
       else{
           stop("Invalid Method, must be AMOC, PELT, SegNeigh or BinSeg")
       }
 }
 
-ocpt.meanvar.initialize=function(data,penalty="MBIC",pen.value=0,method="AMOC",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=1){
-return(ocpt.meanvar.initialise(data,penalty,pen.value,method,Q,test.stat,class,param.estimates,minseglen))
+ocpt.meanvar.initialize=function(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2){
+return(ocpt.meanvar.initialise(data,penalty,pen.value,method,Q,test.stat,class,param.estimates,shape,minseglen))
 
 }
 
-ocpt.meanvar.update = function(){
-    "Not done yet"
+ocpt.meanvar.update=function(previousanswer,newdata){
+    
+    checkData(newdata)
+    if(class(previousanswer@param.est) == "list"){
+        param.estimates = TRUE
+    }else{
+        param.estimates = FALSE
+    }
+    
+    nextans = PELT.online.update(previousanswer=previousanswer,newdata=newdata)
+    
+    return(online.class_input(data=newdata, cpttype="mean and variance", method=previousanswer@method, test.stat=previousanswer@test.stat, penalty=previousanswer@pen.type, pen.value=nextans$penalty, minseglen=nextans$minseglen, param.estimates=param.estimates, out=c(0, nextans$cptsout),shape = previousanswer@shape, lastchangelike=nextans$lastchangelike,lastchangecpts=nextans$lastchangecpts,numchangecpts=nextans$numchangecpts,checklist=nextans$checklist,ndone=nextans$ndone,nupdate=nextans$nupdate,cost_func=previousanswer@cost_func))
+    
 }
 

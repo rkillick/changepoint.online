@@ -6,29 +6,28 @@ Input all required arguments into online cpt classes - Only intended for develop
 \description{
 This function helps to input all the necessary information into the correct format for \code{ocpt} and \code{ocpt.range} classes.
 
-This function is called by \code{ocpt.mean}, \code{ocpt.var} and \code{ocpt.meanvar} when \code{class=TRUE}.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed and convenience.
+This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialise} and \code{ocpt.meanvar.initialise} and all the corresponding update functions.  This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed and convenience.
 
 WARNING: No checks on arguments are performed!
 }
 \usage{
-online.class_input(data, ocpttype, method, test.stat, penalty, pen.value, minseglen, 
-param.estimates, out=list(), Q=NA, shape=NA)
+online.class_input(data, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out = list(), Q = NA, shape = NA, lastchangelike = c(0), lastchangecpts =c(0), numchangecpts = c(0), checklist = c(0), ndone = 0, nupdate = length(data), cost_func)
 }
 \arguments{
   \item{data}{
-  Data used in changepoint analysis, see \code{\link{ocpt.mean}} for further details.
+  Data used in changepoint analysis, see \code{\link{ocpt.mean.initalise}} for further details.
 }
-  \item{ocpttype}{
+  \item{cpttype}{
   Type of changepoint analysis performed as a text string, e.g. "Mean", "Mean and Variance".
 }
   \item{method}{
-	Method used as a text string, see \code{\link{ocpt.mean}} for further details.
+	Method used as a text string, see \code{\link{ocpt.mean.initialise}} for further details.
 }
   \item{test.stat}{
 	The assumed test statistic / distribution of the data as a text string.  , see \code{\link{ocpt.mean}}, \code{\link{ocpt.meanvar}} or \code{\link{ocpt.var}} for further details.
 }
   \item{penalty}{
-	Penalty used as a text string, see \code{\link{ocpt.mean}} for further details.
+	Penalty used as a text string, see \code{\link{ocpt.mean.initialise}} for further details.
 }
   \item{pen.value}{
 	Numerical penalty value used in the analysis (positive).
@@ -48,6 +47,27 @@ param.estimates, out=list(), Q=NA, shape=NA)
   \item{shape}{
 	Value of the assumed known shape parameter required when test.stat="Gamma".
 }
+\item{lastchangelike}{
+	Vector of lenght n containing the likelihood of the optimal segmentation up to each timepoint.
+}
+\item{lastchangecpts}{
+	Vector of length n containing the last changepoint prior to each timepoint.
+}
+\item{numchangecpts}{
+Stores the current number of changepoints detected.
+}
+\item{checklist}{
+	Vector of locations of the potential last changepoint for next iteration (to be updated), max length=(ndone+nupdate).
+}
+\item{ndone}{
+Length of the time series when analysis begins.
+}
+\item{nupdate}{
+	Length of the time series to be analysed in this update.
+}
+\item{cost_func}{
+The cost function that has been used.
+}
 }
 \details{
 	This function takes all the input required for the \code{ocpt} or \code{ocpt.range} classes and enters it into the object.
@@ -58,10 +78,11 @@ param.estimates, out=list(), Q=NA, shape=NA)
   An object of class \code{ocpt} or \code{ocpt.range} as appropriate filled with the given attributes.
 }
 \author{
+Andrew Connell
 Rebecca Killick
 }
 \seealso{
-\code{\link{ocpt.var}},\code{\link{ocpt.mean}},\code{\link{plot-methods}},\code{\linkS4class{ocpt}}
+\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initialise}},\code{\linkS4class{ocpt}}
 }
 \examples{
 #This function should only be used by developers, see its use in ocpt.mean, ocpt.var and ocpt.meanvar.

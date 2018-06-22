@@ -1,4 +1,8 @@
 import('changepoint')
+import('methods')
+import('zoo')
+importFrom("graphics", "abline", "lines", "segments")
+importFrom("stats", "is.ts", "ts", "var")
  	
 
 exportPattern("^[^\\.]")

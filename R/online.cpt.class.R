@@ -1,6 +1,6 @@
-setClass("ocpt",slots=list(data.set="ts", cpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character",lastchangelike="array",lastchangecpts="array",numchangecpts="array",checklist="array",ndone="numeric",nupdate="numeric"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
+setClass("ocpt",slots=list(data.set="ts", cpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character",lastchangelike="numeric",lastchangecpts="numeric",numchangecpts="numeric",checklist="numeric",ndone="numeric",nupdate="numeric",cost_func="character",shape="numeric"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
 
-setClass("ocpt.reg",slots=list(data.set="matrix", cpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
+setClass("ocpt.reg",slots=list(data.set="matrix", cpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character",lastchangelike="numeric",lastchangecpts="numeric",numchangecpts="numeric",checklist="numeric",ndone="numeric",nupdate="numeric",cost_func="character",shape="numeric"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
 
 #  setClass("ocpt", representation(), prototype())
 #  cpts is the optimal segementation
@@ -333,6 +333,34 @@ if(!isGeneric("nupdate")) {
 setMethod("nupdate","ocpt",function(object) object@nupdate)
 setMethod("nupdate","ocpt.reg",function(object) object@nupdate)
 
+#cost_func
+if(!isGeneric("cost_func")) {
+    if (is.function("cost_func")){
+        fun <- ndone
+    }
+    else {fun <- function(object){
+        standardGeneric("cost_func")
+    }
+    }
+    setGeneric("cost_func", fun)
+}
+setMethod("cost_func","ocpt",function(object) object@cost_func)
+setMethod("cost_func","ocpt.reg",function(object) object@cost_func)
+
+#shape
+if(!isGeneric("shape")) {
+    if (is.function("shape")){
+        fun <- shape
+    }
+    else {fun <- function(object){
+        standardGeneric("shape")
+    }
+    }
+    setGeneric("shape", fun)
+}
+setMethod("shape","ocpt",function(object) object@shape)
+setMethod("shape","ocpt.reg",function(object) object@shape)
+
 
 # replacement functions for slots
 setGeneric("data.set<-", function(object, value) standardGeneric("data.set<-"))
@@ -537,6 +565,28 @@ setReplaceMethod("nupdate", "ocpt", function(object, value) {
 })
 setReplaceMethod("nupdate", "ocpt.reg", function(object, value) {
     object@nupdate <- value
+    return(object)
+})
+
+#cost_func
+setGeneric("cost_func<-", function(object, value) standardGeneric("cost_func<-"))
+setReplaceMethod("cost_func", "ocpt", function(object, value) {
+    object@cost_func <- value
+    return(object)
+})
+setReplaceMethod("cost_func", "ocpt.reg", function(object, value) {
+    object@cost_func <- value
+    return(object)
+})
+
+#shape
+setGeneric("shape<-", function(object, value) standardGeneric("shape<-"))
+setReplaceMethod("shape", "ocpt", function(object, value) {
+    object@shape <- value
+    return(object)
+})
+setReplaceMethod("shape", "ocpt.reg", function(object, value) {
+    object@shape <- value
     return(object)
 })
 
@@ -850,7 +900,7 @@ setMethod("param", "ocpt.reg", function(object,shape,...) {
 
 # summary functions
 setMethod("summary","ocpt",function(object){
-    cat("Created Using changepoint version",object@version,'\n')
+    cat("Created Using changepoint.online version",object@version,'\n')
     cat("Changepoint type      : Change in",cpttype(object),'\n')
     cat("Method of analysis    :",method(object),"\n")
     cat("Test Statistic  :", test.stat(object),"\n")
@@ -859,16 +909,12 @@ setMethod("summary","ocpt",function(object){
     cat("Maximum no. of cpts   :", ncpts.max(object),"\n")
     if(length(cpts(object))<=20){cat("Changepoint Locations :",cpts(object),"\n")}
     else{cat("Number of changepoints:", ncpts(object),"\n")}
-    cat("lastchangelike     :", lastchangelike(object), "\n")
-    cat("lastchangecpts     :", lastchangecpts(object), "\n")
-    cat("numchangecpts      :", numchangecpts(object), "\n")
-    cat("checklist          :", checklist(object), "\n")
     cat("ndone              :", ndone(object), "\n")
     cat("nupdate            :", nupdate(object), "\n")
 })
 
 setMethod("summary","ocpt.range",function(object){
-    cat("Created Using changepoint version",object@version,'\n')
+    cat("Created Using changepoint.online version",object@version,'\n')
     cat("Changepoint type      : Change in",cpttype(object),'\n')
     cat("Method of analysis    :",method(object),"\n")
     cat("Test Statistic  :", test.stat(object),"\n")
@@ -879,16 +925,12 @@ setMethod("summary","ocpt.range",function(object){
     else{cat("Number of changepoints:", ncpts(object),"\n")}
     if((nrow(cpts.full(object))<=5)&(ncol(cpts.full(object)<=20))){cat("Range of segmentations:\n");print(cpts.full(object));cat("\n For penalty values:", pen.value.full(object),"\n")}
     else{cat("Number of segmentations recorded:", nrow(cpts.full(object)), " with between ", sum(cpts.full(object)[nrow(cpts.full(object)),]>0,na.rm=T), " and ", sum(cpts.full(object)[1,]>0,na.rm=T), "changepoints.\n Penalty value ranges from:",min(pen.value.full(object))," to ",max(pen.value.full(object)))}
-    cat("lastchangelike     :", lastchangelike(object), "\n")
-    cat("lastchangecpts     :", lastchangecpts(object), "\n")
-    cat("numchangecpts      :", numchangecpts(object), "\n")
-    cat("checklist          :", checklist(object), "\n")
     cat("ndone              :", ndone(object), "\n")
     cat("nupdate            :", nupdate(object), "\n")
 })
 
 setMethod("summary","ocpt.reg",function(object){
-    cat("Created Using changepoint version",object@version,'\n')
+    cat("Created Using changepoint.online version",object@version,'\n')
     cat("Changepoint type     : Change in",cpttype(object),'\n')
     cat("Method of analysis   :",method(object),"\n")
     cat("Test Statistic :", test.stat(object),"\n")
@@ -896,10 +938,6 @@ setMethod("summary","ocpt.reg",function(object){
     cat("Maximum no. of cpts   :", ncpts.max(object),"\n")
     if(length(cpts(object))<=20){cat("Changepoint Locations :",cpts(object),"\n")}
     else{cat("Number of changepoints:", ncpts(object),"\n")}
-    cat("lastchangelike     :", lastchangelike(object), "\n")
-    cat("lastchangecpts     :", lastchangecpts(object), "\n")
-    cat("numchangecpts      :", numchangecpts(object), "\n")
-    cat("checklist          :", checklist(object), "\n")
     cat("ndone              :", ndone(object), "\n")
     cat("nupdate            :", nupdate(object), "\n")
 })
