@@ -7,8 +7,11 @@ Authors@R: c(person("Rebecca", "Killick", role=c("aut","cre"),email="r.killick@l
 	person("Matt", "Nunes", role="aut"),person("Andrew", "Connell", role="aut"))
 Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>
 Description: Brings the functionality of the offline changepoint package online. This package breaks the original functions in to initalise and update functions.
-Depends: R(>= 3.1), changepoint,methods,zoo
-Suggests: testthat
+Depends: R(>= 3.1), changepoint,methods,zoo,ecp,Rcpp
+Suggests: testthat, mvtnorm, MASS, combinat, R.rsp
 License: GPL
+LinkingTo: Rcpp
+NeedsCompilation: yes
+Repository: CRAN
 LazyLoad: yes
 Packaged: 2016-03-21 12:36:29 UTC; killick
