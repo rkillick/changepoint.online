@@ -43,7 +43,7 @@ BEGIN_RCPP
     int oldlength = as<int>(oldlength_);
     int newlength = as<int>(newlength_);
     double deltlength = abs(oldlength - delta);
-    double deltlengthplus = oldlength + delta ;
+    double deltlengthplus = oldlength + delta;
     NumericMatrix Z(Z_);
 
     //int N = Z.nrow(); //Get number of observations
@@ -77,12 +77,11 @@ BEGIN_RCPP
     //DRR[s] = within sum for Z[s+1], Z[s+2], ..., Z[s+delta]
     //DLL[s] = within sum for Z[s-delta+1], Z[s-delta+2], ..., Z[s]
     //DLR[s] = between sum for the sets used to calculate DLL[s] and DRR[s]
-    for(int s = deltlength; s < N; ++s){
-        DLL[s] = delta_sum(Z, s-delta+1, s, alpha);
-        if(s >= deltlength)//avoid array out of bounds error
-            DRR[s-delta] = DLL[s];
+    for(int s = delta; s < newlength; ++s){
+        DLL[s+oldlength] = delta_sum(Z, s-delta+1, s, alpha);
+        if(s >= delta)//avoid array out of bounds error
+            DRR[s+oldlength-delta] = DLL[s+oldlength];
     }
-    
     //Calculate DLR array in O(delta*N) time
     
     NumericMatrix Left(Left_), Right(Right_);
@@ -90,8 +89,7 @@ BEGIN_RCPP
     //Right(i,0) = sum of distances of Z[i] to {Z[i+1], Z[i+2], ..., Z[i+delta]}
     //Left(i,1) = sum of distances of Z[i] to {Z[i-delta], Z[i-delta-1], ..., Z[i-2*delta+1]}
     //Right(i,1) = sum of distances of Z[i] to {Z[i+delta], Z[i+delta+1], ..., Z[i+2*delta-1]}
-    
-    for(int i = deltlengthplus; i < N-delta; ++i){  
+    for(int i = deltlengthplus; i < N-delta; ++i){
         int ithpointlr = i - oldlength;
         for(int j1 = ithpointlr-delta; j1 < ithpointlr; ++j1)
             Left(i,0) += dst(Z(ithpointlr,_), Z(j1,_), alpha);
@@ -127,6 +125,9 @@ BEGIN_RCPP
     //Calculaton of cumulative sum of distances for adjacent observations
     NumericVector cSum(cSum_);
     //cSum[i] = |Z[0]-Z[1]|^alpha + |Z[1]-Z[2]|^alpha + ... + |Z[i-1]-Z[i]|^alpha
+    if(oldlength>0){
+        cSum[oldlength]=cSum[oldlength-1]
+    }
     for(int i = oldlength1;i < N; ++i)
         cSum[i] = cSum[i-1] + dst(Z(i-oldlength,_), Z(i-oldlength1,_), alpha);
 

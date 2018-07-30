@@ -15,7 +15,7 @@ mulmeanvarpoisdata <- c(rpois(50,1), rpois(50,2), rpois(50,3), rpois(50,5)) #lam
 
 constantdata <- rep(1, 200)
 shortdata <- c(2)
-negativedata <- jitter(rep(-100, 200) )
+negativedata <- jitter(rep(-100, 200))
 
 characterdata <- rep("ert", 200)
 

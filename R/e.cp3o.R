@@ -48,7 +48,7 @@ e.cp3o_delta.online.update = function(previousanswer, newdata, K=1){
     stop("alpha must be in the interval (0,2].")
     if(previousanswer@delta < 2)
     stop("delta must be a positive integer greater than 1.")
-    if(K < 1 || K > floor(nrow(newdata)/(previousanswer@delta+1))){
+    if(K < 1 || K > floor((length(newdata[,1])+previousanswer@datalength)/(previousanswer@delta+1))){
     stop("K is not in an acceptable range.")
     }
     #Force K and delta to be integers
@@ -74,7 +74,8 @@ e.cp3o_delta.online.update = function(previousanswer, newdata, K=1){
     res$length = oldlength + newlength
     res$time = as.numeric((t2-t1)[3])
 
-    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time)
-    return(ans)
+#ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time)
+#return(ans)
+return(res)
 }
 
