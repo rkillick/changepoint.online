@@ -71,16 +71,27 @@ BEGIN_RCPP
     if(verbose)
         Rcout<<"Starting pre-processing"<<std::endl;
     int minsize = delta + 1;   //minsize is minseglen in PELT
+    int minold = oldlength + minsize;
+    int oldlength1 = oldlength + 1;
     
     //Calculations for complete portion of statistics in delta neighborhoods
     NumericVector DLL(DLL_), DRR(DRR_), DLR(DLR_);
     //DRR[s] = within sum for Z[s+1], Z[s+2], ..., Z[s+delta]
     //DLL[s] = within sum for Z[s-delta+1], Z[s-delta+2], ..., Z[s]
     //DLR[s] = between sum for the sets used to calculate DLL[s] and DRR[s]
+
     for(int s = delta; s < newlength; ++s){
         DLL[s+oldlength] = delta_sum(Z, s-delta+1, s, alpha);
         if(s >= delta)//avoid array out of bounds error
             DRR[s+oldlength-delta] = DLL[s+oldlength];
+    }
+    if(oldlength>0){
+        for( int i = oldlength-delta; i < oldlength; ++i){
+            DRR[i]=DRR[oldlength-delta-1];
+        }
+        for (int i=oldlength; i<oldlength+delta; ++i) {
+            DLL[i]=DLL[oldlength+delta];
+        }
     }
     //Calculate DLR array in O(delta*N) time
     
@@ -106,8 +117,6 @@ BEGIN_RCPP
     }
     
     //Update DLR
-    int minold = oldlength + minsize;
-    int oldlength1 = oldlength + 1;
     for(int i = oldlength1; i < minold; ++i)
         for(int j = minsize; j < minsize+delta; ++j)
             DLR[minold-1] += dst(Z(i - oldlength,_), Z(j,_), alpha);
@@ -126,7 +135,7 @@ BEGIN_RCPP
     NumericVector cSum(cSum_);
     //cSum[i] = |Z[0]-Z[1]|^alpha + |Z[1]-Z[2]|^alpha + ... + |Z[i-1]-Z[i]|^alpha
     if(oldlength>0){
-        cSum[oldlength]=cSum[oldlength-1]
+        cSum[oldlength]=cSum[oldlength-1];
     }
     for(int i = oldlength1;i < N; ++i)
         cSum[i] = cSum[i-1] + dst(Z(i-oldlength,_), Z(i-oldlength1,_), alpha);

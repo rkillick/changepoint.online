@@ -74,8 +74,7 @@ e.cp3o_delta.online.update = function(previousanswer, newdata, K=1){
     res$length = oldlength + newlength
     res$time = as.numeric((t2-t1)[3])
 
-#ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time)
-#return(ans)
-return(res)
+    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time)
+    return(ans)
 }
 
