@@ -1,4 +1,4 @@
-setClass("ecp.ocpt",slots=list(number="numeric",estimates="numeric",GofM="numeric",delta="numeric",alpha="numeric",verbose="logical",csum="numeric",dll="numeric",dlr="numeric",drr="numeric",left="matrix",right="matrix",datalength="numeric",time="numeric",version=as(packageVersion("changepoint.online"),"character")))
+setClass("ecp.ocpt",slots=list(number="numeric",estimates="numeric",GofM="numeric",delta="numeric",alpha="numeric",verbose="logical",csum="numeric",dll="numeric",dlr="numeric",drr="numeric",left="matrix",right="matrix",datalength="numeric",time="numeric",width="numeric",version=as(packageVersion("changepoint.online"),"character")))
 
 ####functions
 if(!isGeneric("number")) {
@@ -169,6 +169,17 @@ if(!isGeneric("time")) {
 }
 setMethod("time","ecp.ocpt",function(object) object@time)
 
+if(!isGeneric("width")) {
+    if (is.function("width")){
+        fun <- width
+    }
+    else {fun <- function(object){
+        standardGeneric("width")
+    }
+    }
+    setGeneric("width", fun)
+}
+setMethod("width","ecp.ocpt",function(object) object@width)
 
 ####replacement
 setGeneric("number<-", function(object, value) standardGeneric("number<-"))
@@ -239,6 +250,11 @@ setReplaceMethod("datalength", "ecp.ocpt", function(object, value) {
 setGeneric("time<-", function(object, value) standardGeneric("time<-"))
 setReplaceMethod("time", "ecp.ocpt", function(object, value) {
     object@time <- value
+    return(object)
+})
+setGeneric("width<-", function(object, value) standardGeneric("width<-"))
+setReplaceMethod("width", "ecp.ocpt", function(object, value) {
+    object@width <- value
     return(object)
 })
 
