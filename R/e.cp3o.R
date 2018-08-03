@@ -32,9 +32,11 @@ e.cp3o_delta.online.initialise = function(Z, K=1, delta=29, alpha=1, verbose=FAL
     res$length = newlength
 	res$time = as.numeric((t2-t1)[3])
     res$width = length(Z[1,])
-    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width)
-	#Correct for the fact that C++ is zero based estimates-1
-	return(ans)
+    if(K==1){
+        res$cpLoc=as.list(res$estimates)
+    }
+    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width, cpLoc = res$cpLoc, crossover=res$crossover)
+    return(ans)
 }
 
 e.cp3o_delta.online.initialize = function(Z, K=1, delta=29, alpha=1, verbose=FALSE){
@@ -56,7 +58,7 @@ e.cp3o_delta.online.update = function(previousanswer, newdata, K=2){
     }
     #Force K and delta to be integers
     Z = newdata
-    K = as.integer(K)
+    K = previousanswer@number + K
     delta = as.integer(previousanswer@delta)
     alpha = as.numeric(previousanswer@alpha)
     verbose = as.logical(previousanswer@verbose)
@@ -77,8 +79,10 @@ e.cp3o_delta.online.update = function(previousanswer, newdata, K=2){
     res$length = oldlength + newlength
     res$time = as.numeric((t2-t1)[3])
     res$width = previousanswer@width
-
- ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width)
+    if(K==1){
+        res$cpLoc=as.list(res$estimates)
+    }
+ ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width, cpLoc = res$cpLoc)
  return(ans)
 }
 

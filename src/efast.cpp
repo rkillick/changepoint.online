@@ -45,8 +45,7 @@ BEGIN_RCPP
     double deltlengthplus = oldlength + delta;
     NumericMatrix Z(Z_);
 
-    //int N = Z.nrow(); //Get number of observations
-    int N = newlength + oldlength;
+    int N = newlength + oldlength; //Get number of observations
     
     // Reset K to be maximum number of possible segments
     if(N/(delta+1) < K)
@@ -58,7 +57,7 @@ BEGIN_RCPP
     
     std::fill(FF.begin(), FF.end(), R_NegInf); //Fill FF matrix with negative infinity
     std::fill(A.begin(), A.end(), -1); //Fill A matrix with -1 because of C arrays being 0 indexed
-    
+
     //Counters and distances
     
     //Sum of within sample for left and right segments as well as between segment distances
@@ -118,15 +117,22 @@ BEGIN_RCPP
         //update end of previous
         for( int i = oldlength-delta; i < oldlength; ++i){
             Left(i,0)=Left(oldlength-delta-1,0);
-            Left(i,1)=Left(oldlength-delta-1,1);
             Right(i,0)=Right(oldlength-delta-1,0);
-            Right(i,1)=Right(oldlength-delta-1,1);
         }
-        for (int i=oldlength; i<oldlength+delta; ++i) {
+        for(int i=oldlength-2*delta-1; i<oldlength; ++i){
+            Left(i,1)=Left(oldlength-2*delta-1,1);
+        }
+        for(int i =oldlength-2*delta-1; i<oldlength; ++i){
+         Right(i,1)=Right(oldlength-2*delta-1,1);
+        }
+        for(int i=oldlength; i<oldlength+delta; ++i) {
            //updated beginning of new
             Left(i,0)=Left(oldlength+delta,0);
             Right(i,0)=Right(oldlength+delta,0);
             Right(i,1)=Right(oldlength+delta,1);
+        }
+        for(int i=oldlength; i<2*delta+oldlength;++i){
+            Left(i,1)=Left(2*delta+oldlength,1);
         }
     }
     
@@ -372,7 +378,7 @@ BEGIN_RCPP
                 //Update the set of possible change point locations for a given set of outer loop values
                 std::set<int> cpSetCopy = cpSet;
                 int a2 = t-minsize;
-                int b2 = A(k,a2);
+                int b2 = A(k,a2);                
                 double V2;
                 if(b2 <= 0)
                     V2 = 0.0;

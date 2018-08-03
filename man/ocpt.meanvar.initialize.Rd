@@ -7,7 +7,7 @@ Identifying Changes in Mean and Variance. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.meanvar.initialize(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2)
+ocpt.meanvar.initialize(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -20,7 +20,7 @@ ocpt.meanvar.initialize(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.s
 	The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty.  The value of the penalty when using the Manual penalty option - this can be a numeric value or text giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters.  
 }
   \item{method}{
-	Choice of "AMOC", "PELT", "SegNeigh" or "BinSeg".
+	Choice of "ECP", "AMOC", "PELT", "SegNeigh" or "BinSeg".
 }
   \item{Q}{
 	The maximum number of changepoints to search for using the "BinSeg" method.  The maximum number of segments (number of changepoints + 1) to search for using the "SegNeigh" method.
@@ -29,10 +29,10 @@ ocpt.meanvar.initialize(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.s
 	The assumed test statistic / distribution of the data.  Currently only "Normal" and "CUSUM" supported.
 }
   \item{class}{
-	Logical.  If TRUE then an object of class \code{cpt} is returned.
+	Logical. If TRUE then an object of class \code{cpt} is returned.
 }
   \item{param.estimates}{
-	Logical.  If TRUE and class=TRUE then parameter estimates are returned. If FALSE or class=FALSE no parameter estimates are returned.
+	Logical. If TRUE and class=TRUE then parameter estimates are returned. If FALSE or class=FALSE no parameter estimates are returned.
 }
 \item{shape}{
 Only used when cost function is the gamma likelihood.
@@ -40,6 +40,9 @@ Only used when cost function is the gamma likelihood.
   \item{minseglen}{
   Positive integer giving the minimum segment length (no. of observations between changes), default is the minimum allowed by theory.
   }
+   \item{verbose}{
+ Allows the user to have some of the internal steps returned. (Only for ECP method.)
+}
 }
 \details{
 	This function is used to find changes in mean for data using the test statistic specified in the test.stat parameter.  The changes are found using the method supplied which can be single changepoint or multiple changepoints.  A changepoint is denoted as the last observation of the segment / regime.

@@ -7,7 +7,7 @@ Identifying Changes in Mean. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.var.initialise(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1)
+ocpt.var.initialise(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -26,7 +26,7 @@ ocpt.var.initialise(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,method
 Where the value of mean should be added if know.mean=TRUE.
 }
   \item{method}{
-	Choice of "AMOC", "PELT", "SegNeigh" or "BinSeg".
+	Choice of "ECP", "AMOC", "PELT", "SegNeigh" or "BinSeg".
 }
   \item{Q}{
 	The maximum number of changepoints to search for using the "BinSeg" method.  The maximum number of segments (number of changepoints + 1) to search for using the "SegNeigh" method.
@@ -46,6 +46,9 @@ Only used when cost function is the gamma likelihood.
   \item{minseglen}{
   Positive integer giving the minimum segment length (no. of observations between changes), default is the minimum allowed by theory.
   }
+  \item{verbose}{
+ Allows the user to have some of the internal steps returned. (Only for ECP method.)
+}
 }
 \details{
 	This function is used to find changes in mean for data using the test statistic specified in the test.stat parameter.  The changes are found using the method supplied which can be single changepoint or multiple changepoints.  A changepoint is denoted as the last observation of the segment / regime.
