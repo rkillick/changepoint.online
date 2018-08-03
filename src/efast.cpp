@@ -42,7 +42,6 @@ BEGIN_RCPP
     bool verbose = as<bool>(verbose_);
     int oldlength = as<int>(oldlength_);
     int newlength = as<int>(newlength_);
-    double deltlength = abs(oldlength - delta);
     double deltlengthplus = oldlength + delta;
     NumericMatrix Z(Z_);
 
@@ -71,7 +70,6 @@ BEGIN_RCPP
     if(verbose)
         Rcout<<"Starting pre-processing"<<std::endl;
     int minsize = delta + 1;   //minsize is minseglen in PELT
-    int minold = oldlength + minsize;
     int oldlength1 = oldlength + 1;
     
     //Calculations for complete portion of statistics in delta neighborhoods
@@ -110,17 +108,51 @@ BEGIN_RCPP
         //Avoid array out of bounds errors
         if(i >= 2*delta-1+oldlength)
             for(int j3=i-oldlength-2*delta+1; j3<i-oldlength-delta+1; ++j3)
-                Left(i,1) += dst(Z(i-oldlength,_), Z(j3,_), alpha);
-        if(i+2*delta-1+oldlength < N)
-            for(int j4=i+delta; j4<i+2*delta; ++j4)
-                Right(i+oldlength,1) += dst(Z(i-oldlength,_), Z(j4,_), alpha);
+                Left(i,1) += dst(Z(ithpointlr,_), Z(j3,_), alpha);
+        if(i+2*delta-1 < N)
+            for(int j4=ithpointlr+delta; j4<ithpointlr+2*delta; ++j4)
+                Right(i,1) += dst(Z(ithpointlr,_), Z(j4,_), alpha);
+    }
+    //need to cover the zero cells in left and right matrix
+    if(oldlength>0){
+        //update end of previous
+        for( int i = oldlength-delta; i < oldlength; ++i){
+            Left(i,0)=Left(oldlength-delta-1,0);
+            Left(i,1)=Left(oldlength-delta-1,1);
+            Right(i,0)=Right(oldlength-delta-1,0);
+            Right(i,1)=Right(oldlength-delta-1,1);
+        }
+        for (int i=oldlength; i<oldlength+delta; ++i) {
+           //updated beginning of new
+            Left(i,0)=Left(oldlength+delta,0);
+            Right(i,0)=Right(oldlength+delta,0);
+            Right(i,1)=Right(oldlength+delta,1);
+        }
     }
     
     //Update DLR
-    for(int i = oldlength1; i < minold; ++i)
-        for(int j = minsize; j < minsize+delta; ++j)
-            DLR[minold-1] += dst(Z(i - oldlength,_), Z(j,_), alpha);
-    
+    if(oldlength==0){
+        for(int i = 1; i < minsize; ++i)
+            for(int j = minsize; j < minsize+delta; ++j)
+                DLR[minsize-1] = DLR[minsize-1] + dst(Z(i,_), Z(j,_), alpha);
+        
+        for(int s = minsize; s < N-delta; ++s){
+            double r1 = Left(s,0); //Z[s] moved from the right to left segment so track affected distances
+            double r2 = Right(s-delta,1); //Z[s-delta] has been removed from the sample under consideration
+            double r3 = dst(Z(s,_),Z(s+delta,_),alpha); //Account for double counting in a1 and a2 below
+            double a1 = Left(s+delta,1); //Z[s+delta] has been added to the sample under consideration
+            double a2 = Right(s,0); //Z[s] moved from the right to left segment so track affected distances
+            double a3 = dst(Z(s,_),Z(s-delta,_),alpha); //Account for double counting in r1 and r2 above
+            DLR[s] = DLR[s-1] - r1 - r2 - r3 + a1 + a2 + a3;
+        }
+    }else{
+        int minold = oldlength + minsize;
+        for(int i = oldlength1; i < minold; ++i){
+            for(int j = minsize; j < minsize+delta; ++j){
+                int ithpoint = i - oldlength;
+                DLR[minold-1] += dst(Z(ithpoint,_), Z(j,_), alpha);
+            }
+        }
     for(int s = minold; s < N-delta; ++s){
         double r1 = Left(s,0); //Z[s] moved from the right to left segment so track affected distances
         double r2 = Right(s-delta,1); //Z[s-delta] has been removed from the sample under consideration
@@ -130,16 +162,23 @@ BEGIN_RCPP
         double a3 = dst(Z(s-oldlength,_),Z(s-oldlength-delta,_),alpha); //Account for double counting in r1 and r2 above
         DLR[s] = DLR[s-1] - r1 - r2 - r3 + a1 + a2 + a3;
     }
-    
+    for(int i=oldlength-delta; i<oldlength+delta; ++i){
+        double r1 = Left(i,0); //Z[s] moved from the right to left segment so track affected distances
+        double r2 = Right(i-delta,1); //Z[s-delta] has been removed from the sample under consideration
+        double a1 = Left(i+delta,1); //Z[s+delta] has been added to the sample under consideration
+        double a2 = Right(i,0); //Z[s] moved from the right to left segment so track affected distances
+        DLR[i] = DLR[i-1] - r1 - r2 + a1 + a2;
+    }}
     //Calculaton of cumulative sum of distances for adjacent observations
     NumericVector cSum(cSum_);
     //cSum[i] = |Z[0]-Z[1]|^alpha + |Z[1]-Z[2]|^alpha + ... + |Z[i-1]-Z[i]|^alpha
     if(oldlength>0){
         cSum[oldlength]=cSum[oldlength-1];
     }
-    for(int i = oldlength1;i < N; ++i)
-        cSum[i] = cSum[i-1] + dst(Z(i-oldlength,_), Z(i-oldlength1,_), alpha);
-
+    for(int i = oldlength1;i < N; ++i){
+        int ithpoint = i - oldlength;
+        cSum[i] = cSum[i-1] + dst(Z(ithpoint,_), Z(ithpoint-1,_), alpha);
+    }
     if(verbose)
         Rcout<<"Pre-processing complete. Starting optimization."<<std::endl;
     

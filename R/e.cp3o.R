@@ -41,7 +41,7 @@ e.cp3o_delta.online.initialize = function(Z, K=1, delta=29, alpha=1, verbose=FAL
   e.cp3o_delta.online.initialise(Z, K, delta, alpha, verbose)
 }
 
-e.cp3o_delta.online.update = function(previousanswer, newdata, K=1){
+e.cp3o_delta.online.update = function(previousanswer, newdata, K=2){
     #Argument checking
     if(previousanswer@width != length(newdata[1,]))
     stop("New data must have the same number of columns as previously.")
@@ -76,8 +76,9 @@ e.cp3o_delta.online.update = function(previousanswer, newdata, K=1){
     t2 = proc.time()
     res$length = oldlength + newlength
     res$time = as.numeric((t2-t1)[3])
+    res$width = previousanswer@width
 
-    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time)
-    return(ans)
+ ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width)
+ return(ans)
 }
 
