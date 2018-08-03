@@ -1,5 +1,9 @@
-ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1){
+ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE){
     checkData(data)
+    if(method=="ECP"){
+        ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=shape,verbose=verbose)
+        return(ecpans)
+    }
   if(method=="SegNeigh" & minseglen>1){stop("minseglen not yet implemented for SegNeigh method, use PELT instead.")}
   if(minseglen<1){minseglen=1;warning('Minimum segment length for a change in mean is 1, automatically changed to be 1.')}
   #if(!((test.stat=="Normal")||(test.stat=="CUSUM"))){ stop("Invalid test statistic, must be Normal or CUSUM") #}
@@ -46,14 +50,17 @@ ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,
       }
 }
 
-ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1){
-return(ocpt.mean.initialise(data,penalty,pen.value,method,Q,test.stat,class,param.estimates,shape,minseglen))
-
+ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE){
+return(ocpt.mean.initialise(data,penalty,pen.value,method,Q,test.stat,class,param.estimates,shape,minseglen,verbose))
 }
 
 ocpt.mean.update=function(previousanswer,newdata){
     
     checkData(newdata)
+    if(class(previousanswer)=="ecp.ocpt"){
+        ecpans = e.cp3o_delta.online.update(previousanswer,newdata,K=2*(previousanswer@number))
+        return(ecpans)
+    }
     if(class(previousanswer@param.est) == "list"){
         param.estimates = TRUE
     }else{
