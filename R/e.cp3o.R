@@ -35,7 +35,7 @@ e.cp3o_delta.online.initialise = function(Z, K=1, delta=29, alpha=1, verbose=FAL
     if(K==1){
         res$cpLoc=as.list(res$estimates)
     }
-    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width, cpLoc = res$cpLoc, crossover=res$crossover)
+    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width, cpLoc = res$cpLoc)
     return(ans)
 }
 
