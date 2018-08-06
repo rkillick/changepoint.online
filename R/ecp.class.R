@@ -1,4 +1,4 @@
-setClass("ecp.ocpt",slots=list(number="numeric",estimates="numeric",GofM="numeric",delta="numeric",alpha="numeric",verbose="logical",csum="numeric",dll="numeric",dlr="numeric",drr="numeric",left="matrix",right="matrix",datalength="numeric",time="numeric",width="numeric",cpLoc="list",version=as(packageVersion("changepoint.online"),"character")))
+setClass("ecp.ocpt",slots=list(number="numeric",estimates="numeric",GofM="numeric",delta="numeric",alpha="numeric",verbose="logical",csum="numeric",dll="numeric",dlr="numeric",drr="numeric",left="matrix",right="matrix",datalength="numeric",time="numeric",width="numeric",cpLoc="list"))
 
 ####functions
 if(!isGeneric("number")) {
@@ -277,7 +277,6 @@ setReplaceMethod("cpLoc", "ecp.ocpt", function(object, value) {
 #summary
 # summary functions
 setMethod("summary","ecp.ocpt",function(object){
-    cat("Created Using changepoint.online version",object@version,'\n')
     cat("Number of Changepoints   :", number(object),"\n")
     cat("Estimate Locations       :",estimates(object),"\n")
     cat("Goodness of Fit Model    :",GofM(object),"\n")

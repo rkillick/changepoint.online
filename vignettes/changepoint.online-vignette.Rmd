@@ -1,0 +1,38 @@
+---
+title: "changepoint.online package"
+author: "Andrew Connell"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+In recent years, there has been an increase in applications in which data is collected in an online manner, also known as streaming data. In many cases, it is not feasible or advisable to store this data prior to analysis. Thus, there is a growing need to develop analysis methods specifically for the online setting, see for example Gama and Rodrigues (2007). The ability to detect changes in the distributional properties of a time series accurately and efficiently in an online fashion has important implications in many industrial applications, for example in forecasting (Koop and Potter, 2007), consumer profiling (Whittaker et al., 2007) and fault detection in industrial process control (Lai, 1995); it is also a critical consideration in (online or offline) processing of time series segments and data storage applications (Golab and Özsu, 2003).
+
+The problem of online changepoint analysis of time series has been considered extensively in the literature due to its importance in many scientific fields (see Page, 1954; Hawkins et. al, 2003). The changepoint problem for online data streams is typically formulated in a sequential hypothesis test framework in which, as new data arrives, the hypothesis of a change is tested, conditional on the data observed in the past. If a changepoint is found to be statistically significant, the changepoint detection method is “reset”, i.e. the changepoint analysis restarts from the next observed data point. As far as we are aware, this methodology is only available in the cpm R package which provides a selection of distributional and nonparametric data assumptions.
+
+A criticism of the sequential resetting or “conditional” formulation of the multiple changepoint problem above is that there is no accumulation of useful information as the data stream progresses: as soon as a change is found, the analysis is restarted as if the arriving data is an independent dataset, and thus previous information is not retained for assessing future changepoint locations. In particular, any errors made by the changepoint detection method early in the data stream propagate such that they affect any inference made about subsequent changes in the stream, adding uncertainty to those potential change locations. In addition, since any new data after a change are considered independent, detected changes in the past cannot be re-evaluated to improve accuracy in location estimation. This is not conducive to a streaming data environment where both speed and accuracy are valued.
+
+Recently, Killick et al. (2012) proposed a changepoint search algorithm, named the Pruned Exact Linear Time (PELT) algorithm, which is shown to be exact and whose complexity is linear in the number of data points. Since the PELT method achieves the benefits of both exactness and computational efficiency, it has thus been shown to perform particularly well for applications in which the analysis of large datasets is required. A further development for nonparametric cost functions which provides an approximate pruning step, e-cp3o, is given in James and Matteson (2015). These algorithms are available in the popular changepoint and ecp packages on CRAN.
+
+Our motivation for considering these algorithms is that, since they reassess the locations of potential changepoints each time new data arrives, the propagation of errors in detected changes is circumvented when performing inference about changes later in the stream. Furthermore, the exact (for PELT) and minimal computational complexity of the algorithms ensures these techniques find changes in data streams in an efficient and accurate fashion.
+Due to the dynamic programming in these algorithms they are inherently online in nature but currently are only available in R packages changepoint and ecp which require the full data for analysis. This package mirrors the functionality of the changepoint and ecp packages in terms of functionality but for provided initialisation functions and update functions required in an online setting.
+
+## Methodology
+
+## Usage & Examples
+
+## Conclusion 
+
+## References
