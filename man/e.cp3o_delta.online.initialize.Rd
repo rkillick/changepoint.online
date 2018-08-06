@@ -1,15 +1,15 @@
-\name{e.cp3o_delta.online.initialise}
-\alias{e.cp3o_delta.online.initialise}
+\name{e.cp3o_delta.online.initialize}
+\alias{e.cp3o_delta.online.initialize}
 \title{
-e.cp3o_delta.online.initialise - Initialisation function for ECP method and test statistic.
+e.cp3o_delta.online.initialize - Initialization function for ECP method and test statistic.
 }
 \description{
 Implements the ECP method for identifying changepoints in a given set of summary statistics for a specified delta and alpha.
 
-This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialise}  and \code{ocpt.var.initialise} when \code{test.stat="ECP"}. 
+This function is called by \code{ocpt.mean.initialize}, \code{ocpt.var.initialize}  and \code{ocpt.var.initialize} when \code{test.stat="ECP"}. 
 }
 \usage{
-e.cp3o_delta.online.initialise(Z,K,delta,alpha,verbose)
+e.cp3o_delta.online.initialize(Z,K,delta,alpha,verbose)
 }
 \arguments{
   \item{Z}{
@@ -50,7 +50,7 @@ David Matteson
 
 \examples{
 z = matrix(c(rnorm(100,1,5),(rnorm(100,20,1))),ncol=1)
-ans = e.cp3o_delta.online.initialise(z)
+ans = e.cp3o_delta.online.initialize(z)
 ans
 }
 

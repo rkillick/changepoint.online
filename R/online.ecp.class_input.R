@@ -1,4 +1,4 @@
-online.ecp.class_input <- function(number, estimates, GofM, delta, alpha, verbose, csum, dll, dlr, drr, left, right, datalength, time,width,cpLoc){
+online.ecp.class_input <- function(number, estimates, GofM, delta, alpha, verbose, csum, dll, dlr, drr, left, right, datalength, time, width, cpLoc){
   
   ans = new("ecp.ocpt")
   

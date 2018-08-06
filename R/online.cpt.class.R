@@ -1144,7 +1144,7 @@ setMethod("logLik", "ocpt", function(object) {
             slope=rep(param.est(object)$thetaT-param.est(object)$thetaS,object@cpts-c(0,cpts(object)))/rep(object@cpts-c(0,cpts(object)),object@cpts-c(0,cpts(object)))
             cptn=rep(c(0,cpts(object)),object@cpts-c(0,cpts(object)))
             n=length(data.set(object))
-            means=intercept+slope*((1:n)-ocptn)
+            means=intercept+slope*((1:n)-cptn)
             rss=sum((data.set(object)-means)^2)
             like=n*(log(2*pi)+log(rss/n)+1) # -2*loglik
             if(pen.type(object)=="MBIC"){
