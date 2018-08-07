@@ -1,10 +1,9 @@
-ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,verbose=FALSE){
+ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,verbose=FALSE){
     checkData(data)
-    if(method=="ECP"){
+    if(test.stat=="ECP"){
         ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=shape,verbose=verbose)
         return(ecpans)
     }
-  if(method=="SegNeigh" & minseglen>2){stop("minseglen not yet implemented for SegNeigh method, use PELT instead.")}
   if(minseglen<2){minseglen=2;warning('Minimum segment length for a change in mean and variance is 2, automatically changed to be 2.')}
   #if(!((test.stat=="Normal")||(test.stat=="CUSUM"))){ stop("Invalid test statistic, must be Normal or CUSUM") #}
   if(penalty == "CROPS"){
@@ -33,25 +32,19 @@ ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,method="PELT",Q
           stop("Not a valid test statistic. Must be Normal, Exponential, Gamma or Poisson")
       }
   }
-  
-      if(((method=="AMOC")||(method=="PELT")||(method=="BinSeg")||(method=="Segeigh"))){
           
           mu=mean(data)
           sumstat=cbind(c(0,cumsum(coredata(data))),c(0,cumsum(coredata(data)^2)),cumsum(c(0,(coredata(data)-mu)^2)))
           
           pen.value = penalty_decision(penalty, pen.value, length(data), diffparam=1, asymcheck=costfunc, method="AMOC")
-          
+          method = "PELT"
           ans=PELT.online.initialise(sumstat=sumstat,pen=pen.value,cost_func = costfunc, shape = shape, minseglen = minseglen)
           
           return(online.class_input(data, cpttype="mean and variance", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cptsout),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,numchangecpts=ans$numchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
-      }
-      else{
-          stop("Invalid Method, must be AMOC, PELT, SegNeigh or BinSeg")
-      }
 }
 
-ocpt.meanvar.initialize=function(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,verbose=FALSE){
-return(ocpt.meanvar.initialise(data,penalty,pen.value,method,Q,test.stat,class,param.estimates,shape,minseglen,verbose))
+ocpt.meanvar.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,verbose=FALSE){
+return(ocpt.meanvar.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,verbose))
 
 }
 

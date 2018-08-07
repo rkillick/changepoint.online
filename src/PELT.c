@@ -110,7 +110,7 @@ int *numchangecpts; //stores the current number of changepoints
     
     void min_which();
     int min = 2*(*minseglen);
-    if(*ndone==0){
+    if(*ndone==1){
       lastchangelike[0]= -*pen;
       lastchangecpts[0]=0; 
       numchangecpts[0]=0;
