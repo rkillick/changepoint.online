@@ -7,7 +7,7 @@ Identifying Changes in Mean. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.var.initialise(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE)
+ocpt.var.initialise(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -24,9 +24,6 @@ ocpt.var.initialise(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,method
 }
 \item{mu}{
 Where the value of mean should be added if know.mean=TRUE.
-}
-  \item{method}{
-	Choice of "ECP", "AMOC", "PELT", "SegNeigh" or "BinSeg".
 }
   \item{Q}{
 	The maximum number of changepoints to search for using the "BinSeg" method.  The maximum number of segments (number of changepoints + 1) to search for using the "SegNeigh" method.

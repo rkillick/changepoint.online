@@ -1,4 +1,4 @@
-setClass("ecp.ocpt",slots=list(number="numeric",estimates="numeric",GofM="numeric",delta="numeric",alpha="numeric",verbose="logical",csum="numeric",dll="numeric",dlr="numeric",drr="numeric",left="matrix",right="matrix",datalength="numeric",time="numeric",width="numeric",cpLoc="list"))
+setClass("ecp.ocpt",slots=list(number="numeric",estimates="numeric",GofM="numeric",delta="numeric",alpha="numeric",verbose="logical",csum="numeric",dll="numeric",dlr="numeric",drr="numeric",left="matrix",right="matrix",datalength="numeric",functime="numeric",width="numeric",cpLoc="list"))
 
 ####functions
 if(!isGeneric("number")) {
@@ -157,17 +157,17 @@ if(!isGeneric("datalength")) {
 }
 setMethod("datalength","ecp.ocpt",function(object) object@datalength)
 
-if(!isGeneric("time")) {
-    if (is.function("time")){
-        fun <- time
+if(!isGeneric("functime")) {
+    if (is.function("functime")){
+        fun <- functime
     }
     else {fun <- function(object){
-        standardGeneric("time")
+        standardGeneric("functime")
     }
     }
-    setGeneric("time", fun)
+    setGeneric("functime", fun)
 }
-setMethod("time","ecp.ocpt",function(object) object@time)
+setMethod("functime","ecp.ocpt",function(object) object@functime)
 
 if(!isGeneric("width")) {
     if (is.function("width")){
@@ -259,9 +259,9 @@ setReplaceMethod("datalength", "ecp.ocpt", function(object, value) {
     object@datalength <- value
     return(object)
 })
-setGeneric("time<-", function(object, value) standardGeneric("time<-"))
-setReplaceMethod("time", "ecp.ocpt", function(object, value) {
-    object@time <- value
+setGeneric("functime<-", function(object, value) standardGeneric("functime<-"))
+setReplaceMethod("functime", "ecp.ocpt", function(object, value) {
+    object@functime <- value
     return(object)
 })
 setGeneric("width<-", function(object, value) standardGeneric("width<-"))
@@ -284,7 +284,7 @@ setMethod("summary","ecp.ocpt",function(object){
     cat("Alpha                    :", alpha(object),"\n")
     cat("Verbose                  :", verbose(object),"\n")
     cat("Number of Data points    :", datalength(object),"\n")
-    cat("Calculation Time         :", time(object), "\n")
+    cat("Calculation Time         :", functime(object), "\n")
 })
 
 # show functions

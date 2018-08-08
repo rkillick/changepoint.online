@@ -44,8 +44,8 @@ ocpt.var.initialise=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=
           return(online.class_input(data, cpttype="variance", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cptsout),shape=shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,numchangecpts=ans$numchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
 }
 
-ocpt.var.initialize=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE){
-return(ocpt.var.initialise(data,penalty,pen.value,know.mean,mu,method,Q,test.stat,class,param.estimates,shape,minseglen,verbose))
+ocpt.var.initialize=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE){
+return(ocpt.var.initialise(data,penalty,pen.value,know.mean,mu,Q,test.stat,class,param.estimates,shape,minseglen,verbose))
 
 }
 

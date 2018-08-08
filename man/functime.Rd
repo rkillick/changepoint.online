@@ -1,13 +1,13 @@
-\name{time}
-\alias{time}
+\name{functime}
+\alias{functime}
 \title{
-Generic Function - time
+Generic Function - functime
 }
 \description{
 Generic function
 }
 \usage{
-time(object)
+functime(object)
 }
 \arguments{
   \item{object}{
@@ -26,11 +26,11 @@ Andrew Connell
 
 
 \seealso{
-\code{\link{time-methods}}
+\code{\link{functime-methods}}
 }
 \examples{
 x=new("ecp.ocpt") # new cpt object
-time(x) # retrieves the method slot from x
+functime(x) # retrieves the method slot from x
 }
 
 \keyword{methods}

@@ -30,12 +30,12 @@ e.cp3o_delta.online.initialise = function(Z, K=1, delta=29, alpha=1, verbose=FAL
 	res = eFastC_delta.online(Z, K, delta, alpha, verbose, oldlength, newlength, cSum, DLL, DRR, DLR, Left, Right)
 	t2 = proc.time()
     res$length = newlength
-	res$time = as.numeric((t2-t1)[3])
+	res$functime = as.numeric((t2-t1)[3])
     res$width = length(Z[1,])
     if(K==1){
         res$cpLoc=as.list(res$estimates)
     }
-    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width, cpLoc = res$cpLoc)
+    ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, functime=res$functime,width=res$width, cpLoc = res$cpLoc)
     return(ans)
 }
 
@@ -77,12 +77,12 @@ e.cp3o_delta.online.update = function(previousanswer, newdata, K=2){
     res = eFastC_delta.online(Z, K, delta, alpha, verbose, oldlength, newlength, cSum, DLL, DRR, DLR, Left, Right)
     t2 = proc.time()
     res$length = oldlength + newlength
-    res$time = as.numeric((t2-t1)[3])
+    res$functime = as.numeric((t2-t1)[3])
     res$width = previousanswer@width
     if(K==1){
         res$cpLoc=as.list(res$estimates)
     }
- ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, time=res$time,width=res$width, cpLoc = res$cpLoc)
+ ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, functime=res$functime,width=res$width, cpLoc = res$cpLoc)
  return(ans)
 }
 

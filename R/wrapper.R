@@ -3,8 +3,8 @@ PELT.online.initialise=function(sumstat,pen=0,cost_func = "mean.norm", shape = 1
   # initialisation function for online use
 
   # assumes dyn.load('PELTonline.so') has already been done
-  ndone=1
-  nupdate=length(sumstat[,1]) - 1
+  ndone=0
+  nupdate=length(sumstat[,1])
   
   if(missing(lastchangelike)) {lastchangelike = c(rep(0,nupdate + ndone + 1))}
   storage.mode(lastchangelike) = 'double'

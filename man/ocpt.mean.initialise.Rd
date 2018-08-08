@@ -7,7 +7,7 @@ Identifying Changes in Mean. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.mean.initialise(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE)
+ocpt.mean.initialise(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -19,14 +19,11 @@ ocpt.mean.initialise(data,penalty="MBIC",pen.value=0,method="PELT",Q=5,test.stat
   \item{pen.value}{
 	The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty.  The value of the penalty when using the Manual penalty option - this can be a numeric value or text giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters.  
 }
-  \item{method}{
-	Choice of "ECP","AMOC", "PELT", "SegNeigh" or "BinSeg".
-}
   \item{Q}{
 	The maximum number of changepoints to search for using the "BinSeg" method.  The maximum number of segments (number of changepoints + 1) to search for using the "SegNeigh" method.
 }
   \item{test.stat}{
-	The assumed test statistic / distribution of the data.  Currently only "Normal" and "CUSUM" supported.
+	The assumed test statistic / distribution of the data.  Currently only "Normal", "ECP" and "CUSUM" supported.
 }
   \item{class}{
 	Logical.  If TRUE then an object of class \code{cpt} is returned.

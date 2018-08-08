@@ -15,7 +15,7 @@
 \alias{ecp.ocpt-method,left}
 \alias{ecp.ocpt-method,right}
 \alias{ecp.ocpt-method,datalength}
-\alias{ecp.ocpt-method,time}
+\alias{ecp.ocpt-method,functime}
 \alias{ecp.ocpt-method,width}
 \alias{ecp.ocpt-method,cpLoc}
 \alias{ecp.ocpt-method,number<-}
@@ -31,7 +31,7 @@
 \alias{ecp.ocpt-method,left<-}
 \alias{ecp.ocpt-method,right<-}
 \alias{ecp.ocpt-method,datalength<-}
-\alias{ecp.ocpt-method,time<-}
+\alias{ecp.ocpt-method,functime<-}
 \alias{ecp.ocpt-method,width<-}
 \alias{ecp.ocpt-method,cpLoc<-}
 \alias{ocpt.reg-method,summary}
@@ -61,7 +61,7 @@ Objects can be created by calls of the form \code{new("ecp.ocpt", ...)}.
     \item{\code{left}:}{A vector which gives the sum of distances before point i at Left(i,0). Left(i,1) is to resolve out of bound errors.}
     \item{\code{right}:}{A vector which gives the sum of distances after point i at Right(i,0). Right(i,1) is to resolve out of bound errors.}
     \item{\code{datalength}:}{This is the total length of the observations.}
-    \item{\code{time}:}{The total amount to time take to estimate the change point locations.}
+    \item{\code{functime}:}{The total amount to time take to estimate the change point locations.}
     \item{\code{width}:}{This is the number of changepoints located in the dataset.}
     \item{\code{cpLoc}:}{The list of locations of change points estimated by the procedure for different numbers of change points up to K (the maximum number of changepoints the user wishes to search for).}
 }
@@ -82,7 +82,7 @@ Objects can be created by calls of the form \code{new("ecp.ocpt", ...)}.
     \item{left}{\code{signature(object = "ecp.ocpt")}: retrieves left slot }
     \item{right}{\code{signature(object = "ecp.ocpt")}: retrieves right slot }
     \item{datalength}{\code{signature(object = "ecp.ocpt")}: retrieves datalength slot }
-    \item{time}{\code{signature(object = "ecp.ocpt")}: retrieves time slot }
+    \item{functime}{\code{signature(object = "ecp.ocpt")}: retrieves time slot }
     \item{width}{\code{signature(object = "ecp.ocpt")}: retrieves width slot }
     \item{cpLoc}{\code{signature(object = "ecp.ocpt")}: retrieves csum slot }
     \item{number<-}{\code{signature(object = "ecp.ocpt")}: replaces number slot }
@@ -98,7 +98,7 @@ Objects can be created by calls of the form \code{new("ecp.ocpt", ...)}.
     \item{left<-}{\code{signature(object = "ecp.ocpt")}: replaces left slot }
     \item{right<-}{\code{signature(object = "ecp.ocpt")}: replaces right slot }
     \item{datalength<-}{\code{signature(object = "ecp.ocpt")}: replaces datalength slot }
-    \item{time<-}{\code{signature(object = "ecp.ocpt")}: replaces time slot }
+    \item{functime<-}{\code{signature(object = "ecp.ocpt")}: replaces time slot }
     \item{width<-}{\code{signature(object = "ecp.ocpt")}: replaces width slot }
     \item{cpLoc<-}{\code{signature(object = "ecp.ocpt")}: replaces cpLoc slot }
     \item{summary}{\code{signature(object = "ecp.ocpt")}: prints a summary of the ecp.ocpt object }

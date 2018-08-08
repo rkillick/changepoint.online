@@ -11,7 +11,7 @@ This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialis
 WARNING: No checks on arguments are performed!
 }
 \usage{
-online.ecp.class_input(number, estimates, GofM, delta, alpha, verbose, csum, dll, dlr, drr, left, right, datalength, time, width, cpLoc)
+online.ecp.class_input(number, estimates, GofM, delta, alpha, verbose, csum, dll, dlr, drr, left, right, datalength, functime, width, cpLoc)
 }
 \arguments{
 \item{number}{The estimated number of change points.}
@@ -27,7 +27,7 @@ online.ecp.class_input(number, estimates, GofM, delta, alpha, verbose, csum, dll
 \item{left}{A vector which gives the sum of distances before point i at Left(i,0). Left(i,1) is to resolve out of bound errors.}
 \item{right}{A vector which gives the sum of distances after point i at Right(i,0). Right(i,1) is to resolve out of bound errors.}
 \item{datalength}{This is the total length of the observations.}
-\item{time}{The total amount to time take to estimate the change point locations.}
+\item{functime}{The total amount to time take to estimate the change point locations.}
 \item{width}{This is the number of changepoints located in the dataset.}
 \item{cpLoc}{The list of locations of change points estimated by the procedure for different numbers of change points up to K (the maximum number of changepoints the user wishes to search for).}
 }

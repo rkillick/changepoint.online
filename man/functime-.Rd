@@ -1,13 +1,13 @@
-\name{time<-}
-\alias{time<-}
+\name{functime<-}
+\alias{functime<-}
 \title{
-Generic Function - time<-
+Generic Function - functime<-
 }
 \description{
 Generic function
 }
 \usage{
-time(object)<-value
+functime(object)<-value
 }
 \arguments{
   \item{object}{
@@ -29,11 +29,11 @@ Andrew Connell
 
 
 \seealso{
-\code{\link{time<--methods}}
+\code{\link{functime<--methods}}
 }
 \examples{
 x=new("ecp.ocpt") # new ecp.ocpt object
-time(x)<- c(0) # replaces the existing time slot with zero.
+functime(x)<- c(0) # replaces the existing time slot with zero.
 }
 
 \keyword{methods}

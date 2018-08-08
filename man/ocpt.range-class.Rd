@@ -69,7 +69,7 @@ c # retrieves the ocpts slot from x
 # Example of multiple changes in variance at 50,100,150 in simulated normal data
 set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
-out=ocpt.var.initialise(x,pen.value=c(log(length(x)),10*log(length(x))),method="PELT")
+out=ocpt.var.initialise(x,pen.value=c(log(length(x)),10*log(length(x))))
 print(out) # prints details of the analysis including a summary
 summary(out)
 }

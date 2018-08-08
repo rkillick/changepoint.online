@@ -2,8 +2,8 @@ PELT.online = function(sumstat,pen=0, cost_func = "mean.norm", shape = 1, minseg
   # function that uses the PELT method to calculate changes in mean where the segments in the data are assumed to be Normal
   if(is.null(dim(sumstat))){sumstat=as.matrix(sumstat,ncol=1)}
   
-  ndone=1
-  nupdate=length(sumstat[,1]) - 1
+  ndone=0
+  nupdate=length(sumstat[,1])
   
   if(nupdate<2){stop('Data must have at least 2 observations to fit a changepoint model.')}
   storage.mode(sumstat) = 'double'
