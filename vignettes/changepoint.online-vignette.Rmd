@@ -1,6 +1,6 @@
 ---
 title: "changepoint.online package"
-author: "Andrew Connell"
+author: "Andrew Connell, Rebecca Killick, David Matteson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -15,6 +15,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+## Abstract
+One of new the key challenges in changepoint analysis is the need for an online approach. The __changepoint.online__ package has been developed to provide users with a choice of changepoint search methods to use in conjunction with a given changepoint method and in particular provides an implementation of the recently proposed PELT algorithm much like the __changepoint__ package does. The __changepoint.online__ in fact has the same functionality and can produce the same results for offline data as the __changepoint__ package however, it can also analysise online data. This article describes the methodology of the new online approachs and the key differences between the two methods with simulated and practical examples. Another key change is the _ECP_ test statistic is now available, which stems from the __ecp__ package.
 
 ## Introduction
 
