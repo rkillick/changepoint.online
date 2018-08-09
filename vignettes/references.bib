@@ -49,3 +49,83 @@ isbn="978-3-540-74976-9"
  publisher = {ACM},
  address = {New York, NY, USA},
 } 
+
+@article{KillickPELT,
+issn = {0162-1459},
+abstract = {In this article, we consider the problem of detecting multiple changepoints in large datasets. Our focus is on applications where the number of changepoints will increase as we collect more data: for example, in genetics as we analyze larger regions of the genome, or in finance as we observe time series over longer periods. We consider the common approach of detecting changepoints through minimizing a cost function over possible numbers and locations of changepoints. This includes several established procedures for detecting changing points, such as penalized likelihood and minimum description length. We introduce a new method for finding the minimum of such cost functions and hence the optimal number and location of changepoints that has a computational cost, which, under mild conditions, is linear in the number of observations. This compares favorably with existing methods for the same problem whose computational cost can be quadratic or even cubic. In simulation studies, we show that our new method can be orders of magnitude faster than these alternative exact methods. We also compare with the binary segmentation algorithm for identifying changepoints, showing that the exactness of our approach can lead to substantial improvements in the accuracy of the inferred segmentation of the data. This article has supplementary materials available online.},
+journal = {Journal of the American Statistical Association},
+pages = {1590--1598},
+volume = {107},
+publisher = {Taylor & Francis Group},
+number = {500},
+year = {2012},
+title = {Optimal Detection of Changepoints With a Linear Computational Cost},
+language = {eng},
+author = {Killick, R. and Fearnhead, P. and Eckley, I. A.},
+keywords = {Dynamic Programming ; Pelt ; Segmentation ; Structural Change},
+}
+
+@article{Mattesonecp,
+abstract = {The concept of homogeneity plays a critical role in statistics, both in its applications as well as its theory. Change point analysis is a statistical tool that aims to attain homogeneity within time series data. This is accomplished through partitioning the time series into a number of contiguous homogeneous segments. The applications of such techniques range from identifying chromosome alterations to solar flare detection. In this manuscript we present a general purpose search algorithm called cp3o that can be used to identify change points in multivariate time series. This new search procedure can be applied with a large class of goodness of fit measures. Additionally, a reduction in the computational time needed to identify change points is accomplish by means of probabilistic pruning. With mild assumptions about the goodness of fit measure this new search algorithm is shown to generate consistent estimates for both the number of change points and their locations, even when the number of change points increases with the time series length. A change point algorithm that incorporates the cp3o search algorithm and E-Statistics, e-cp3o, is also presented. The only distributional assumption that the e-cp3o procedure makes is that the absolute $\alpha$th moment exists, for some $\alpha\in(0,2)$. Due to this mild restriction, the e-cp3o procedure can be applied to a majority of change point problems. Furthermore, even with such a mild restriction, the e-cp3o procedure has the ability to detect any type of distributional change within a time series. Simulation studies are used to compare the e-cp3o procedure to other parametric and nonparametric change point procedures, we highlight applications of e-cp3o to climate and financial datasets.},
+year = {2015},
+title = {Change Points via Probabilistically Pruned Objectives},
+author = {James, Nicholas A. and Matteson, David S.},
+keywords = {Statistics - Methodology},
+}
+
+@article{Lai,
+ ISSN = {00359246},
+ URL = {http://www.jstor.org/stable/2345934},
+ abstract = {After a brief survey of a large variety of sequential detection procedures that are widely scattered in statistical references on quality control and engineering references on fault detection and signal processing, we study some open problems concerning these procedures and introduce a unified theory of sequential changepoint detection. This theory leads to a class of sequential detection rules which are not too demanding in computational and memory requirements for on-line implementation and yet are nearly optimal under several performance criteria.},
+ author = {Tze Leung Lai},
+ journal = {Journal of the Royal Statistical Society. Series B (Methodological)},
+ number = {4},
+ pages = {613--658},
+ publisher = {[Royal Statistical Society, Wiley]},
+ title = {Sequential Changepoint Detection in Quality Control and Dynamical Systems},
+ volume = {57},
+ year = {1995}
+}
+
+ @Article{changepointvignette,
+    title = {{changepoint}: An {R} Package for Changepoint Analysis},
+    author = {Rebecca Killick and Idris A. Eckley},
+    journal = {Journal of Statistical Software},
+    year = {2014},
+    volume = {58},
+    number = {3},
+    pages = {1--19},
+    url = {http://www.jstatsoft.org/v58/i03/},
+  }
+ 
+  @Manual{changepointrpackage,
+    title = {{changepoint}: An {R} package for changepoint analysis},
+    author = {Rebecca Killick and Kaylea Haynes and Idris A. Eckley},
+    year = {2016},
+    url = {https://CRAN.R-project.org/package=changepoint},
+    note = {R package version 2.2.2},
+  }
+  
+  @Article{ecprpackage,
+    title = {{ecp}: An {R} Package for Nonparametric Multiple Change
+      Point Analysis of Multivariate Data},
+    author = {Nicholas A. James and David S. Matteson},
+    journal = {Journal of Statistical Software},
+    year = {2014},
+    volume = {62},
+    number = {7},
+    pages = {1--25},
+    url = {http://www.jstatsoft.org/v62/i07/},
+  }
+  
+  @Article{cpmrpackage,
+    title = {Parametric and Nonparametric Sequential Change Detection
+      in {R}: The {cpm} Package},
+    author = {Gordon J. Ross},
+    journal = {Journal of Statistical Software},
+    year = {2015},
+    volume = {66},
+    number = {3},
+    pages = {1--20},
+    url = {http://www.jstatsoft.org/v66/i03/},
+  }
