@@ -4,7 +4,7 @@ PELT.online.initialise=function(sumstat,pen=0,cost_func = "mean.norm", shape = 1
 
   # assumes dyn.load('PELTonline.so') has already been done
   ndone=0
-  nupdate=length(sumstat[,1])
+  nupdate=length(sumstat[,1]) - 1 
   
   if(missing(lastchangelike)) {lastchangelike = c(rep(0,nupdate + ndone + 1))}
   storage.mode(lastchangelike) = 'double'
