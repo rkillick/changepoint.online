@@ -732,7 +732,7 @@ setMethod("param", "ocpt.range", function(object,ncpts=NA,shape,...) {
         if(class(row)=='try-error'){
             stop("Your input object doesn't have a segmentation with the requested number of changepoints.")
         }
-        cpts=c(0,cpts.full(object)[row,1:ncpts],length(data.set(object)))
+        cpts=c(0,cpts.full(object)[row,1:ncpts],as.integer(ndone(object)+nupdate(object)))
     }
     
     param.mean=function(object,cpts){
@@ -1281,7 +1281,7 @@ setMethod("logLik", "ocpt.range", function(object,ncpts=NA) {
         if(length(row)==0){
             stop(paste("Your input object doesn't have a segmentation with the requested number of changepoints.\n Possible ncpts are: "),paste(ncpts.full,collapse=','))
         }
-        cpts=c(0,cpts.full(object)[row,1:ncpts],length(data.set(object)))
+        cpts=c(0,cpts.full(object)[row,1:ncpts],as.integer(ndone(object)+nupdate(object)))
         pen.value=pen.value.full(object)[row]
     }
     nseg=length(cpts)-1

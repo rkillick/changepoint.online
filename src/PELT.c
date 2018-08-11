@@ -97,6 +97,12 @@ int *numchangecpts; //stores the current number of changepoints
 
     double minout;
     
+    checklist = (int *)calloc((*nupdate+*nchecklist+1),sizeof(int));
+    if (checklist==NULL)   {
+        *error = 5;
+        goto err5;
+    }
+    
     double *tmplike;
     tmplike = (double *)calloc((*nupdate+*nchecklist+1),sizeof(double));
     if (tmplike==NULL)   {
@@ -110,7 +116,7 @@ int *numchangecpts; //stores the current number of changepoints
     
     void min_which();
     int min = 2*(*minseglen);
-    if(*ndone==1){
+    if(*ndone==0){
       lastchangelike[0]= -*pen;
       lastchangecpts[0]=0; 
       numchangecpts[0]=0;
@@ -168,6 +174,7 @@ int *numchangecpts; //stores the current number of changepoints
     }
     
     free(tmplike);
-err4:  return;
+err4:  free(checklist);
+err5:  return;
 }
 
