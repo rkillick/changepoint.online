@@ -1,4 +1,4 @@
-ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
+ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
     checkData(data)
     if(test.stat=="ECP"){
         ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=alpha,verbose=verbose)
@@ -41,11 +41,11 @@ ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Nor
           method = "PELT"
           ans=PELT.online.initialise(sumstat,pen=pen.value,cost_func = cost_func, shape = shape, minseglen = minseglen)
           
-          return(online.class_input(data, cpttype="mean", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=sort(ans$cptsout),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
+          return(online.class_input(data, cpttype="mean", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=sort(ans$cptsout),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,checklist=ans$checklist,nchecklist=ans$nchecklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
 }
 
-ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
-return(ocpt.mean.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
+ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
+return(ocpt.mean.initialise(data,penalty,pen.value,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
 }
 
 ocpt.mean.update=function(previousanswer,newdata){
@@ -63,6 +63,6 @@ ocpt.mean.update=function(previousanswer,newdata){
     
     nextans = PELT.online.update(previousanswer=previousanswer,newdata=newdata)
     
-    return(online.class_input(data=newdata, cpttype="mean", method=previousanswer@method, test.stat=previousanswer@test.stat, penalty=previousanswer@pen.type, pen.value=nextans$penalty, minseglen=nextans$minseglen, param.estimates=param.estimates, out=sort(nextans$cptsout),shape = previousanswer@shape, lastchangelike=nextans$lastchangelike,lastchangecpts=nextans$lastchangecpts,checklist=nextans$checklist,ndone=nextans$ndone,nupdate=nextans$nupdate,cost_func=previousanswer@cost_func))
+    return(online.class_input(data=c(previousanswer@data.set,newdata), cpttype="mean", method=previousanswer@method, test.stat=previousanswer@test.stat, penalty=previousanswer@pen.type, pen.value=nextans$penalty, minseglen=nextans$minseglen, param.estimates=param.estimates, out=sort(nextans$cptsout),shape = previousanswer@shape, lastchangelike=nextans$lastchangelike,lastchangecpts=nextans$lastchangecpts,checklist=nextans$checklist,nchecklist=nextans$nchecklist,ndone=nextans$ndone,nupdate=nextans$nupdate,cost_func=previousanswer@cost_func))
     
 }

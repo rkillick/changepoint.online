@@ -60,10 +60,9 @@ PELT.online.update=function(previousanswer,newdata){
     lastchangecpts=c(previousanswer@lastchangecpts,rep(0,nupdate))
     storage.mode(lastchangecpts)='integer'
     
-    checklist=c(previousanswer@checklist[1:length(previousanswer@checklist)],rep(0,nupdate))
+    checklist=c(previousanswer@checklist[1:previousanswer@nchecklist],rep(0,nupdate))
     storage.mode(checklist)='integer'
     
-    nchecklist=sum(checklist>0)
     
     cptsout=rep(0,ndone+nupdate+1) # sets up null vector for changepoint answer
     storage.mode(cptsout)='integer'
@@ -72,7 +71,7 @@ PELT.online.update=function(previousanswer,newdata){
     answer=list()
     answer[[7]]=1
     on.exit(.C("FreePELT",answer[[7]]))
-     answer=.C('PELT_online',cost_func=previousanswer@cost_func,sumstat=sumstat,ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(previousanswer@pen.value),cptsout=cptsout,error=as.integer(error),shape=previousanswer@shape, minseglen=as.integer(previousanswer@minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=nchecklist)
+     answer=.C('PELT_online',cost_func=previousanswer@cost_func,sumstat=sumstat,ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(previousanswer@pen.value),cptsout=cptsout,error=as.integer(error),shape=previousanswer@shape, minseglen=as.integer(previousanswer@minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=as.integer(previousanswer@nchecklist))
     if(answer[[7]]>0){
         print("C code error:",answer[[7]])
         stop(call.=F)

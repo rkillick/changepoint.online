@@ -40,7 +40,7 @@ int *nchecklist;    /* Number in the checklist currently (to be updated) */
 {
     // R code does know.mean and fills mu if necessary
     // must have at least 1 observations for initialisation, i.e. if ndone=0 then nupdate>=1
-    
+
     double (*costfunction)();
     double mll_var();
     double mll_mean();
@@ -128,13 +128,14 @@ int *nchecklist;    /* Number in the checklist currently (to be updated) */
         *(checklist)=0;
         *(checklist+1)=*minseglen;
     }
-    Rprintf("%d, %d, %d",*checklist, *(checklist+1), *(checklist+2));
+
     for(tstar=*ndone;tstar<(n+1);tstar++){
         R_CheckUserInterrupt(); /* checks if user has interrupted the R session and quits if true */
         
         for(i=0;i< *nchecklist;i++){
             tmplike[i]=lastchangelike[*(checklist+i)] + costfunction(*(sumstat+tstar)-*(sumstat+*(checklist+i)),*(sumstat + n + 1 +tstar)-*(sumstat + n + 1 +*(checklist+i)),*(sumstat + n + n + 2 +tstar)-*(sumstat + n + n + 2 +*(checklist+i)), tstar-*(checklist+i), *shape)+*pen;
         }
+
         min_which(tmplike,*nchecklist,&minout,&whichout); /*updates minout and whichout with min and which element */
         *(lastchangelike+tstar)=minout;
         *(lastchangecpts+tstar)=*(checklist+whichout); 
@@ -151,7 +152,7 @@ int *nchecklist;    /* Number in the checklist currently (to be updated) */
         *(checklist+nchecktmp)=tstar-(*minseglen - 1);  // at least 1 obs per seg
         *nchecklist+=1;
     } // end taustar
-    
+
     // put final set of changepoints together
     int ncpts=0;
     int last=n;
@@ -160,9 +161,8 @@ int *nchecklist;    /* Number in the checklist currently (to be updated) */
         last=*(lastchangecpts+last);
         ncpts+=1;
     }
-    
+
     free(tmplike);
-err4:  free(checklist);
-err5:  return;
+err4:  return;
 }
 
