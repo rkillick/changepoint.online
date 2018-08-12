@@ -20,20 +20,17 @@ LazyLoad: \tab yes\cr
 
 }
 \author{
-Andrew Connell <a.connell1@lancaster.ac.uk>, Rebecca Killick <r.killick@lancs.ac.uk>, Kaylea Haynes <k.haynes1@lancs.ac.uk> with contributions from Idris A. Eckley <i.eckley@lancs.ac.uk>, Paul Fearnhead <p.fearnhead@lancs.ac.uk>.
+Andrew Connell <a.connell1@lancaster.ac.uk>, Rebecca Killick <r.killick@lancs.ac.uk>, Matthew Nunes <m.nunes@lancs.ac.uk>.
 
-Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>, Andrew Connell <a.connell1@lancaster.ac.uk>
+Maintainer: Andrew Connell <a.connell1@lancaster.ac.uk>
 }
 
 \references{
-Chen, J. and Gupta, A. K. (2000) \emph{Parametric statistical change point analysis}, Birkhauser
-
 PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, \emph{JASA} \bold{107(500)}, 1590--1598
 
-Binary Segmentation: Scott, A. J. and Knott, M. (1974) A Cluster Analysis Method for Grouping Means in the Analysis of Variance, \emph{Biometrics} \bold{30(3)}, 507--512
+ECP test statistic: David's paper here
 
-Segment Neighbourhoods: Auger, I. E. And Lawrence, C. E. (1989) Algorithms for the Optimal Identification of Segment Neighborhoods, \emph{Bulletin of Mathematical Biology} \bold{51(1)}, 39--54
-
+Online PELT: reference here.
 }
 \keyword{changepoint}
 \keyword{segmentation}

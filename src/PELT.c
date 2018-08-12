@@ -39,7 +39,6 @@ double *lastchangelike;    /* Vector of likelihoods for the data up to n (to be 
 int *lastchangecpts;    /* Vector of identified last changepoint locations up to n (to be added to), length 2*(ndone+nupdate) */
 int *checklist;    /* Vector of locations of the potential last changepoint for next iteration (to be updated), max length=(ndone+nupdate) */
 int *nchecklist;    /* Number in the checklist currently (to be updated) */
-int *numchangecpts; //stores the current number of changepoints
 {
     // R code does know.mean and fills mu if necessary
     // must have at least 1 observations for initialisation, i.e. if ndone=0 then nupdate>=1
@@ -119,7 +118,6 @@ int *numchangecpts; //stores the current number of changepoints
     if(*ndone==0){
       lastchangelike[0]= -*pen;
       lastchangecpts[0]=0; 
-      numchangecpts[0]=0;
       
         if(min>*nupdate){min=*nupdate;} // you might have less updates than 2*minseglen thus you can't add a change yet!
         for(i=*minseglen;i<min;i++){
@@ -130,12 +128,9 @@ int *numchangecpts; //stores the current number of changepoints
         for(i=*minseglen;i<min;i++){
             lastchangecpts[i] = 0;
         }
-        
-        for(i=*minseglen;i<min;i++){
-            numchangecpts[i] =1;
-        }
-        
+                
         *ndone=min;
+	*nupdate=*nupdate-min;
         if(min==*nupdate){return;} // i.e. you can't add a change
         *nchecklist=2;
         checklist[0]=0;
