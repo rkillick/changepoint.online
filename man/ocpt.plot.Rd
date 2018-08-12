@@ -7,15 +7,36 @@ Plotting changes in Mean and variance. Update function.
 Plots the optimal positioning of changepoints for data using the user specified method. 
 }
 \usage{
-ocpt.plot(data, Q=4)
+ocpt.plot(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2)
 }
 \arguments{
   \item{data}{
 	The data that the user wants to plot. 
 }
- \item{Q}{
-	Maximum number of changepoints the plot will draw. Also twice this value is 
-} 
+ \item{penalty}{
+	Choice of "None", "SIC", "BIC", "MBIC", AIC", "Hannan-Quinn", "Asymptotic", "Manual" and "CROPS" penalties.  If Manual is specified, the manual penalty is contained in the pen.value parameter. If Asymptotic is specified, the theoretical type I error is contained in the pen.value parameter.  If CROPS is specified, the penalty range is contained in the pen.value parameter; note this is a vector of length 2 which contains the minimum and maximum penalty value.  Note CROPS can only be used if the method is "PELT". The predefined penalties listed DO count the changepoint as a parameter, postfix a 0 e.g."SIC0" to NOT count the changepoint as a parameter.
+}
+  \item{pen.value}{
+	The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty.  The value of the penalty when using the Manual penalty option - this can be a numeric value or text giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters.  
+}
+  \item{Q}{
+	The maximum number of changepoints to search for using the "BinSeg" method.  The maximum number of segments (number of changepoints + 1) to search for using the "SegNeigh" method.
+}
+  \item{test.stat}{
+	The assumed test statistic / distribution of the data.  Currently only "Normal" and "CUSUM" supported.
+}
+  \item{class}{
+	Logical. If TRUE then an object of class \code{cpt} is returned.
+}
+  \item{param.estimates}{
+	Logical. If TRUE and class=TRUE then parameter estimates are returned. If FALSE or class=FALSE no parameter estimates are returned.
+}
+\item{shape}{
+Only used when cost function is the gamma likelihood.
+}
+  \item{minseglen}{
+  Positive integer giving the minimum segment length (no. of observations between changes), default is the minimum allowed by theory.
+  }
 }
 \details{
 	This function is used to plot the changes in mean and variance.

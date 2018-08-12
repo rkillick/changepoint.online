@@ -57,6 +57,11 @@ x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
 y = c(rnorm(50,15,1),rnorm(50,25,1),rnorm(50,33,1),rnorm(50,7,1))
 previousans = ocpt.meanvar.initialise(x)
 ocpt.meanvar.update(previousanswer = previousans, newdata = y)
+
+x_ecp = matrix(c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1)), ncol = 1)
+y_ecp = matrix(c(rnorm(50,15,1),rnorm(50,25,1),rnorm(50,33,1),rnorm(50,7,1)), ncol = 1)
+previousansecp = ocpt.meanvar.initialise(x_ecp, test.stat="ECP")
+ocpt.meanvar.update(previousanswer = previousansecp, newdata = y_ecp)
 }
 
 \keyword{methods}

@@ -7,7 +7,7 @@ Identifying Changes in Mean and Variance. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.meanvar.initialize(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,verbose=FALSE)
+ocpt.meanvar.initialize(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,alpha=1,verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -36,6 +36,9 @@ Only used when cost function is the gamma likelihood.
 }
   \item{minseglen}{
   Positive integer giving the minimum segment length (no. of observations between changes), default is the minimum allowed by theory.
+  }
+  \item{alpha}{
+  The moment index used for determining the distance between and within segments.
   }
    \item{verbose}{
  Allows the user to have some of the internal steps returned. (Only for ECP method.)
@@ -79,6 +82,9 @@ Rebecca Killick
 set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,5),rnorm(50,3,10))
 ocpt.meanvar.initialize(x)
+
+x_ecp=matrix(c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,5),rnorm(50,3,10)),ncol=1)
+ocpt.meanvar.initialize(x_ecp,test.stat="ECP")
 }
 
 \keyword{methods}
