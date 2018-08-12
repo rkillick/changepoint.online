@@ -1,7 +1,7 @@
-ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE){
+ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
     checkData(data)
     if(test.stat=="ECP"){
-        ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=shape,verbose=verbose)
+        ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=alpha,verbose=verbose)
         return(ecpans)
     }
   if(minseglen<1){minseglen=1;warning('Minimum segment length for a change in mean is 1, automatically changed to be 1.')}
@@ -44,8 +44,8 @@ ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Nor
           return(online.class_input(data, cpttype="mean", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cptsout),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,numchangecpts=ans$numchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
 }
 
-ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE){
-return(ocpt.mean.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,verbose))
+ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
+return(ocpt.mean.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
 }
 
 ocpt.mean.update=function(previousanswer,newdata){

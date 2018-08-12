@@ -1,7 +1,7 @@
-ocpt.var.initialise=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE){
+ocpt.var.initialise=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
     checkData(data)
     if(test.stat=="ECP"){
-        ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=shape,verbose=verbose)
+        ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=alpha,verbose=verbose)
         return(ecpans)
     }
   if(minseglen<1){minseglen=1;warning('Minimum segment length for a change in variance is 1, automatically changed to be 1.')}
@@ -44,8 +44,8 @@ ocpt.var.initialise=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=
           return(online.class_input(data, cpttype="variance", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cptsout),shape=shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,numchangecpts=ans$numchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
 }
 
-ocpt.var.initialize=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,verbose=FALSE){
-return(ocpt.var.initialise(data,penalty,pen.value,know.mean,mu,Q,test.stat,class,param.estimates,shape,minseglen,verbose))
+ocpt.var.initialize=function(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
+return(ocpt.var.initialise(data,penalty,pen.value,know.mean,mu,Q,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
 
 }
 

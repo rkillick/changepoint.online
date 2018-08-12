@@ -1,7 +1,7 @@
-ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,verbose=FALSE){
+ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,alpha=1,verbose=FALSE){
     checkData(data)
     if(test.stat=="ECP"){
-        ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=shape,verbose=verbose)
+        ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=alpha,verbose=verbose)
         return(ecpans)
     }
   if(minseglen<2){minseglen=2;warning('Minimum segment length for a change in mean and variance is 2, automatically changed to be 2.')}
@@ -43,8 +43,8 @@ ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="
           return(online.class_input(data, cpttype="mean and variance", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=c(0, ans$cptsout),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,numchangecpts=ans$numchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
 }
 
-ocpt.meanvar.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,verbose=FALSE){
-return(ocpt.meanvar.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,verbose))
+ocpt.meanvar.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,alpha=1,verbose=FALSE){
+return(ocpt.meanvar.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
 
 }
 

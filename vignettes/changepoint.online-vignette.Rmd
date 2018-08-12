@@ -43,9 +43,9 @@ More formally, let us assume we have an initial ordered sequence of data, $y_{1:
 
 In the following subsections, we will focus on multiple changepoint detection for brevity. The single changepoint detection case can be thought of as a special case of the multiple and thus the multiple changepoint detection method generalises all cases.
 
-\subsection{2.1. Initialisation Changepoint Detection}
+\subsection{2.1. PELT.online}
 
-\subsection{2.2. Updating Changepoint Detection}
+\subsection{2.2. ECP.online}
 
 \section{3. Introduction to the package and the 'ocpt' class}
 The \textbf{changepoint} package introduced a new object class called ‘cpt’ to store changepoint analysis objects. This section provides an introduction to the new 'ocpt' structure in \textbf{changepoint.online} which follows on from the 'cpt' class previously introduced in @changepointvignette. The new 'ocpt' class contains the functions within the 'cpt' class however, it also combines them with new functions that are approrpiate to the online method. 
@@ -102,9 +102,7 @@ The following sections explore the use of the core functions within the __change
 
 \section{6. Changes in Mean and Variance: The ocpt.meanvar functions}
 
-\section{7. The ECP test.stat and The e.cp3o\_delta functions}
-
-\section{8. Summary}
+\section{7. Summary}
 
 \begin{center} \textbf{Acknowledgements} \end{center}
 
