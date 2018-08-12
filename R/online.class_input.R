@@ -7,7 +7,7 @@ online.class_input <- function(data, cpttype, method, test.stat, penalty, pen.va
   
   data.set(ans)=data;cpttype(ans)=cpttype;method(ans)=method; test.stat(ans)=test.stat;pen.type(ans)=penalty;pen.value(ans)=pen.value;minseglen(ans)=minseglen;ndone(ans)=ndone;nupdate(ans)=nupdate;lastchangelike(ans)=lastchangelike;lastchangecpts(ans)=lastchangecpts;checklist(ans)=checklist;ans@nchecklist=nchecklist;shape(ans)=shape;cost_func(ans)=cost_func;
   if(penalty!="CROPS"){ # crops is only one that doesn't give a single set of cpts
-    cpts(ans)=out[[2]]
+    cpts(ans)=out
     
     if(param.estimates==TRUE){
       if(test.stat == "Gamma"){

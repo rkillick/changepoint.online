@@ -62,8 +62,7 @@ PELT.online.update=function(previousanswer,newdata){
     
     checklist=c(previousanswer@checklist[1:previousanswer@nchecklist],rep(0,nupdate))
     storage.mode(checklist)='integer'
-    
-    
+
     cptsout=rep(0,ndone+nupdate+1) # sets up null vector for changepoint answer
     storage.mode(cptsout)='integer'
     
