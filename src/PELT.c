@@ -12,20 +12,18 @@
 
 #define SWAP(a,b)   { int t; t=a; a=b; b=t; }  // Macro for swapping
 
-//static int *checklist;
 static double *tmplike;
 
 void FreePELT(error)
 int *error; // Error code from PELT C function, non-zero => error
 {
     if(*error==0){
-       // free((void *)checklist);
         free((void *)tmplike);
     }
 }
 
  
-void PELT_online(cost_func, sumstat, ndone, nupdate, pen, cptsout, error, shape, minseglen, lastchangelike, lastchangecpts, checklist, nchecklist, numchangecpts)
+void PELT_online(cost_func, sumstat, ndone, nupdate, pen, cptsout, error, shape, minseglen, lastchangelike, lastchangecpts, checklist, nchecklist)
 char **cost_func;
 double *sumstat;    /* Summary statistics for the time series (ndone+nupdate) */
 int *ndone;            /* Length of the time series analyzed so far */
@@ -96,12 +94,6 @@ int *nchecklist;    /* Number in the checklist currently (to be updated) */
 
     double minout;
     
-    checklist = (int *)calloc((*nupdate+*nchecklist+1),sizeof(int));
-    if (checklist==NULL)   {
-        *error = 5;
-        goto err5;
-    }
-    
     double *tmplike;
     tmplike = (double *)calloc((*nupdate+*nchecklist+1),sizeof(double));
     if (tmplike==NULL)   {
@@ -131,17 +123,17 @@ int *nchecklist;    /* Number in the checklist currently (to be updated) */
                 
         *ndone=min;
 	*nupdate=*nupdate-min;
-        if(min==*nupdate){return;} // i.e. you can't add a change
+        if(*nupdate==0){return;} // i.e. you can't add a change
         *nchecklist=2;
-        checklist[0]=0;
-        checklist[1]=*minseglen;
+        *(checklist)=0;
+        *(checklist+1)=*minseglen;
     }
-    
+    Rprintf("%d, %d, %d",*checklist, *(checklist+1), *(checklist+2));
     for(tstar=*ndone;tstar<(n+1);tstar++){
         R_CheckUserInterrupt(); /* checks if user has interrupted the R session and quits if true */
         
         for(i=0;i< *nchecklist;i++){
-            tmplike[i]=lastchangelike[checklist[i]] + costfunction(*(sumstat+tstar)-*(sumstat+checklist[i]),*(sumstat + n + 1 +tstar)-*(sumstat + n + 1 +checklist[i]),*(sumstat + n + n + 2 +tstar)-*(sumstat + n + n + 2 +checklist[i]), tstar-checklist[i], *shape)+*pen;
+            tmplike[i]=lastchangelike[*(checklist+i)] + costfunction(*(sumstat+tstar)-*(sumstat+*(checklist+i)),*(sumstat + n + 1 +tstar)-*(sumstat + n + 1 +*(checklist+i)),*(sumstat + n + n + 2 +tstar)-*(sumstat + n + n + 2 +*(checklist+i)), tstar-*(checklist+i), *shape)+*pen;
         }
         min_which(tmplike,*nchecklist,&minout,&whichout); /*updates minout and whichout with min and which element */
         *(lastchangelike+tstar)=minout;
@@ -155,6 +147,7 @@ int *nchecklist;    /* Number in the checklist currently (to be updated) */
                 nchecktmp+=1;
             }
         }
+	*nchecklist=nchecktmp;
         *(checklist+nchecktmp)=tstar-(*minseglen - 1);  // at least 1 obs per seg
         *nchecklist+=1;
     } // end taustar

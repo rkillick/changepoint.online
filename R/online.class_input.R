@@ -1,11 +1,11 @@
-online.class_input <- function(data, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out=list(), Q=NA, shape=NA, lastchangelike=c(0), lastchangecpts=c(0), numchangecpts=c(0), checklist=c(0), ndone=0, nupdate=length(data),cost_func){
+online.class_input <- function(data, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out=list(), Q=NA, shape=NA, lastchangelike=c(0), lastchangecpts=c(0), checklist=c(0), ndone=0, nupdate=length(data),cost_func){
   if(method=="BinSeg" || method=="SegNeigh" || penalty=="CROPS"){
     ans=new("ocpt.range")
   }else{
     ans=new("ocpt")
   }
   
-  data.set(ans)=data;cpttype(ans)=cpttype;method(ans)=method; test.stat(ans)=test.stat;pen.type(ans)=penalty;pen.value(ans)=pen.value;minseglen(ans)=minseglen;ndone(ans)=ndone;nupdate(ans)=nupdate;lastchangelike(ans)=lastchangelike;lastchangecpts(ans)=lastchangecpts;numchangecpts(ans)=numchangecpts;checklist(ans)=checklist;shape(ans)=shape;cost_func(ans)=cost_func;
+  data.set(ans)=data;cpttype(ans)=cpttype;method(ans)=method; test.stat(ans)=test.stat;pen.type(ans)=penalty;pen.value(ans)=pen.value;minseglen(ans)=minseglen;ndone(ans)=ndone;nupdate(ans)=nupdate;lastchangelike(ans)=lastchangelike;lastchangecpts(ans)=lastchangecpts;checklist(ans)=checklist;shape(ans)=shape;cost_func(ans)=cost_func;
   if(penalty!="CROPS"){ # crops is only one that doesn't give a single set of cpts
     cpts(ans)=out[[2]]
     

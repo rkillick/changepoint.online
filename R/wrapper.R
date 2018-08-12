@@ -1,4 +1,4 @@
-PELT.online.initialise=function(sumstat,pen=0,cost_func = "mean.norm", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist){
+PELT.online.initialise=function(sumstat,pen=0,cost_func = "mean.norm", shape = 1, minseglen = 1){
   # function that uses the PELT method to calculate changes in mean where the segments in the data are assumed to be Normal
   # initialisation function for online use
 
@@ -6,20 +6,16 @@ PELT.online.initialise=function(sumstat,pen=0,cost_func = "mean.norm", shape = 1
   ndone=0
   nupdate=length(sumstat[,1]) - 1 
   
-  if(missing(lastchangelike)) {lastchangelike = c(rep(0,nupdate + ndone + 1))}
+  lastchangelike = c(rep(0,nupdate + ndone + 1))
   storage.mode(lastchangelike) = 'double'
   
-  if(missing(lastchangecpts)) {lastchangecpts = c(rep(0,nupdate + ndone + 1))}
+  lastchangecpts = c(rep(0,nupdate + ndone + 1))
   storage.mode(lastchangecpts) = 'integer'
   
-  if(missing(numchangecpts)) {numchangecpts = c(rep(0,nupdate + ndone + 1))}
-  storage.mode(numchangecpts) = 'integer'
-  
-  if(missing(checklist)) {checklist = c(rep(0,nupdate + ndone + 1))}
+  checklist = c(rep(0,nupdate + ndone + 1))
   storage.mode(checklist) = 'integer'
   
-  if(missing(checklist)){nchecklist=0}
-  else{nchecklist=sum(checklist>0)}
+  nchecklist=0
   
   cptsout=rep(0,ndone+nupdate+1) # sets up null vector for changepoint answer
   storage.mode(cptsout)='integer'
@@ -30,8 +26,8 @@ PELT.online.initialise=function(sumstat,pen=0,cost_func = "mean.norm", shape = 1
   
   error=0
 
-  answer=.C('PELT_online',cost_func=as.character(cost_func),sumstat=as.double(sumstat),ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(pen),cptsout=cptsout,error=as.integer(error),shape=as.double(shape), minseglen=as.integer(minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=as.integer(nchecklist),numchangecpts=numchangecpts)
-  names(answer)=c('cost_func','sumstat','ndone','nupdate','penalty','cptsout','error','shape','minseglen','lastchangelike','lastchangecpts','checklist','nchecklist','numchangecpts')
+  answer=.C('PELT_online',cost_func=as.character(cost_func),sumstat=as.double(sumstat),ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(pen),cptsout=cptsout,error=as.integer(error),shape=as.double(shape), minseglen=as.integer(minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=as.integer(nchecklist))
+  names(answer)=c('cost_func','sumstat','ndone','nupdate','penalty','cptsout','error','shape','minseglen','lastchangelike','lastchangecpts','checklist','nchecklist')
 
   if(answer$error>0){
     stop("C code error:",answer$error,call.=F)
@@ -47,7 +43,7 @@ PELT.online.update=function(previousanswer,newdata){
     # function that uses the PELT method to calculate changes in mean where the segments in the data are assumed to be Normal
     # update function for online use
     # previous answer is of the format spat out by PELT.mean.norm.initialise
-     # note for previousanswer[], 1=cost_func 2=sumstat 3=ndone 4=nupdate 5=penalty 6=cptsout 7=error 8=shape 9=minseglen 10=lastchanglike 11=lastchangepts 12=checklist 13=nchecklist 14=numchangecpts
+     # note for previousanswer[], 1=cost_func 2=sumstat 3=ndone 4=nupdate 5=penalty 6=cptsout 7=error 8=shape 9=minseglen 10=lastchanglike 11=lastchangepts 12=checklist 13=nchecklist
     # new data is a numerical vector of length 1 or more
     
     # assumes dyn.load('PELTonline.so') has already been done
@@ -64,9 +60,6 @@ PELT.online.update=function(previousanswer,newdata){
     lastchangecpts=c(previousanswer@lastchangecpts,rep(0,nupdate))
     storage.mode(lastchangecpts)='integer'
     
-    numchangecpts=c(previousanswer@numchangecpts,rep(0,nupdate))
-    storage.mode='integer'
-
     checklist=c(previousanswer@checklist[1:length(previousanswer@checklist)],rep(0,nupdate))
     storage.mode(checklist)='integer'
     
@@ -79,11 +72,11 @@ PELT.online.update=function(previousanswer,newdata){
     answer=list()
     answer[[7]]=1
     on.exit(.C("FreePELT",answer[[7]]))
-     answer=.C('PELT_online',cost_func=previousanswer@cost_func,sumstat=sumstat,ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(previousanswer@pen.value),cptsout=cptsout,error=as.integer(error),shape=previousanswer@shape, minseglen=as.integer(previousanswer@minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=nchecklist,numchangecpts=numchangecpts)
+     answer=.C('PELT_online',cost_func=previousanswer@cost_func,sumstat=sumstat,ndone=as.integer(ndone),nupdate=as.integer(nupdate),penalty=as.double(previousanswer@pen.value),cptsout=cptsout,error=as.integer(error),shape=previousanswer@shape, minseglen=as.integer(previousanswer@minseglen), lastchangelike=lastchangelike, lastchangecpts=lastchangecpts,checklist=checklist,nchecklist=nchecklist)
     if(answer[[7]]>0){
         print("C code error:",answer[[7]])
         stop(call.=F)
     }
-    names(answer)=c('cost_func','sumstat','ndone','nupdate','penalty','cptsout','error','shape','minseglen','lastchangelike','lastchangecpts','checklist','nchecklist','numchangecpts')
+    names(answer)=c('cost_func','sumstat','ndone','nupdate','penalty','cptsout','error','shape','minseglen','lastchangelike','lastchangecpts','checklist','nchecklist')
     return(answer)
 }

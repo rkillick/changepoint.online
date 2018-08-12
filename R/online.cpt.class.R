@@ -1,6 +1,6 @@
-setClass("ocpt",slots=list(data.set="ts", cpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character",lastchangelike="numeric",lastchangecpts="numeric",numchangecpts="numeric",checklist="numeric",ndone="numeric",nupdate="numeric",cost_func="character",shape="numeric"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
+setClass("ocpt",slots=list(data.set="ts", cpttype="character", method="character",     test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character",lastchangelike="numeric",lastchangecpts="numeric",checklist="numeric",ndone="numeric",nupdate="numeric",cost_func="character",shape="numeric"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
 
-setClass("ocpt.reg",slots=list(data.set="matrix", cpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character",lastchangelike="numeric",lastchangecpts="numeric",numchangecpts="numeric",checklist="numeric",ndone="numeric",nupdate="numeric",cost_func="character",shape="numeric"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
+setClass("ocpt.reg",slots=list(data.set="matrix", cpttype="character", method="character", test.stat="character",pen.type="character",pen.value="numeric",minseglen="numeric",cpts="numeric",ncpts.max="numeric",param.est="list",date="character",version="character",lastchangelike="numeric",lastchangecpts="numeric",checklist="numeric",ndone="numeric",nupdate="numeric",cost_func="character",shape="numeric"),prototype=prototype(cpttype="Not Set",date=date(),version=as(packageVersion("changepoint.online"),'character')))
 
 #  setClass("ocpt", representation(), prototype())
 #  cpts is the optimal segementation
@@ -277,20 +277,6 @@ if(!isGeneric("lastchangecpts")) {
 setMethod("lastchangecpts","ocpt",function(object) object@lastchangecpts)
 setMethod("lastchangecpts","ocpt.reg",function(object) object@lastchangecpts)
 
-#numchangecpts function
-if(!isGeneric("numchangecpts")) {
-    if (is.function("numchangecpts")){
-        fun <- numchangecpts
-    }
-    else {fun <- function(object){
-        standardGeneric("numchangecpts")
-    }
-    }
-    setGeneric("numchangecpts", fun)
-}
-setMethod("numchangecpts","ocpt",function(object) object@numchangecpts)
-setMethod("numchangecpts","ocpt.reg",function(object) object@numchangecpts)
-
 #checklist function
 if(!isGeneric("checklist")) {
     if (is.function("checklist")){
@@ -521,17 +507,6 @@ setReplaceMethod("lastchangecpts", "ocpt", function(object, value) {
 })
 setReplaceMethod("lastchangecpts", "ocpt.reg", function(object, value) {
     object@lastchangecpts <- value
-    return(object)
-})
-
-#numchangecpts
-setGeneric("numchangecpts<-", function(object, value) standardGeneric("numchangecpts<-"))
-setReplaceMethod("numchangecpts", "ocpt", function(object, value) {
-    object@numchangecpts <- value
-    return(object)
-})
-setReplaceMethod("numchangecpts", "ocpt.reg", function(object, value) {
-    object@numchangecpts <- value
     return(object)
 })
 
