@@ -1,4 +1,4 @@
-ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
+ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
     checkData(data)
     if(test.stat=="ECP"){
         ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=alpha,verbose=verbose)
@@ -45,8 +45,8 @@ ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,test.stat="Normal"
           return(online.class_input(sumstat=sumstat, cpttype="mean", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=sort(ans$cptsout[ans$cptsout>0]),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,checklist=ans$checklist,nchecklist=ans$nchecklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
 }
 
-ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
-return(ocpt.mean.initialise(data,penalty,pen.value,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
+ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
+return(ocpt.mean.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
 }
 
 ocpt.mean.update=function(previousanswer,newdata){
