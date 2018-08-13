@@ -15,7 +15,7 @@ online.class_input(sumstat, cpttype, method, test.stat, penalty, pen.value, mins
 }
 \arguments{
   \item{sumstat}{
-  Summary statistic used in changepoint analysis, see \code{\link{ocpt.mean.initalise}} for further details.
+  Summary statistic used in changepoint analysis, see \code{\link{ocpt.mean.initialise}} for further details.
 }
   \item{cpttype}{
   Type of changepoint analysis performed as a text string, e.g. "Mean", "Mean and Variance".
@@ -24,7 +24,7 @@ online.class_input(sumstat, cpttype, method, test.stat, penalty, pen.value, mins
 	Method used as a text string, see \code{\link{ocpt.mean.initialise}} for further details.
 }
   \item{test.stat}{
-	The assumed test statistic / distribution of the data as a text string.  , see \code{\link{ocpt.mean}}, \code{\link{ocpt.meanvar}} or \code{\link{ocpt.var}} for further details.
+	The assumed test statistic / distribution of the data as a text string.  , see \code{\link{ocpt.mean.initialise}}, \code{\link{ocpt.meanvar.initialise}} or \code{\link{ocpt.var.initialise}} for further details.
 }
   \item{penalty}{
 	Penalty used as a text string, see \code{\link{ocpt.mean.initialise}} for further details.

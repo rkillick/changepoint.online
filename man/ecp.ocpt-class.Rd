@@ -34,7 +34,7 @@
 \alias{ecp.ocpt-method,functime<-}
 \alias{ecp.ocpt-method,width<-}
 \alias{ecp.ocpt-method,cpLoc<-}
-\alias{ocpt.reg-method,summary}
+\alias{ocpt.ocpt-method,summary}
 
 \title{Class "ecp.ocpt"}
 \description{
@@ -78,7 +78,7 @@ Objects can be created by calls of the form \code{new("ecp.ocpt", ...)}.
         \item{\code{version}:}{Object of class \code{"character"}, version number of the package used when the analysis was run.}
  \item{\code{lastchangelike}:}{Object of class \code{"numeric"}, vector of lenght n containing the likelihood of the optimal segmentation up to each timepoint.}
     \item{\code{lastchangecpts}:}{Object of class \code{"numeric"}, vector of length n containing the last changepoint prior to each timepoint.}
-    \item{\code{numchangecpts}:}{Object of class \code{"numeric"}, stores the current number of changepoints detected.}
+    \item{\code{nchecklist}:}{Object of class \code{"numeric"}, stores the current number of changepoints detected.}
     \item{\code{checklist}:}{Object of class \code{"numeric"}, vector of locations of the potential last changepoint for next iteration (to be updated), max length=(ndone+nupdate).}
     \item{\code{ndone}:}{Object of class \code{"numeric"}, length of the time series when analysis begins.}
     \item{\code{nupdate}:}{Object of class \code{"numeric"}, length of the time series to be analysed in this update.}
