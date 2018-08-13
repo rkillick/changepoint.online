@@ -48,7 +48,7 @@ for(i in previousdata){
     updatedans = ocpt.var.update(previousans,j)
     ij = c(i,j)
     ans.offline = cpt.var(ij,method="PELT")
-    expect_equal(cpts(updatedans),cpts(ans.offline)-2)
+    expect_equal(cpts(updatedans),cpts(ans.offline))
   }
 }
 
@@ -56,7 +56,7 @@ for(i in previousdata){
 expect_identical(ecpdata,as.matrix(singvardata))
 ecpans = ocpt.var.initialise(ecpdata,test.stat = "ECP")
 normans = ocpt.var.initialise(singvardata,test.stat = "Normal")
-expect_equal(estimates(ecpans),78)
+expect_equal(estimates(ecpans),67)
 #Check correct classes are called
 for(i in testStats){
   if(i == "ECP"){

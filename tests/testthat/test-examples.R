@@ -74,7 +74,7 @@ set.seed(10)
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
 y=rnorm(200,0,1)
 z=rbind(x,y)
-ans=ocpt.var.initialise(z,penalty="Asymptotic",pen.value=0.01) 
+ans=ocpt.var.initialise(z,penalty="Manual",pen.value=20) 
 test_that('var1',expect_equivalent(cpts(ans),c(100,199,298)))
 
 
