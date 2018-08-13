@@ -1,13 +1,13 @@
-\name{data.set<-}
-\alias{data.set<-}
+\name{sumstat<-}
+\alias{sumstat<-}
 \title{
-Generic Function - data.set<-
+Generic Function - sumstat<-
 }
 \description{
 Generic function
 }
 \usage{
-data.set(object)<-value
+sumstat(object)<-value
 }
 \arguments{
   \item{object}{
@@ -29,11 +29,11 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{data.set<--methods}}
+\code{\link{sumstat<--methods}}
 }
 \examples{
 x=new("ocpt") # new ocpt object
-data.set(x)<-c(1,2,3,4,5) # replaces the existing data.set slot in x with c(1,2,3,4,5)
+sumstat(x)<-matrix(c(1,2,3,4,5)) # replaces the existing sumstat slot in x with matrix(1,2,3,4,5)
 }
 
 \keyword{methods}
