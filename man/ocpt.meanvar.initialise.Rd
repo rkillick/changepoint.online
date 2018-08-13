@@ -7,7 +7,7 @@ Identifying Changes in Mean and Variance. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.meanvar.initialise(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2, alpha=1, verbose=FALSE)
+ocpt.meanvar.initialise(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2, alpha=1, verbose=FALSE)
 }
 \arguments{
   \item{data}{

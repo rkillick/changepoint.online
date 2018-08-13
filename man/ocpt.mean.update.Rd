@@ -43,8 +43,7 @@ PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of ch
 MBIC: Zhang, N. R. and Siegmund, D. O. (2007) A Modified Bayes Information Criterion with Applications to the Analysis of Comparative Genomic Hybridization Data. \emph{Biometrics} \bold{63}, 22-32.
 }
 \author{
-Andrew Connell
-Rebecca Killick
+Andrew Connell, Rebecca Killick
 }
 
 

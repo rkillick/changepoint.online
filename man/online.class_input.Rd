@@ -11,11 +11,11 @@ This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialis
 WARNING: No checks on arguments are performed!
 }
 \usage{
-online.class_input(data, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out = list(), Q = NA, shape = NA, lastchangelike = c(0), lastchangecpts =c(0), numchangecpts = c(0), checklist = c(0), ndone = 0, nupdate = length(data), cost_func)
+online.class_input(sumstat, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out = list(), Q = NA, shape = NA, lastchangelike = c(0), lastchangecpts =c(0), numchangecpts = c(0), checklist = c(0), ndone = 0, nupdate = length(data), cost_func)
 }
 \arguments{
-  \item{data}{
-  Data used in changepoint analysis, see \code{\link{ocpt.mean.initalise}} for further details.
+  \item{sumstat}{
+  Summary statistic used in changepoint analysis, see \code{\link{ocpt.mean.initalise}} for further details.
 }
   \item{cpttype}{
   Type of changepoint analysis performed as a text string, e.g. "Mean", "Mean and Variance".
@@ -78,8 +78,7 @@ The cost function that has been used.
   An object of class \code{ocpt} or \code{ocpt.range} as appropriate filled with the given attributes.
 }
 \author{
-Andrew Connell
-Rebecca Killick
+Andrew Connell, Rebecca Killick
 }
 \seealso{
 \code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initialise}},\code{\linkS4class{ocpt}}

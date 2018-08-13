@@ -7,7 +7,7 @@ Identifying Changes in Mean. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.mean.initialise(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE)
+ocpt.mean.initialise(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -70,8 +70,7 @@ PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of ch
 MBIC: Zhang, N. R. and Siegmund, D. O. (2007) A Modified Bayes Information Criterion with Applications to the Analysis of Comparative Genomic Hybridization Data. \emph{Biometrics} \bold{63}, 22-32.
 }
 \author{
-Andrew Connell
-Rebecca Killick
+Andrew Connell, Rebecca Killick
 }
 
 

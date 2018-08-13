@@ -11,7 +11,7 @@ This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialis
 WARNING: No checks on arguments are performed!
 }
 \usage{
-PELT.online.initialise(sumstat, pen=0, cost_func = "mean.norm", shape = 1, minseglen = 1, lastchangelike, lastchangecpts, numchangecpts, checklist)
+PELT.online.initialise(sumstat, pen=0, cost_func = "mean.norm", shape = 1, minseglen = 1)
 }
 \arguments{
   \item{sumstat}{
@@ -28,18 +28,6 @@ PELT.online.initialise(sumstat, pen=0, cost_func = "mean.norm", shape = 1, minse
 }
   \item{minseglen}{
   Positive integer giving the minimum segment length (no. of observations between changes), default is 1.  No checks are performed on the input value so it could be larger than feasible to have changes in the data.
-  }
-  \item{lastchangelike}{
-  Vector of likelihoods for the data up to the length of the data.
-  }
-  \item{lastchangecpts}{
-  Vector of identified last changepoint locations up to the length of the data.
-  }
-  \item{numchangecpts}{
-  Stores the current number of changepoints identified.
-  }
-  \item{checklist}{
-  Vector of locations of the potential last changepoint for next iteration.
   }
 }
 \details{
@@ -70,8 +58,7 @@ PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of ch
 CROPS: Haynes K, Eckley IA, Fearnhead P (2014) Efficient penalty search for multiple changepoint problems (in submission), arXiv:1412.3617
 }
 \author{
-Andrew Connell
-Rebecca Killick
+Andrew Connell, Rebecca Killick
 }
 
 

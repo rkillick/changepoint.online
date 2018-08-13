@@ -4,7 +4,7 @@
 \alias{ocpt.reg-class}
 \alias{ocpt.reg-method,cpts}
 \alias{ocpt.reg-method,cpttype}
-\alias{ocpt.reg-method,data.set}
+\alias{ocpt.reg-method,sumstat}
 \alias{ocpt.reg-method,test.stat}
 \alias{ocpt.reg-method,method}
 \alias{ocpt.reg-method,ncpts.max}
@@ -13,7 +13,7 @@
 \alias{ocpt.reg-method,pen.value}
 \alias{ocpt.reg-method,cpts<-}
 \alias{ocpt.reg-method,cpttype<-}
-\alias{ocpt.reg-method,data.set<-}
+\alias{ocpt.reg-method,sumstat<-}
 \alias{ocpt.reg-method,test.stat<-}
 \alias{ocpt.reg-method,method<-}
 \alias{ocpt.reg-method,ncpts.max<-}
@@ -36,7 +36,7 @@ Objects can be created by calls of the form \code{new("ocpt", ...)}.
 }
 \section{Slots}{
   \describe{
-    \item{\code{data.set}:}{Object of class \code{"numeric"}, the original vector of data }
+    \item{\code{sumstat}:}{Object of class \code{"numeric"}, the summary statistic matrix for the data }
     \item{\code{cpttype}:}{Object of class \code{"character"}, the type of online changepoint that was identified }
     \item{\code{method}:}{Object of class \code{"character"}, the method that was used to search for online changepoints, default change in regression }
     \item{\code{test.stat}:}{Object of class \code{"character"}, the test statistic used to analyse the data }
@@ -62,7 +62,7 @@ Objects can be created by calls of the form \code{new("ocpt", ...)}.
   \describe{
     \item{cpts}{\code{signature(object = "ocpt.reg")}: retrieves cpts slot }
     \item{cpttype}{\code{signature(object = "ocpt.reg")}: retrieves cpttype slot }
-    \item{data.set}{\code{signature(object = "ocpt.reg")}: retrieves data.set slot }
+    \item{sumstat}{\code{signature(object = "ocpt.reg")}: retrieves sumstat slot }
     \item{test.stat}{\code{signature(object = "ocpt.reg")}: retrieves test.stat slot }
     \item{ncpts.max}{\code{signature(object = "ocpt.reg")}: retrieves ncpts.max slot }
     \item{method}{\code{signature(object = "ocpt.reg")}: retrieves method slot }
@@ -72,7 +72,7 @@ Objects can be created by calls of the form \code{new("ocpt", ...)}.
     \item{pen.value}{\code{signature(object = "ocpt.reg")}: retrieves pen.value slot }
     \item{cpts<-}{\code{signature(object = "ocpt.reg")}: replaces cpts slot }
     \item{cpttype<-}{\code{signature(object = "ocpt.reg")}: replaces cpttype slot }
-    \item{data.set<-}{\code{signature(object = "ocpt.reg")}: replaces data.set slot }
+    \item{sumstat<-}{\code{signature(object = "ocpt.reg")}: replaces sumstat slot }
     \item{test.stat<-}{\code{signature(object = "ocpt.reg")}: replaces test.stat slot }
     \item{ncpts.max<-}{\code{signature(object = "ocpt.reg")}: replaces ncpts.max slot }
     \item{method<-}{\code{signature(object = "ocpt.reg")}: replaces method slot }
@@ -96,8 +96,8 @@ Rebecca Killick
 showClass("ocpt.reg")
 
 x=new("ocpt.reg") # creates a new object with the cpt.reg class defaults
-data.set(x)  # retrieves the data.set slot from x
-data.set(x)<-matrix(1:10,nrow=5,ncol=2) # replaces the data.set slot from x with a matrix
+sumstat(x)  # retrieves the sumstat slot from x
+sumstat(x)<-matrix(1:10,nrow=5,ncol=2) # replaces the sumstat slot from x with a matrix
 
 }
 \keyword{classes}

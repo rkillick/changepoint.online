@@ -4,8 +4,7 @@
 \alias{ocpt-class}
 \alias{ocpt-method,cpts}
 \alias{ocpt-method,cpttype}
-\alias{ocpt-method,data.set}
-\alias{ocpt-method,data.set.ts}
+\alias{ocpt-method,sumstat}
 \alias{ocpt-method,test.stat}
 \alias{ocpt-method,ncpts.max}
 \alias{ocpt-method,method}
@@ -15,7 +14,7 @@
 \alias{ocpt-method,pen.value}
 \alias{ocpt-method,cpts<-}
 \alias{ocpt-method,cpttype<-}
-\alias{ocpt-method,data.set<-}
+\alias{ocpt-method,sumstat<-}
 \alias{ocpt-method,test.stat<-}
 \alias{ocpt-method,ncpts.max<-}
 \alias{ocpt-method,method<-}
@@ -41,7 +40,7 @@ Objects can be created by calls of the form \code{new("ocpt", ...)}.
 }
 \section{Slots}{
   \describe{
-    \item{\code{data.set}:}{Object of class \code{"ts"}, a coerced time series of the original data. }
+    \item{\code{sumstat}:}{Object of class \code{"array"}, a summary statistic for the the original data. }
     \item{\code{cpttype}:}{Object of class \code{"character"}, the type of online changepoint that was identified. }
     \item{\code{method}:}{Object of class \code{"character"}, the method that was used to search for changepoints. }
     \item{\code{test.stat}:}{Object of class \code{"character"}, the test statistic for the analysis of the data. }
@@ -67,8 +66,7 @@ Objects can be created by calls of the form \code{new("ocpt", ...)}.
   \describe{
     \item{ocpts}{\code{signature(object = "ocpt")}: retrieves ocpts slot }
     \item{cpttype}{\code{signature(object = "ocpt")}: retrieves ocpttype slot }
-    \item{data.set}{\code{signature(object = "ocpt")}: retrieves vector version of data.set slot }
-    \item{data.set.ts}{\code{signature(object = "ocpt")}: retrieves time series version of data.set slot }
+    \item{sumstat}{\code{signature(object = "ocpt")}: retrieves matrix version of sumstat slot }
     \item{test.stat}{\code{signature(object = "ocpt")}: retrieves test.stat slot }
     \item{ncpts.max}{\code{signature(object = "ocpt")}: retrieves ncpts.max slot }
     \item{method}{\code{signature(object = "ocpt")}: retrieves method slot }
@@ -78,7 +76,7 @@ Objects can be created by calls of the form \code{new("ocpt", ...)}.
     \item{pen.value}{\code{signature(object = "ocpt")}: retrieves pen.value slot }
     \item{cpts<-}{\code{signature(object = "ocpt")}: replaces cpts slot }
     \item{cpttype<-}{\code{signature(object = "ocpt")}: replaces cpttype slot }
-    \item{data.set<-}{\code{signature(object = "ocpt")}: replaces data.set slot }
+    \item{sumstat<-}{\code{signature(object = "ocpt")}: replaces sumstat slot }
     \item{test.stat<-}{\code{signature(object = "ocpt")}: replaces test.stat slot }
     \item{ncpts.max<-}{\code{signature(object = "ocpt")}: replaces ncpts.max slot }
     \item{method<-}{\code{signature(object = "ocpt")}: replaces method slot }
@@ -100,7 +98,7 @@ Rebecca Killick
 }
 
 \seealso{
-\code{\link{data.set-methods}},\code{\link{cpts-methods}},\code{\linkS4class{cpt.reg}},\code{\link{ocpt.mean.initialise}},\code{\link{ocpt.var.initialise}},\code{\link{ocpt.meanvar.initialise}}
+\code{\link{cpts-methods}},\code{\linkS4class{cpt.reg}},\code{\link{ocpt.mean.initialise}},\code{\link{ocpt.var.initialise}},\code{\link{ocpt.meanvar.initialise}}
 }
 \examples{
 showClass("ocpt") # shows the structure of the ocpt class
@@ -114,7 +112,7 @@ x=c(rnorm(100,0,1),rnorm(100,0,10))
 ans=ocpt.var.initialise(x) 
 print(ans) # prints details of the analysis including a summary
 summary(ans)
-plot(ans) # plots the data with change (vertical line) at 100
+plot(ans,data=x) # plots the data with change (vertical line) at 100
 }
 \keyword{classes}
 \keyword{ocpt}

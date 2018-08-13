@@ -43,7 +43,7 @@ ocpt.meanvar.initialise=function(data,penalty="Manual",pen.value=length(data),Q=
           return(online.class_input(sumstat=sumstat, cpttype="mean and variance", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=sort(ans$cptsout[ans$cptsout>0]),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,checklist=ans$checklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
 }
 
-ocpt.meanvar.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,alpha=1,verbose=FALSE){
+ocpt.meanvar.initialize=function(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,alpha=1,verbose=FALSE){
 return(ocpt.meanvar.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
 
 }

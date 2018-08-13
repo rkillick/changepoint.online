@@ -18,7 +18,7 @@ Objects can be created by calls of the form \code{new("ocpt.range", ...)}.
     \item{\code{cpts.full}:}{Object of class \code{"matrix"}, each row of the matrix is a different segmentation of the data (different set of online changepoints).}
     \item{\code{pen.value.full}:}{Object of class \code{"vector"}, each element is the penalty used to create the set of changepoints in the corresponding row of \code{ocpts.full}.}
     The remaining slots are inherited from the \code{ocpt} class.
-    \item{\code{data.set}:}{Object of class \code{"ts"}, a coerced time series of the original data. Inherited from ocpt class. }
+    \item{\code{sumstat}:}{Object of class \code{"array"}, a summary statistic matrix of the original data. Inherited from ocpt class. }
     \item{\code{cpttype}:}{Object of class \code{"character"}, the type of online changepoint that was identified. Inherited from ocpt class. }
     \item{\code{method}:}{Object of class \code{"character"}, the method that was used to search for online changepoints. Inherited from ocpt class. }
     \item{\code{test.stat}:}{Object of class \code{"character"}, the test statistic for the analysis of the data. Inherited from ocpt class. }
@@ -54,8 +54,7 @@ Objects can be created by calls of the form \code{new("ocpt.range", ...)}.
 }
 
 \author{
-Andrew Connell
-Rebecca Killick
+Andrew Connell, Rebecca Killick
 }
 
 \seealso{
@@ -63,8 +62,6 @@ Rebecca Killick
 }
 \examples{
 showClass("ocpt.range") # shows the structure of the ocpt.range class
-
-c # retrieves the ocpts slot from x
 
 # Example of multiple changes in variance at 50,100,150 in simulated normal data
 set.seed(1)

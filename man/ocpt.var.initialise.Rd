@@ -7,7 +7,7 @@ Identifying Changes in Mean. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.var.initialise(data,penalty="MBIC",pen.value=0,know.mean=FALSE,mu=NA,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE)
+ocpt.var.initialise(data,penalty="Manual",pen.value=length(data),know.mean=FALSE,mu=NA,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE)
 }
 \arguments{
   \item{data}{

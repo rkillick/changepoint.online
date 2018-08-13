@@ -7,7 +7,7 @@ Plotting changes in Mean and variance. Update function.
 Plots the optimal positioning of changepoints for data using the user specified method. 
 }
 \usage{
-ocpt.plot(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2)
+ocpt.plot(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2)
 }
 \arguments{
   \item{data}{
@@ -52,8 +52,7 @@ PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of ch
 MBIC: Zhang, N. R. and Siegmund, D. O. (2007) A Modified Bayes Information Criterion with Applications to the Analysis of Comparative Genomic Hybridization Data. \emph{Biometrics} \bold{63}, 22-32.
 }
 \author{
-Andrew Connell
-Rebecca Killick
+Andrew Connell, Rebecca Killick
 }
 
 
@@ -62,7 +61,7 @@ Rebecca Killick
 }
 \examples{
 set.seed(1)
-x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
+x=c(rnorm(50,0,1),rnorm(50,15,1),rnorm(50,30,1),rnorm(50,50,1))
 ocpt.plot(x, Q=5)
 }
 
