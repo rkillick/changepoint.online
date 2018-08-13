@@ -5,7 +5,7 @@ context("man file example tests")
 set.seed(1)
 x=c(rnorm(100,0,1),rnorm(100,0,10))
 ansvar=ocpt.var.initialise(x)
-test_that('var1',expect_identical(cpts(ansvar),100))
+test_that('var1',expect_equal(cpts(ansvar),100))
 
 # change in mean
 set.seed(1)
