@@ -50,7 +50,7 @@ set.seed(1)
 x = matrix(c(rnorm(100,50,1),rnorm(100,5,1)),ncol=1)
 y=matrix(c(rnorm(100,15,1),rnorm(100,25,1)),ncol=1)
 ans = e.cp3o_delta.online.initialise(x)
-updatedans = e.cp3o_delta.online.update(ans,y,K=4)
+updatedans = e.cp3o_delta.online.update(ans,y,K=3)
 updatedans
 }
 
