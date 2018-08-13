@@ -1,57 +1,81 @@
-context("ocpt.mean.initialise tests")
+context("ocpt.mean function tests")
 
 set.seed(1) # Note: new data sets must be added at the end.
+previoussingmeandata <- c(rnorm(100,50,1),rnorm(100,100,1))
+previousmulmeandata <- c(rnorm(100,100,1),rnorm(100,70,1),rnorm(100,5,1),rnorm(100,4,1))
 singmeandata <- c(rnorm(100,0,1),rnorm(100,10,1))
 mulmeandata <- c(rnorm(100,0,1),rnorm(100,10,1),rnorm(100,20,1),rnorm(100,50,1))
 nochangedata <- c(rnorm(200,0,1))
-
 singvardata <- c(rnorm(100,10,1),rnorm(100,10,5))
 mulvardata <- c(rnorm(100,20,10),rnorm(100,20,15),rnorm(100,20,20),rnorm(100,20,25))
-
 singmeanvardata <- c(rnorm(50,0,1),rnorm(50,3,10))
 mulmeanvardata <- c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
 mulmeanvarexpdata <- c(rexp(50,1), rexp(50,3), rexp(50,5), rexp(50,7)) #rate values correct
 mulmeanvarpoisdata <- c(rpois(50,1), rpois(50,2), rpois(50,3), rpois(50,5)) #lambda values correct?
-
 constantdata <- rep(1, 200)
-shortdata <- c(2)
+shortdata <- c(2,2,2)
 negativedata <- jitter(rep(-100, 200))
 
-characterdata <- rep("ert", 200)
-
-#NAdata - creates 10 random NA within singmeandata
-NAdata <- singmeandata
-rn <- sample(1:length(singmeandata), 10, replace=F)
-
-for(i in rn){
-  NAdata[i] <- NA
-}
-###################
+#list of datas
 meandata <- list(singmeandata, mulmeandata, nochangedata)
-vardata <-  list(singvardata, mulvardata, nochangedata)
 meanvardata <-  list(singmeanvardata, mulmeanvardata, nochangedata)
-
-penalties <- c("None", "SIC", "BIC", "AIC", "Hannan-Quinn", "Asymptotic", "Manual", "MBIC", "CROPS") 
-
-asympenval <- list(1, 0.756, 0.234, 'return', -1, 0) #need to add character string and -1 and 0
-manpenval <- list("2+log(n)", "log(n)", "3*n", -1, "diffparam-1") #null, alt, tau*2 don't work (comes back with user defind error "your manual cannot be evaluated")
-
-QValues <- list(3, -1, 'jamie', 200000) #data variable needs to be modified - larger than data length and over half data length
-#QValues <- c(3, 5)
+data <- list(singmeandata, mulmeandata, nochangedata, constantdata, shortdata, negativedata)
+previousdata <- list(previoussingmeandata)
+updateddata <- list(singmeandata)
+ecpdata <- matrix(singmeandata,ncol=1)
+penalties <- c("None", "SIC", "BIC", "AIC", "Hannan-Quinn", "Manual", "MBIC") 
+penalties.error <- c("Asymptotic","CROPS")
 
 testStats <- c("Normal","ECP") 
-#asym and cusum return user defined "no asymptotic penalty" && "asymptotic penalties not implemented"
 
-class <- c(TRUE, FALSE)
-param.estimates <- c(TRUE, FALSE)
+#Firt test that results of changepoint.online yield same answers as offline
+for(i in data){
+  ans.online = ocpt.mean.initialise(i)
+  ans.offline = cpt.mean(i,method='PELT')
+    expect_equal(cpts(ans.online),cpts(ans.offline))
+}
 
-minseglen <- c(-1, 10, 20000)
+for(i in data){
+  english = ocpt.mean.initialise(i)
+  american = ocpt.mean.initialize(i)
+  expect_identical(english,american)
+}
 
-cropspenval = list(c(2,2.5), c(3,1), c(5,5,6), c("a", "b"), 5, "a")
+for(i in previousdata){
+  for(j in updateddata){
+    previousans = ocpt.mean.initialise(i)
+    updatedans = ocpt.mean.update(previousans,j)
+    ij = c(i,j)
+    ans.offline = cpt.mean(ij,method="PELT")
+    expect_equal(cpts(updatedans),cpts(ans.offline))
+  }
+}
 
-t = 0 #count for number of iterations
+#Test ecp and pelt yield same answers (difference of one due to theoretical choice of which data point is considered the changepoint)
+expect_identical(ecpdata,as.matrix(singmeandata))
+ecpans = ocpt.mean.initialise(ecpdata,test.stat = "ECP")
+normans = ocpt.mean.initialise(singmeandata,test.stat = "Normal")
+expect_equal(estimates(ecpans)-1,cpts(normans))
+#Check correct classes are called
+for(i in testStats){
+if(i == "ECP"){
+  ecpans = ocpt.mean.initialise(ecpdata,test.stat = i)
+  expect_identical(class(ecpans)[1],"ecp.ocpt")
+}else{
+  ans = ocpt.mean.initialise(singmeandata,test.stat = i)
+  expect_identical(class(ans)[1],"ocpt")
+}
+}
 
-
-
-  
+#Check all penalties have either solution or it is clearly stated they no longer work
+for(p in penalties){
+  ans = ocpt.mean.initialise(singmeandata,penalty = p)
+}
+for(p in penalties.error){
+  if(p=="CROPS"){
+    expect_that(ocpt.mean.initialise(singmeandata,penalty = p),throws_error("Use cpt.mean from changepoint as CROPS is not available with changepoint.online"))
+  }else{
+    expect_that(ocpt.mean.initialise(singmeandata,penalty = p),throws_error("Asymptotic penalty values must be > 0 and <= 1"))
+  }
+}
   
