@@ -1,4 +1,4 @@
-ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
+ocpt.mean.initialise=function(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
     checkData(data)
     if(test.stat=="ECP"){
         ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=alpha,verbose=verbose)
@@ -38,14 +38,14 @@ ocpt.mean.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Nor
           mu=mean(data)
           sumstat=cbind(c(0,cumsum(coredata(data))),c(0,cumsum(coredata(data)^2)),cumsum(c(0,(coredata(data)-mu)^2)))
           
-          pen.value = penalty_decision(penalty, pen.value, length(data), diffparam=1, asymcheck=cost_func, method="AMOC")
+          pen.value = online.decision(penalty, pen.value, length(data), diffparam=1, asymcheck=cost_func, method="AMOC")
           method = "PELT"
           ans=PELT.online.initialise(sumstat,pen=pen.value,cost_func = cost_func, shape = shape, minseglen = minseglen)
           
           return(online.class_input(sumstat=sumstat, cpttype="mean", method=method, test.stat=test.stat, penalty=penalty, pen.value=ans$penalty, minseglen=minseglen, param.estimates=param.estimates, out=sort(ans$cptsout[ans$cptsout>0]),shape=ans$shape,Q=Q,lastchangelike=ans$lastchangelike,lastchangecpts=ans$lastchangecpts,checklist=ans$checklist,nchecklist=ans$nchecklist,ndone=ans$ndone,nupdate=ans$nupdate,cost_func=ans$cost_func))
 }
 
-ocpt.mean.initialize=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
+ocpt.mean.initialize=function(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE){
 return(ocpt.mean.initialise(data,penalty,pen.value,Q,test.stat,class,param.estimates,shape,minseglen,alpha,verbose))
 }
 

@@ -1,4 +1,4 @@
-ocpt.plot=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2){ #Q= maximum number of changepoints
+ocpt.plot=function(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2){ #Q= maximum number of changepoints
     n = length(data)
     if(n > Q){
         for(i in (2*Q):n){

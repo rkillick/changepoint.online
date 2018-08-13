@@ -1,4 +1,4 @@
-ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,alpha=1,verbose=FALSE){
+ocpt.meanvar.initialise=function(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2,alpha=1,verbose=FALSE){
     checkData(data)
     if(test.stat=="ECP"){
         ecpans = e.cp3o_delta.online.initialise(Z=data, K=Q, delta=minseglen+1, alpha=alpha,verbose=verbose)
@@ -36,7 +36,7 @@ ocpt.meanvar.initialise=function(data,penalty="MBIC",pen.value=0,Q=5,test.stat="
           mu=mean(data)
           sumstat=cbind(c(0,cumsum(coredata(data))),c(0,cumsum(coredata(data)^2)),cumsum(c(0,(coredata(data)-mu)^2)))
           
-          pen.value = penalty_decision(penalty, pen.value, length(data), diffparam=1, asymcheck=costfunc, method="AMOC")
+          pen.value = online.decision(penalty, pen.value, length(data), diffparam=1, asymcheck=costfunc, method="AMOC")
           method = "PELT"
           ans=PELT.online.initialise(sumstat=sumstat,pen=pen.value,cost_func = costfunc, shape = shape, minseglen = minseglen)
           
