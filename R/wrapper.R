@@ -50,7 +50,8 @@ PELT.online.update=function(previousanswer,newdata){
     ndone=previousanswer@ndone+previousanswer@nupdate
     nupdate=length(newdata)
     mu=mean(newdata)
-    sumstat=cbind(c(0,cumsum(coredata(newdata))),c(0,cumsum(coredata(newdata)^2)),cumsum(c(0,(coredata(newdata)-mu)^2)))
+    end.sumstat=previousanswer@sumstat[nrow(previousanswer@sumstat),]
+    sumstat=rbind(previousanswer@sumstat,matrix(c(end.sumstat[1]+cumsum(coredata(newdata)),end.sumstat[2]+cumsum(coredata(newdata)^2),end.sumstat[3]+cumsum(c((coredata(newdata)-mu)^2))),ncol=3))
     storage.mode(sumstat) = 'double'
     
     

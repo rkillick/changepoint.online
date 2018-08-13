@@ -131,8 +131,12 @@ int *nchecklist;    /* Number in the checklist currently (to be updated) */
 
     for(tstar=*ndone;tstar<(n+1);tstar++){
         R_CheckUserInterrupt(); /* checks if user has interrupted the R session and quits if true */
-        
+	
         for(i=0;i< *nchecklist;i++){
+/*	if(tstar==20){
+		Rprintf("lcl:%f, cf:%f, ss1:%f, ss2:%f, ss3:%f, ss4:%f, ss5:%f, ss6:%f \n",
+			lastchangelike[*(checklist+i)], costfunction(*(sumstat+tstar)-*(sumstat+*(checklist+i)),*(sumstat + n + 1 +tstar)-*(sumstat + n + 1 +*(checklist+i)),*(sumstat + n + n + 2 +tstar)-*(sumstat + n + n + 2 +*(checklist+i)), tstar-*(checklist+i), *shape),*(sumstat+tstar),*(sumstat+*(checklist+i)),*(sumstat + n + 1 +tstar),*(sumstat + n + 1 +*(checklist+i)), *(sumstat + n + n + 2 +tstar),*(sumstat + n + n + 2 +*(checklist+i)));
+	} */
             tmplike[i]=lastchangelike[*(checklist+i)] + costfunction(*(sumstat+tstar)-*(sumstat+*(checklist+i)),*(sumstat + n + 1 +tstar)-*(sumstat + n + 1 +*(checklist+i)),*(sumstat + n + n + 2 +tstar)-*(sumstat + n + n + 2 +*(checklist+i)), tstar-*(checklist+i), *shape)+*pen;
         }
 
