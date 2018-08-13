@@ -11,7 +11,7 @@ This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialis
 WARNING: No checks on arguments are performed!
 }
 \usage{
-online.class_input(sumstat, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out = list(), Q = NA, shape = NA, lastchangelike = c(0), lastchangecpts =c(0), numchangecpts = c(0), checklist = c(0), ndone = 0, nupdate = length(data), cost_func)
+online.class_input(sumstat, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out = list(), Q = NA, shape = NA, lastchangelike = c(0), lastchangecpts =c(0), checklist = c(0), nchecklist=0, ndone = 0, nupdate = length(data), cost_func)
 }
 \arguments{
   \item{sumstat}{
@@ -53,11 +53,11 @@ online.class_input(sumstat, cpttype, method, test.stat, penalty, pen.value, mins
 \item{lastchangecpts}{
 	Vector of length n containing the last changepoint prior to each timepoint.
 }
-\item{numchangecpts}{
-Stores the current number of changepoints detected.
-}
 \item{checklist}{
 	Vector of locations of the potential last changepoint for next iteration (to be updated), max length=(ndone+nupdate).
+}
+\item{nchecklist}{
+Stores the current number of changepoints detected.
 }
 \item{ndone}{
 Length of the time series when analysis begins.
