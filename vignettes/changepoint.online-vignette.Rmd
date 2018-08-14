@@ -47,8 +47,8 @@ In the following subsections, we will focus on multiple changepoint detection fo
 
 \subsection{2.2. ECP.online}
 
-\section{3. Introduction to the package and the 'ocpt' class}
-The \textbf{changepoint} package introduced a new object class called ‘cpt’ to store changepoint analysis objects. This section provides an introduction to the new 'ocpt' structure in \textbf{changepoint.online} which follows on from the 'cpt' class previously introduced in @changepointvignette. The new 'ocpt' class contains the functions within the 'cpt' class however, it also combines them with new functions that are approrpiate to the online method. 
+\section{3. Introduction to the package and the ‘ocpt' class}
+The \textbf{changepoint} package introduced a new object class called ‘cpt’ to store changepoint analysis objects. This section provides an introduction to the new 'ocpt' structure in \textbf{changepoint.online} which follows on from the ‘cpt' class previously introduced in @changepointvignette. The new ‘ocpt' class contains the functions within the ‘cpt' class however, it also combines them with new functions that are approrpiate to the online method. 
 
 Each of the core functions outputs an object of the ‘ocpt’ S4 class. The class has been constructed such that the ‘ocpt’ object contains the main features required for the online changepoint analysis and future summaries. Several objects, although masked from the user and the summary, are filled within slots as they are required for the update functions. Each of the objects are stored within a slot entry in the ‘ocpt’ class. The slots within the class are:
 \begin{itemize}
@@ -103,7 +103,7 @@ The following sections explore the use of the core functions within the __change
 \section{6. Changes in Mean and Variance: The ocpt.meanvar functions}
 
 \section{7. Summary}
-
+The unique contribution of the \textbf{changepoint.online} package is that the user has the ability to update previously existed data in a truly online method while still looking back through the whole data. The package currently contains two unique styles of doing this: ECP and PELT and this paper has described and demonstrated some differences between these approaches. Furthermore, this paper has given some examples and uses of the different initialisation and update functions whether that be for changes in mean and/or variance using distributional or distribution-free assumptions. The package has brought both the \textbf{ecp} and \textbf{changepoint} packages into an online perspective while not losing accuracy or efficiency. As such the \textbf{changepoint.online} package is useful in the modern approach of data analysis.
 \begin{center} \textbf{Acknowledgements} \end{center}
 
 The authors wish to thank Ben Norwood for helpful insight and discussions during the project. A. Connell acknowledge financial support from Google via the Google Summer of Code stipend.
