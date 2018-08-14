@@ -153,7 +153,7 @@ meandataupdate <- c(rnorm(100, 2, 1), rnorm(100, 6, 1))
 ```
 
 ```{r figssep, echo=FALSE,fig.cap="1(A) & 1(B)"}
-par(mfrow=c(2,2))
+par(mfrow=c(1,2))
 plot(meandata)
 plot(meandataupdate)
 ```
@@ -204,13 +204,80 @@ coef(Lai.default.update)
 
 \section{5. Changes in Variance: The ocpt.var functions}
 
+Whilst considerable research effort has been given to the change in mean problem, @Chen1997 observe that the detection of changes in variance has received comparatively little attention. Existing methods within the change in variance literature find it hard to detect subtle changes in variability, see @Killick2010 and previous discussion of this by @changepointvignette.
+Within the __changepoint.online__ package all change in variance methods are accessed using the \emph{ocpt.var} functions. The functions are structured as follows:
+
+\emph{ocpt.var.initialise(data,penalty="Manual",pen.value=length(data),know.mean=FALSE,mu=NA,Q=5,
+test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE)}
+
+The \emph{data}, \emph{penalty}, \emph{pen.value}, \emph{Q}, \emph{test.stat}, \emph{class}, \emph{param.estimates}, \emph{shape}, \emph{minseglen}, \emph{alpha}, \emph{verbose} are all the same as \emph{ocpt.mean.intialise}. The two remaining arguments are interpreted as followed:
+\begin{itemize}
+\item \emph{know.mean} - This logical argument is only required for test.stat = "Normal". If TRUE then the mean is assumed known and mu is taken as its value. If FALSE and \emph{mu = NA} (default value) then the mean is estimated via maximum likelihood. If FALSE and the value of \emph{mu} is supplied, mu is not estimated but is counted as an estimated parameter for decisions.
+\item \emph{mu} - Only required for test.stat = "Normal". Numerical value of the true mean of the data (if known). Either single value or vector of length nrow(data). If data is a matrix and \emph{mu} is a single value, the same mean is used for each row.
+\end{itemize}
+
+For the \emph{ocpt.var.update} function we have the following structure: \
+
+\emph{ocpt.var.update(previousanswer, newdata)}
+
+This has the same arguments as \emph{ocpt.mean.update}.
+The remainder of this section is a worked example considering changes in variability within wind speeds.
+
+\subsection{5.1. Case study: Irish wind speeds}
+
+With the increase of wind based renewables in the power grid, there has become great interest in forecasting wind speeds. Often modelers assume a constant dependence structure when modeling the existing data before producing a forecast. Here we conduct a naive changepoint analysis of wind speed data which are available in the R package __gstat__ @gstat. The data provided are daily wind speeds from 12 meteorological stations in the Republic of Ireland. The data has previously been analysed by several authors including @Haslett2006 and @changepointvignette. These were concerned with a spatial-temporal model for 11 of the 12 sites. Here we consider a single site, Claremorris depicted in Figure 3.
+
+```{r varianceexample, message=FALSE, warning=FALSE, paged.print=FALSE}
+data("wind", package = "gstat")
+ts.plot(wind[, 9], xlab = "Index")
+```
+The variability of the data appears smaller in some sections and larger in others, this motivates a search for changes in variability. Wind speeds are by nature diurnal and thus have a periodic mean. The change in variance approaches within the \emph{ocpt.var} functions require the data to have a fixed value mean over time and thus this periodic mean must be removed prior to analysis. Whilst there are a range of options for removing this mean, we choose to take first differences as this does not require any modeling assumptions. Following this we assume that the differences follow a Normal distribution with changing variance and thus use the \emph{ocpt.var} functions.
+
+```{r windvar, message=FALSE, warning=FALSE, paged.print=FALSE}
+wind.pelt.initialise <- ocpt.var.initialise(diff(wind[1:500, 9]),pen.value=10)
+wind.pelt.update <- ocpt.var.update(wind.pelt.initialise,diff(wind[500:1000, 9]))
+plot(wind.pelt.update,data=diff(wind[1:1000, 9]), xlab = "Index", type = "l" )
+cpts(wind.pelt.update)
+coef(wind.pelt.update)
+```
+
+Note that the pen.value set as a baseline can have far more of an effect on the detection of variance chagepoints than mean, users are advised to try different \emph{pen.values} so as to gain a better understanding. 
+
 \section{6. Changes in Mean and Variance: The ocpt.meanvar functions}
 
+The __changepoint.online__ package, much like the __changepoint__ package contains four distributional choices for a change in both the mean and variance; Exponential, Gamma, Poisson and Normal. The Exponential, Gamma and Poisson distributional choices only require a change in a single parameter to change both the mean and the variance. In contrast, the Normal distribution requires a change in two parameters. 
+Each distributional option is available within the \emph{ocpt.meanvar} functions which has a similar structure to the mean and variance functions from previous sections. The basic call format is as follows:
+
+\emph{ocpt.meanvar.initialise(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",} \
+\emph{class=TRUE,param.estimates=TRUE,shape=1,minseglen=2, alpha=1, verbose=FALSE)}
+
+The arguments for this function and the update function are the same as that for \emph{ocpt.mean.initialise} and \emph{ocpt.mean.update} respectively. The structure of the update function is: \
+\emph{ocpt.meanvar.update(previousanswer, newdata)}
+
+Following the format of previous sections we briefly describe a case study using data on notable
+inventions / discoveries.
+
+\subsection{6.1. Case study: Discoveries}
+
+This section considers the dataset called discoveries available within the __datasets__ package in the base distribution of \textbf{R}. The data are the counts of the number of “great” inventions and/or scientific discoveries in each year from 1860 to 1959. Our approach models each segment as following a Poisson distribution with its own rate parameter.
+
+```{r}
+data("discoveries", package = "datasets")
+discovery.pelt.initialise <- ocpt.meanvar.initialise(discoveries[1:40], test.stat = "Poisson",pen.value = 10)
+discovery.pelt.update1 <- ocpt.meanvar.update(discovery.pelt.initialise,discoveries[40:70])
+discovery.pelt.update2 <- ocpt.meanvar.update(discovery.pelt.update1,discoveries[70:100])
+plot(discovery.pelt.update2, data=discoveries)
+cpts(discovery.pelt.update2) <- cpts(discovery.pelt.update2)+1860
+cpts(discovery.pelt.update2)
+abline(v=(cpts(discovery.pelt.update2)),col="red")
+```
+
+It is important to note there are some circumstances were corrections to all changepoints will need to be shifted if a false started is wanted by the user. The most versatile of the three sets of functions is the \emph{ocpt.meanvar} functions as they role both of the previous two functions in to one.
 \section{7. Summary}
 The unique contribution of the __changepoint.online__ package is that the user has the ability to update previously existed data in a truly online method while still looking back through the whole data. The package currently contains two unique styles of doing this: ECP and PELT and this paper has described and demonstrated some differences between these approaches. Furthermore, this paper has given some examples and uses of the different initialisation and update functions whether that be for changes in mean and/or variance using distributional or distribution-free assumptions. The package has brought both the __ecp__ and __changepoint__ packages into an online perspective while not losing accuracy or efficiency. As such the __changepoint.online__ package is useful in the modern approach of data analysis.
 
 \begin{center} \textbf{Acknowledgements} \end{center}
 
-The authors wish to thank Ben Norwood for helpful insight and discussions during the project. A. Connell acknowledge financial support from Google via the Google Summer of Code stipend.
+The authors wish to thank Ben Norwood for helpful insight and discussions during the project. A. Connell acknowledges financial support from Google via the Google Summer of Code stipend.
 
 # References
