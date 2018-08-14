@@ -23,10 +23,10 @@ ocpt.mean.initialise(data,penalty="Manual",pen.value=length(data),Q=5,test.stat=
 	The maximum number of changepoints to search for using the "BinSeg" method.  The maximum number of segments (number of changepoints + 1) to search for using the "SegNeigh" method.
 }
   \item{test.stat}{
-	The assumed test statistic / distribution of the data.  Currently only "Normal", "ECP" and "CUSUM" supported.
+	The assumed test statistic / distribution of the data.  Currently only "ECP"  "Normal", "Exponential", "Gamma" or "Poisson" supported.
 }
   \item{class}{
-	Logical.  If TRUE then an object of class \code{cpt} is returned.
+	Logical.  If TRUE then an object of class \code{ocpt} is returned.
 }
   \item{param.estimates}{
 	Logical.  If TRUE and class=TRUE then parameter estimates are returned. If FALSE or class=FALSE no parameter estimates are returned.
@@ -35,13 +35,13 @@ ocpt.mean.initialise(data,penalty="Manual",pen.value=length(data),Q=5,test.stat=
 Only used when cost function is the gamma likelihood.
 }
   \item{minseglen}{
-  Positive integer giving the minimum segment length (no. of observations between changes), default is the minimum allowed by theory.
+  Positive integer giving the minimum segment length (no. of observations between changes), default is the minimum allowed by theory. Note that when the "ECP" test.stat is used then the input value for minseglen is one less than the delta value used.
   }
   \item{alpha}{
   The moment index used for determining the distance between and within segments.
   }
   \item{verbose}{
- Allows the user to have some of the internal steps returned. (Only for ECP method.)
+ Allows the user to have some of the internal steps returned. (Only for ECP case.)
 }
 }
 \details{

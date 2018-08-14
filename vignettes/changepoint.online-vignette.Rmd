@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 \begin{center} \textbf{Abstract} \end{center}
 One of new the key challenges in changepoint analysis is the need for an online approach. The __changepoint.online__ package has been developed to provide users with a choice of changepoint search methods to use in conjunction with a given changepoint method and in particular provides an implementation of the recently proposed PELT algorithm much like the __changepoint__ package does. The __changepoint.online__ in fact has the same functionality and can produce the same results for offline data as the __changepoint__ package however, it can also analysise online data. This article describes the methodology of the new online approachs and the key differences between the two methods with simulated and practical examples. Another key change is the _ECP_ test statistic is now available, which stems from the __ecp__ package.
 
-_Keywords:_ online, changepoint, energy time series, cluster analysis, R
+_Keywords:_ R; exact algorithm; linear cost; online changepoint detection; PELT; ECP; Energy Time Series.
 
 \section{1. Introduction}
 
@@ -45,19 +45,29 @@ In the following subsections, we will focus on multiple changepoint detection fo
 
 \subsection{2.1. PELT.online}
 
+The PELT algorithm already calculates quantities in an online fashion. Therefore, the implimentation only need concern itself with fixing a $\mathcal{O}(1)$ computational time per calculation and allocating a set amount of memory. 
+
+Both the initialisation and update functions pass the information in to PELT.c, this is the new online PELT algorithm. For the initialisation, it starts with empty vectors while for the update some information is carried over. Specifically, for any update we must carry over the last summary statistic row as each point, with the exception of the first initialisation point, looks back one piece of data. Now when considering viable changepoint locations, there are different cases to note. Firstly, there isdetecting a first changepoint. This paper will not discuss this trivial case, as the methodology is the same as the offline approach and is in fact the same as the resetting case. The other cases are when a new changepoint is found and the effect this has on the previous changepoint whether that be the previous changepoint disappearing, moving or remaining the same. Furthermore, due to the nature of the online method in the case of the previous changepoint disappearing, it is thought of as resetting as the new changepoint becomes $\tau_{1}$. This leaves the two cases of the previous changepoint staying in its current position or moving to a different position. It should be noted that if the previous changepoint moves it must be to a point between the minimum segment length and the new changepoint that has been detected. 
+
+The mathematics behind the PELT.online algorithm is in fact very similar to the offline method with some small but crucial changes. Firstly, much like for the PELT algorithm each segment has its specific cost and we use the previously proven proposition for offline PELT of $F(t)+C(y_{(t+1):s}) > F(s)$ where $t$ is the previous changepoint, $s$ is the next changepoint and $C()$ is the specific cost function. Using this proposition, then it can be shown that for a future time T, the last changepoint cannot be at any location $t < s$. This means that these locations can be removed from the minimisation search and this is the basis of the online approach. Since this pruning step excludes locations which cannot occur as changepoints, the changepoint search remains exact but reduces in computational cost from $\mathcal{O}(n^2)$ to be linear in the number of data. This is related to number of changepoints detected so computational complexity does increase linearly as more changepoints are detected. At the end of this updating of the changepoints, for each iteration of the PELT.online function, the storage values are all updated, for instance ndone (the previous points analysed) and nupdate (the points to be analysed in the next update). 
+
 \subsection{2.2. ECP.online}
+
+The "ECP" test.stat leads to a seperate C++ file and this function is an online variant of the test statistic used in the __ecp__ package. The method is similar to PELT due to both methods looking back through vectors and using a cost function and penalty to make decisions. Unlike the PELT.online method, which must pull forward the final row of the summary statistic, the ECP approach must recover the last delta rows from the summary statistic. Although the original preset for delta is 29 in the original __ecp__ pacakge, values as low as 2 will now still yield as accurate results. Therefore, although being a slightly more computationally inefficient method than PELT, the difference for most users will be negligiible. 
+
+The fundamental difference in the new ECP method is that the distance vectors are kept in the delta overlap, by keeping these vectors we are able to first of all recover and calculate whether any changepoints will occur in the last segment length of the initialised data and the first segment length of the updated data. All further updated calculations in the new length beyond the delta overlap, are treated in an iterative process much like the original ECP method. The distance values around the individual changepoints are stored in a similar way to the PELT algoritm. Therefore much like the PELT algorithm the computational cost is linear with respect to the number of changepoints found. Furthermore, nupdate is replaced with newlength and ndone is replaced with oldlength. This is only done so to minimise confusion for users. The only other recovered information is the last row of the cumulative sum so as the update cumulative sum can continue to be calculated. Once all the initialised or updated vectors have been input or calculated, the possible changepoint locations are then scored using a Goodness of Fit model much like the cost functions for PELT. These individual scores are then compared against a threshold as well as each other and the algorithm decides the most appropriate changepoint locations. Unlike PELT, the user can force the ECP algorithm to have a maximum number of changepoints it will be allowed to pick. Caution is advised when using this feature.
 
 \section{3. Introduction to the package and the ‘ocpt' class}
 The \textbf{changepoint} package introduced a new object class called ‘cpt’ to store changepoint analysis objects. This section provides an introduction to the new 'ocpt' structure in \textbf{changepoint.online} which follows on from the ‘cpt' class previously introduced in @changepointvignette. The new ‘ocpt' class contains the functions within the ‘cpt' class however, it also combines them with new functions that are approrpiate to the online method. 
 
 Each of the core functions outputs an object of the ‘ocpt’ S4 class. The class has been constructed such that the ‘ocpt’ object contains the main features required for the online changepoint analysis and future summaries. Several objects, although masked from the user and the summary, are filled within slots as they are required for the update functions. Each of the objects are stored within a slot entry in the ‘ocpt’ class. The slots within the class are:
 \begin{itemize}
-  \item \emph{data.set} – a time series (‘ts’) object containing the numeric values of the data;
+  \item \emph{sumstat} – a matrix containing the summary statistics for the data;
   \item \emph{cpttype} – characters describing the type of changepoint sought e.g., mean, variance;
   \item \emph{method} – characters denoting the single or multiple changepoint search method applied.
   \item \emph{test.stat} – characters denoting the test statistic, i.e., assumed distribution/distribution - free method;
   \item \emph{pen.type} – characters denoting the penalty type;
- \item \emph{pen.value} – the numeric value of the penalty used in the analysis;
+ \item \emph{pen.value} – the numeric value of the penalty used in the analysis. Unlike in previously, pen.value also can be calculated using Average Run Length;
  \item \emph{cpts} – vector giving the estimated changepoint locations ending in the length of the time series in the data.set slot;
  \item \emph{ncpts.max} – the numeric maximum number of changepoints searched for, e.g., 1, 5, Inf;
  \item \emph{param.est} – a list of parameters where each element in the list is a vector of the estimated numeric parameter values for each segment;
@@ -98,12 +108,107 @@ The following sections explore the use of the core functions within the __change
 
 \section{4. Changes in Mean: The ocpt.mean functions}
 
+Within the \textbf{changepoint.online} package all change in only mean methods are accessed using the \emph{ocpt.mean} functions. The functions are structured as follows:
+
+\emph{ocpt.mean.initialise(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,
+param.estimates=TRUE,shape=1,minseglen=1,alpha=1,verbose=FALSE)}
+
+It is worth noting that American English versions of all the functions exist that are written as \emph{ocpt.mean.initialize()} exist but are computationally identical to the British English version. The arguments for both functions are:
+\begin{itemize}
+\item \emph{data} - A vector, ts object or matrix containing the data within which you wish to find a changepoint.  If data is a matrix, each row is considered a separate dataset.
+\item \emph{Penalty} - Choice of "None", "SIC", "BIC", "MBIC", AIC", "Hannan-Quinn", "Asymptotic" and "Manual" penalties.  If Manual is specified, the manual penalty is contained in the pen.value parameter. If Asymptotic is specified, the theoretical type I error is contained in the pen.value parameter. The predefined penalties listed DO count the changepoint as a parameter, postfix a 0 e.g."SIC0" to NOT count the changepoint as a parameter. Note the general preset for a Manual penalty is the average run length of the data.
+\item \emph{pen.value} - The theoretical type I error e.g.0.05 when using the Asymptotic penalty. The value of the penalty when using the Manual penalty option - this can be a numeric value or text giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters. 
+\item \emph{Q} - The maximum number of changepoints to search for using the "ECP" test.stat through the recursive loop. This makes no changes for any of the other test statistics. 
+\item \emph{test.stat} - The assumed test statistic / distribution of the data.  Currently only "ECP"  "Normal", "Exponential", "Gamma" or "Poisson" supported.
+\item \emph{class} - Logical.  If TRUE then an object of class \emph{ocpt} is returned.
+\item \emph{param.estimates} - Logical.  If TRUE and class=TRUE then parameter estimates are returned. If FALSE or class=FALSE no parameter estimates are returned.
+\item \emph{shape} - Only used when cost function is the gamma likelihood.
+\item \emph{minseglen} - Positive integer giving the minimum segment length (no. of observations between changes), default is the minimum allowed by theory. Note that when the "ECP" test.stat is used then the input value for minseglen is one less than the delta value used.
+\item \emph{alpha} - The moment index used for determining the distance between and within segments. only used in "ECP" case.
+\item \emph{verbose} - Allows the user to see certain aspects of the internal processes. Only for "ECP" case.
+\end{itemize}
+
+The function structure for ocpt.mean.updated is:
+
+\emph{ocpt.mean.update(previousanswer, newdata)}
+
+with arguments:
+\begin{itemize}
+\item \emph{previousanswer} -	A S4 class. This will be the output from the \emph{ocpt.mean.initialise()} function.
+\item \emph{newdata} - A vector, ts object or matrix containing the new data within which you wish to find a changepoint.  If data is a matrix, each row is considered a separate dataset.
+\end{itemize}
+
+The update function has far fewer options as a key assumption when updating is that certain decisions such as the penalty cannot be changed as it would invalidate earlier output results. The user choices are thus carried forward and the new data can then be treated as an extension of the previous result.
+
+The remainder of this section gives a worked example exploring how to identify a change in mean.
+
+\subsection{4.1. Example: Changes in mean}
+We now describe the general structure of an online changepoint analysis using the __changepoint.online__ package. We begin by demonstrating the various possible stages within a change in mean analysis. To this end we simulate two datasets ( _meandata_ ) and ( _meandataupdate_ ) of length 400 and 200 respectively. _meandata_ has changepoints at 100, 200 and 300 while _meandataupdate_ has only one change at 100, however this should produce two results when added as an update at 400 and 500. The sequence will have six segments and the means for each segment are 0, 5, 1, 9, 2, 6.
+
+```{r ocpt.mean, message=FALSE, warning=FALSE, paged.print=FALSE}
+library("changepoint.online")
+set.seed(10)
+meandata <- c(rnorm(100, 0, 1), rnorm(100, 5, 1), rnorm(100, 1, 1),rnorm(100, 9, 1))
+meandataupdate <- c(rnorm(100, 2, 1), rnorm(100, 6, 1))
+```
+
+```{r figssep, echo=FALSE,fig.cap="1(A) & 1(B)"}
+par(mfrow=c(2,2))
+plot(meandata)
+plot(meandataupdate)
+```
+
+```{r figstogether, echo=FALSE,fig.cap="\\label{fig:figs}All data"}
+alldata = c(meandata,meandataupdate)
+plot(alldata)
+```
+
+Imagine that we have been presented with the _meandata_ dataset and are asked to perform a changepoint analysis and have been told new data (the _meandataupdata_) will be coming live at a later point once the initial analysis has been done. The first question we aim to answer is “Is there a change within the data and if so how many changes are there?”. Our first choice in answering this question is whether we wish to consider a single change or whether multiple changes are plausible. From a visual inspection of the data in Figure 2, we suspect multiple changes in mean may exist within the two lots of data.
+The challenge in multiple changepoint detection is identifying the optimal number and location of changepoints as the number of solutions increases rapidly with the size of the data and also ensuring with any additional updates that the optimal changepoints are correctly chosen. In this initial example where $n = 400$, we have 399 possible solutions for a single changepoint, for two changes there are 79401 possible solutions and this is not taking into account that we do not know how many changes there are! So we must think of our possible changepoint locations as $n \choose Q$ where $n$ is the total number of datapoints and $Q$ is the maximum number of changepoints the user wishes the algorithm to search for. As such it is clearly desirable to use an efficient method for searching the large solution space.
+Either of the two search methods could be used to detect these changes. For this example we will compare the PELT and ECP. For now we will assume that the dataset is independent and Normally distributed and consider an alternative towards the end of this section.
+
+```{r PELTexamplesinit, message=FALSE, warning=FALSE, paged.print=FALSE}
+meanpeltinitialise <- ocpt.mean.initialise(meandata)
+meanpeltinitialise
+plot(meanpeltinitialise,data=meandata, type = "l", xlab = "Index",cpt.width = 4)
+abline(v=cpts(meanpeltinitialise),col="red")
+cpts(meanpeltinitialise)
+```
+The updated function will now be added to this plot and the cpts will be shown.
+```{r PELTexamplesupdate, message=FALSE, warning=FALSE, paged.print=FALSE}
+meanpeltupdate <- ocpt.mean.update(meanpeltinitialise,meandataupdate)
+plot(meanpeltupdate,data=alldata, type = "l", xlab = "Index",cpt.width = 4)
+abline(v=cpts(meanpeltupdate),col="red")
+cpts(meanpeltupdate)
+```
+As users can check this shows the compuational period is the same for any intialisation and update ths showing it is an online method. Now we must compare this to the ecp test statistic choice. The only difference between using \emph{cpt.mean} on the whole data and using the new online approach is that the new online method is more computationally efficient. The major benefit of the ECP process is the added functionality of multivariate data. The process of updating can be thought of in relatively the same way however the returned summary is slighty different
+```{r ecpexample, message=FALSE, warning=FALSE, paged.print=FALSE}
+matrixdata <- matrix(c(rnorm(100,5,10),rnorm(100,25,1),rnorm(100,5,10),rnorm(100,25,1)),ncol=2)
+ecpmeaninit <- ocpt.mean.initialise(matrixdata, test.stat = "ECP")
+ecpmeaninit
+```
+
+Thus far we have only considered a simulated example. In the next section we apply the \emph{ocpt.mean} functions to some Glioblastoma data previously analysed by @Lai2005 .
+
+\subsection{4.2. Case Study: Glioblastoma}
+
+@Lai2005 compare different methods for segmenting array comparative genomic hybridization (aCGH) data from Glioblastoma multiforme (GBM), a type of brain tumor. These arrays were developed to identify DNA copy number alteration corresponding to chromosomal aberrations. High-throughput aCGH data are intensity ratios of diseased vs. control samples indexed by the location on the genome. Values greater than 1 indicate diseased samples have additional chromosomes and values less than 1 indicate fewer chromosomes. Detection of these aberrations can aid future screening and treatments of diseases.
+The data is replicated in the __changepoint.online__ package for ease. Following @Lai2005 we fit a Normal distribution with a piecewise constant mean using a likelihood criterion. Figure 2 demonstrates that PELT.online (with default penalty) gives the same segmentation as the CGHseg method from @Lai2005.
+```{r casestudymean, message=FALSE, warning=FALSE, paged.print=FALSE}
+data("Lai2005fig4", package = "changepoint.online")
+Lai.default.initialisation <- ocpt.mean.initialise(Lai2005fig4[1:100, 5],pen.value = 10)
+Lai.default.update <- ocpt.mean.update(Lai.default.initialisation,Lai2005fig4[101:191, 5])
+cpts(Lai.default.update)
+coef(Lai.default.update)
+```
+
 \section{5. Changes in Variance: The ocpt.var functions}
 
 \section{6. Changes in Mean and Variance: The ocpt.meanvar functions}
 
 \section{7. Summary}
-The unique contribution of the \textbf{changepoint.online} package is that the user has the ability to update previously existed data in a truly online method while still looking back through the whole data. The package currently contains two unique styles of doing this: ECP and PELT and this paper has described and demonstrated some differences between these approaches. Furthermore, this paper has given some examples and uses of the different initialisation and update functions whether that be for changes in mean and/or variance using distributional or distribution-free assumptions. The package has brought both the \textbf{ecp} and \textbf{changepoint} packages into an online perspective while not losing accuracy or efficiency. As such the \textbf{changepoint.online} package is useful in the modern approach of data analysis.
+The unique contribution of the __changepoint.online__ package is that the user has the ability to update previously existed data in a truly online method while still looking back through the whole data. The package currently contains two unique styles of doing this: ECP and PELT and this paper has described and demonstrated some differences between these approaches. Furthermore, this paper has given some examples and uses of the different initialisation and update functions whether that be for changes in mean and/or variance using distributional or distribution-free assumptions. The package has brought both the __ecp__ and __changepoint__ packages into an online perspective while not losing accuracy or efficiency. As such the __changepoint.online__ package is useful in the modern approach of data analysis.
+
 \begin{center} \textbf{Acknowledgements} \end{center}
 
 The authors wish to thank Ben Norwood for helpful insight and discussions during the project. A. Connell acknowledge financial support from Google via the Google Summer of Code stipend.
