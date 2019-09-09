@@ -49,7 +49,7 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{ocpt.mean.initialise}},\code{\link{ocpt.meanvar.initiliase}},\code{\linkS4class{ocpt}}
+\code{\link{ocpt.mean.initialise}},\code{\link{ocpt.meanvar.initialise}},\code{\linkS4class{ocpt}}
 }
 \examples{
 # Example of changes in mean at 5, 10 and 3 in simulated normal data

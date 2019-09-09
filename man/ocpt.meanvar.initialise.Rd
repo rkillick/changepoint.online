@@ -7,7 +7,9 @@ Identifying Changes in Mean and Variance. Initialisation function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method.
 }
 \usage{
-ocpt.meanvar.initialise(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2, alpha=1, verbose=FALSE)
+ocpt.meanvar.initialise(data,penalty="Manual",pen.value=length(data),
+Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,
+minseglen=2, alpha=1, verbose=FALSE)
 }
 \arguments{
   \item{data}{
@@ -76,7 +78,7 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initiliase}},\code{\linkS4class{ocpt}}
+\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initialise}},\code{\linkS4class{ocpt}}
 }
 \examples{
 set.seed(1)

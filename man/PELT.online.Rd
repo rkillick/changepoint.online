@@ -11,7 +11,8 @@ This function is not called but is the basis for \code{PELT.online.initialise} a
 WARNING: No checks on arguments are performed!
 }
 \usage{
-PELT.online(sumstat,pen=0, cost_func = "mean.norm", shape = 1, minseglen = 1,lastchangelike, lastchangecpts, numchangecpts,checklist)
+PELT.online(sumstat,pen=0, cost_func = "mean.norm", shape = 1, minseglen = 1,
+lastchangelike, lastchangecpts, numchangecpts,checklist)
 }
 \arguments{
   \item{sumstat}{

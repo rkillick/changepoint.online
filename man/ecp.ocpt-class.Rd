@@ -155,7 +155,7 @@ Andrew Connell, Rebecca Killick, David Matteson
 }
 
 \seealso{
-\code{\link{e.cp3o_delta.online.initialise}},\code{\link{ocpt.mean.initialise}},\code{\link{ocpt.var.initialise}},\code{\link{ocpt.meanvar.initialise}}
+\code{\link{ocpt.np.initialise}},\code{\link{ocpt.mean.initialise}},\code{\link{ocpt.var.initialise}},\code{\link{ocpt.meanvar.initialise}}
 }
 \examples{
 showClass("ecp.ocpt") # shows the structure of the ecp.ocpt class
@@ -166,7 +166,7 @@ estimates(x) # retrieves the ecp.ocpts slot from x
 # Example of a change in variance at 100 in simulated normal data
 set.seed(1)
 x=matrix(c(rnorm(100,0,1),rnorm(100,0,10)),ncol=1)
-ans=e.cp3o_delta.online.initialise(x) 
+ans=ocpt.np.initialise(x) 
 print(ans) # prints details of the analysis including a summary
 summary(ans)
 }

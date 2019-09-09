@@ -11,7 +11,8 @@ This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialis
 WARNING: No checks on arguments are performed!
 }
 \usage{
-PELT.online.initialise(sumstat, pen=0, cost_func = "mean.norm", shape = 1, minseglen = 1)
+PELT.online.initialise(sumstat, pen=0, 
+cost_func = "mean.norm", shape = 1, minseglen = 1)
 }
 \arguments{
   \item{sumstat}{
@@ -66,7 +67,8 @@ Andrew Connell, Rebecca Killick
 \code{\link{PELT.online}},\code{\link{PELT.online.update}},\code{\linkS4class{ocpt}}
 }
 \examples{
-#This function should only be used by developers, see its use in ocpt.mean.initialise and ocpt.mean.initialize.
+#This function should only be used by developers, 
+#see its use in ocpt.mean.initialise and ocpt.mean.initialize.
 }
 
 \keyword{methods}

@@ -2,7 +2,7 @@
 	#			    Fast ECP (eFast)    			#
 	#########################################################################
 
-e.cp3o_delta.online.initialise = function(Z, K=1, delta=29, alpha=1, verbose=FALSE){
+ocpt.np.initialise = function(Z, K=1, delta=29, alpha=1, verbose=FALSE){
 	#Argument checking
 	if(!is.matrix(Z))
 		stop("Z must be an n x d matrix.")
@@ -13,7 +13,7 @@ e.cp3o_delta.online.initialise = function(Z, K=1, delta=29, alpha=1, verbose=FAL
 	if(K < 1 || K > floor(nrow(Z)/(delta+1)))
 		stop("K is not in an acceptable range.")
 	#Force K and delta to be integers
-	delta = as.integer(delta)
+	  delta = as.integer(delta)
     K = as.integer(K)
     newlength = as.integer(length(Z[,1]))
     cSum = as.vector(c(rep(0,newlength)))
@@ -39,11 +39,11 @@ e.cp3o_delta.online.initialise = function(Z, K=1, delta=29, alpha=1, verbose=FAL
     return(ans)
 }
 
-e.cp3o_delta.online.initialize = function(Z, K=1, delta=29, alpha=1, verbose=FALSE){
-  e.cp3o_delta.online.initialise(Z, K, delta, alpha, verbose)
+ocpt.np.initialize = function(Z, K=1, delta=29, alpha=1, verbose=FALSE){
+  ocpt.np.initialise(Z, K, delta, alpha, verbose)
 }
 
-e.cp3o_delta.online.update = function(previousanswer, newdata, K=2){
+ocpt.np.update = function(previousanswer, newdata, K=2){
     #Argument checking
     if(previousanswer@width != length(newdata[1,]))
     stop("New data must have the same number of columns as previously.")
@@ -85,4 +85,3 @@ e.cp3o_delta.online.update = function(previousanswer, newdata, K=2){
  ans = online.ecp.class_input(number=res$number, estimates=res$estimates, GofM=res$gofM, delta=res$delta, alpha=res$alpha, verbose=res$verbose, csum=res$csum, dll=res$dll, dlr=res$dlr, drr=res$drr, left=res$left, right=res$right, datalength=res$length, functime=res$functime,width=res$width, cpLoc = res$cpLoc)
  return(ans)
 }
-

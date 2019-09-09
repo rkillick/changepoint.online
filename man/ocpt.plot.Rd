@@ -7,7 +7,9 @@ Plotting changes in Mean and variance. Update function.
 Plots the optimal positioning of changepoints for data using the user specified method. 
 }
 \usage{
-ocpt.plot(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2)
+ocpt.plot(data,penalty="Manual",pen.value=length(data),
+Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,
+shape=1,minseglen=2)
 }
 \arguments{
   \item{data}{
@@ -57,7 +59,7 @@ Andrew Connell, Rebecca Killick
 
 
 \seealso{
-\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initiliase}},\code{\linkS4class{ocpt}}
+\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initialise}},\code{\linkS4class{ocpt}}
 }
 \examples{
 set.seed(1)

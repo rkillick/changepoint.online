@@ -6,12 +6,13 @@ Input all required arguments into online cpt classes - Only intended for develop
 \description{
 This function helps to input all the necessary information into the correct format for the \code{ecp.ocpt} class.
 
-This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialise}, \code{ocpt.meanvar.initialise}, \code{e.cp3o_delta.online.initialise} and all the corresponding update functions. This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed and convenience.
+This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialise}, \code{ocpt.meanvar.initialise}, \code{ocpt.np.initialise} and all the corresponding update functions. This is not intended for use by regular users of the package.  It is exported for developers to call directly for speed and convenience.
 
 WARNING: No checks on arguments are performed!
 }
 \usage{
-online.ecp.class_input(number, estimates, GofM, delta, alpha, verbose, csum, dll, dlr, drr, left, right, datalength, functime, width, cpLoc)
+online.ecp.class_input(number, estimates, GofM, delta, alpha,
+verbose, csum, dll, dlr, drr, left, right, datalength, functime, width, cpLoc)
 }
 \arguments{
 \item{number}{The estimated number of change points.}
@@ -47,7 +48,8 @@ Rebecca Killick
 \code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initialise}},\code{\linkS4class{ecp.ocpt}}
 }
 \examples{
-#This function should only be used by developers, see its use in ocpt.mean, ocpt.var and ocpt.meanvar.
+#This function should only be used by developers, 
+#see its use in ocpt.mean, ocpt.var and ocpt.meanvar.
 }
 
 \keyword{methods}
