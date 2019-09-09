@@ -7,7 +7,7 @@ Authors@R: c(person("Rebecca", "Killick", role=c("aut","cre"),email="r.killick@l
 	person("Andrew", "Connell", role="aut"),person("Matt", "Nunes", role="aut"))
 Maintainer: Andrew Connell <a.connell1@lancs.ac.uk>
 Description: Brings the functionality of the offline changepoint package online. This package breaks the original functions in to initalise and update functions.This project has been done for Google Summer of Code 2018.
-Depends: R(>= 3.1), changepoint,methods,zoo,ecp,Rcpp
+Depends: R(>= 3.5), changepoint,methods,zoo,ecp,Rcpp
 Suggests: testthat, mvtnorm, MASS, combinat, R.rsp,
     knitr,
     rmarkdown
