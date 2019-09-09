@@ -4,7 +4,7 @@ cache: packages
 warnings_are_errors: true
 r_check_revdep: false
 r:
-  - 3.2
+  - 3.5
   - oldrel
   - release
   - devel
