@@ -12,17 +12,17 @@ Implements various mainstream and specialised changepoint methods for finding si
 \tabular{ll}{
 Package: \tab changepoint.online\cr
 Type: \tab Package\cr
-Version: \tab 0.0.1 \cr
-Date: \tab 2018-06-25\cr
+Version: \tab 0.1.1 \cr
+Date: \tab 2020-09-21\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }
 
 }
 \author{
-Andrew Connell <a.connell1@lancaster.ac.uk>, Rebecca Killick <r.killick@lancs.ac.uk>, Matthew Nunes <m.nunes@lancs.ac.uk>.
+Andrew Connell, Rebecca Killick <r.killick@lancs.ac.uk>, Matthew Nunes <m.nunes@lancs.ac.uk>.
 
-Maintainer: Andrew Connell <a.connell1@lancaster.ac.uk>
+Maintainer: Rebecca Killick < r.killick@lancs.ac.uk
 }
 
 \references{
