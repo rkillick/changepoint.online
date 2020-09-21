@@ -152,7 +152,7 @@ test_that('class18',expect_equivalent(distribution(x),"normal"))
 # From logLik-methods.Rd
 set.seed(1)
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
-out=ocpt.var.initialise(x,penalty="Manual",pen.value=200,Q=5)
+#out=ocpt.var.initialise(x,penalty="Manual",pen.value=200,Q=5)
 
 
 # From method.Rd
