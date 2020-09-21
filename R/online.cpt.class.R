@@ -1406,24 +1406,24 @@ setMethod("likelihood", "ocpt", function(object) {
 })
 
 # acf functions
-setGeneric("acf", function(object,...) standardGeneric("acf"))
-setMethod("acf", "ocpt", function(object,lag.max=NULL,...) {
-    cpts=c(0,object@cpts)
-    nseg=nseg(object)
-    data=sumstat(object)
-    for(i in 1:nseg){
-        stats::acf(data[(cpts[i]+1):cpts[i+1]],main=paste("Series part:",(cpts[i]+1),":",cpts[i+1]),...)
-    }
-})
+# setGeneric("acf", function(object,...) standardGeneric("acf"))
+# setMethod("acf", "ocpt", function(object,lag.max=NULL,...) {
+#    cpts=c(0,object@cpts)
+#    nseg=nseg(object)
+#    data=sumstat(object)
+#    for(i in 1:nseg){
+#        stats::acf(data[(cpts[i]+1):cpts[i+1]],main=paste("Series part:",(cpts[i]+1),":",cpts[i+1]),...)
+#    }
+#})
 
-setMethod("acf", "ocpt.reg", function(object,lag.max=NULL,...) {
-    cpts=c(0,object@cpts)
-    nseg=nseg(object)
-    data=sumstat(object)[,1]
-    for(i in 1:nseg){
-        stats::acf(data[(cpts[i]+1):cpts[i+1]],main=paste("Series part:",(cpts[i]+1),"-",cpts[i+1]),...)
-    }
-    })
+#setMethod("acf", "ocpt.reg", function(object,lag.max=NULL,...) {
+#    cpts=c(0,object@cpts)
+#    nseg=nseg(object)
+#    data=sumstat(object)[,1]
+#    for(i in 1:nseg){
+#        stats::acf(data[(cpts[i]+1):cpts[i+1]],main=paste("Series part:",(cpts[i]+1),"-",cpts[i+1]),...)
+#    }
+#    })
 
 setClass("ecp.ocpt",slots=list(number="numeric",estimates="numeric",GofM="numeric",delta="numeric",alpha="numeric",verbose="logical",csum="numeric",dll="numeric",dlr="numeric",drr="numeric",left="matrix",right="matrix",datalength="numeric",functime="numeric",width="numeric",cpLoc="list"),contains="ocpt")
 
