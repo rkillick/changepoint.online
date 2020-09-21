@@ -33,7 +33,8 @@ Andrew Connell
 }
 \examples{
 x=new("ecp.ocpt") # new ocpt object
-datalength(x)<- c(10) # replaces the existing data length slot with data length of 10. In other words, 10 pieces of data.
+datalength(x)<- c(10) # replaces the existing data length
+# slot with data length of 10. In other words, 10 pieces of data.
 }
 
 \keyword{methods}

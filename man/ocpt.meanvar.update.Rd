@@ -49,7 +49,7 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initiliase}},\code{\linkS4class{ocpt}}
+\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initialise}},\code{\linkS4class{ocpt}}
 }
 \examples{
 set.seed(1)

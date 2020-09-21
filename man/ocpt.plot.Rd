@@ -7,11 +7,16 @@ Plotting changes in Mean and variance. Update function.
 Plots the optimal positioning of changepoints for data using the user specified method. 
 }
 \usage{
-ocpt.plot(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",class=TRUE,param.estimates=TRUE,shape=1,minseglen=2)
+ocpt.plot(data,type = "mean", penalty="Manual", pen.value=length(data),
+Q=5, test.stat="Normal", class=TRUE, param.estimates=TRUE, shape=1,
+tol = 1e-07, know.mean = FALSE, mu = NA, minseglen=2)
 }
 \arguments{
   \item{data}{
 	The data that the user wants to plot. 
+}
+\item{type}{
+	The type of change the user wants the function to search for. This can be "mean", "var" or "meanvar".  
 }
  \item{penalty}{
 	Choice of "None", "SIC", "BIC", "MBIC", AIC", "Hannan-Quinn", "Asymptotic", "Manual" and "CROPS" penalties.  If Manual is specified, the manual penalty is contained in the pen.value parameter. If Asymptotic is specified, the theoretical type I error is contained in the pen.value parameter.  If CROPS is specified, the penalty range is contained in the pen.value parameter; note this is a vector of length 2 which contains the minimum and maximum penalty value.  Note CROPS can only be used if the method is "PELT". The predefined penalties listed DO count the changepoint as a parameter, postfix a 0 e.g."SIC0" to NOT count the changepoint as a parameter.
@@ -33,6 +38,15 @@ ocpt.plot(data,penalty="Manual",pen.value=length(data),Q=5,test.stat="Normal",cl
 }
 \item{shape}{
 Only used when cost function is the gamma likelihood.
+}
+\item{tol}{
+The tolerance at which model decisions are made. Only used within type="reg".
+}
+  \item{know.mean}{
+	Only required for test.stat="Normal".  Logical, if TRUE then the mean is assumed known and mu is taken as its value.  If FALSE, and mu=NA (default value) then the mean is estimated via maximum likelihood.  If FALSE and the value of mu is supplied, mu is not estimated but is counted as an estimated parameter for decisions. Only used within type="var".
+}
+  \item{mu}{
+	Only required for test.stat="Normal".  Numerical value of the true mean of the data.  Either single value or vector of length nrow(data).  If data is a matrix and mu is a single value, the same mean is used for each row. Only used within type="var".
 }
   \item{minseglen}{
   Positive integer giving the minimum segment length (no. of observations between changes), default is the minimum allowed by theory.
@@ -57,7 +71,7 @@ Andrew Connell, Rebecca Killick
 
 
 \seealso{
-\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initiliase}},\code{\linkS4class{ocpt}}
+\code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initialise}},\code{\linkS4class{ocpt}}
 }
 \examples{
 set.seed(1)

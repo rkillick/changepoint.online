@@ -1,5 +1,5 @@
-\name{e.cp3o_delta.online.update}
-\alias{e.cp3o_delta.online.update}
+\name{ocpt.np.update}
+\alias{ocpt.np.update}
 \title{
 Identifying Changes Via ECP. Update function.
 }
@@ -7,7 +7,7 @@ Identifying Changes Via ECP. Update function.
 Calculates the optimal positioning and (potentially) number of changepoints for data using the user specified method. The update function should be used once \code{e.cp3o_delta.online.initialise} has created an answer. 
 }
 \usage{
-e.cp3o_delta.online.update(previousanswer, newdata,K)
+ocpt.np.update(previousanswer, newdata,K)
 }
 \arguments{
   \item{previousanswer}{
@@ -43,14 +43,14 @@ David Matteson
 
 
 \seealso{
-\code{\link{ocpt.var.initialise}},\code{\link{ocpt.meanvar.initiliase}},\code{\linkS4class{ocpt}}
+\code{\link{ocpt.var.initialise}},\code{\link{ocpt.meanvar.initialise}},\code{\linkS4class{ocpt}}
 }
 \examples{
 set.seed(1)
 x = matrix(c(rnorm(100,50,1),rnorm(100,5,1)),ncol=1)
 y=matrix(c(rnorm(100,15,1),rnorm(100,25,1)),ncol=1)
-ans = e.cp3o_delta.online.initialise(x)
-updatedans = e.cp3o_delta.online.update(ans,y,K=3)
+ans = ocpt.np.initialise(x)
+updatedans = ocpt.np.update(ans,y,K=3)
 updatedans
 }
 

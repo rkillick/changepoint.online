@@ -7,7 +7,8 @@ eFastC_delta.online - wrapper function.
 This is the wrapper function to hand \code{e.cp3o_delta.online.initialise} and \code{e.cp3o_delta.online.update} in to C++. This function is exported for developer use only. 
 }
 \usage{
-eFastC_delta.online(Z_, K_, delta_, alpha_, verbose_, oldlength_, newlength_, cSum_, DLL_, DRR_, DLR_, Left_, Right_)
+eFastC_delta.online(Z_, K_, delta_, alpha_, verbose_, oldlength_,
+newlength_, cSum_, DLL_, DRR_, DLR_, Left_, Right_)
 }
 \arguments{
   \item{Z_}{

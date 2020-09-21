@@ -1,4 +1,4 @@
-online.class_input <- function(sumstat, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out=list(), Q=NA, shape=NA, lastchangelike=c(0), lastchangecpts=c(0), checklist=c(0), nchecklist=0, ndone=0, nupdate=length(data),cost_func){
+online.class_input <- function(sumstat, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out=list(), Q=NA, shape=NA, lastchangelike=c(0), lastchangecpts=c(0), checklist=c(0), nchecklist=0, ndone=0, nupdate=length(sumstat[,1])-1,cost_func){
   if(method=="BinSeg" || method=="SegNeigh" || penalty=="CROPS"){
     ans=new("ocpt.range")
   }else{

@@ -11,7 +11,10 @@ This function is called by \code{ocpt.mean.initialise}, \code{ocpt.var.initialis
 WARNING: No checks on arguments are performed!
 }
 \usage{
-online.class_input(sumstat, cpttype, method, test.stat, penalty, pen.value, minseglen, param.estimates, out = list(), Q = NA, shape = NA, lastchangelike = c(0), lastchangecpts =c(0), checklist = c(0), nchecklist=0, ndone = 0, nupdate = length(data), cost_func)
+online.class_input(sumstat, cpttype, method, test.stat, penalty, pen.value, 
+minseglen, param.estimates, out = list(), Q = NA, shape = NA, 
+lastchangelike = c(0), lastchangecpts =c(0), checklist = c(0), 
+nchecklist=0, ndone = 0, nupdate = length(sumstat[,1])-1, cost_func)
 }
 \arguments{
   \item{sumstat}{
@@ -84,7 +87,8 @@ Andrew Connell, Rebecca Killick
 \code{\link{ocpt.var.initialise}},\code{\link{ocpt.mean.initialise}},\code{\linkS4class{ocpt}}
 }
 \examples{
-#This function should only be used by developers, see its use in ocpt.mean, ocpt.var and ocpt.meanvar.
+#This function should only be used by developers, 
+#see its use in ocpt.mean, ocpt.var and ocpt.meanvar.
 }
 
 \keyword{methods}
