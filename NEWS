@@ -1,3 +1,7 @@
+Version 0.1.2
+- Thanks to Liviu Vladutu for spotting an error with the exporting of the acf() method.
+- Updates to build on for R 4.0.0
+
 Version 0.1: Original
 
 Rebecca Killick
