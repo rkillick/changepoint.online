@@ -1,8 +1,8 @@
 Package: changepoint.online
 Type: Package
 Title: Online detection of changepoints
-Version: 0.1
-Date: 2016-03-21
+Version: 0.1.1
+Date: 2020-09-21
 Authors@R: c(person("Rebecca", "Killick", role=c("aut","cre"),email="r.killick@lancs.ac.uk"),
 	person("Andrew", "Connell", role="aut"),person("Matt", "Nunes", role="aut"))
 Maintainer: Andrew Connell <a.connell1@lancs.ac.uk>
@@ -16,5 +16,5 @@ LinkingTo: Rcpp
 NeedsCompilation: yes
 Repository: CRAN
 LazyLoad: yes
-Packaged: 2016-03-21 12:36:29 UTC; killick
+Packaged: 2020-09-21 12:36:29 UTC; killick
 VignetteBuilder: knitr
